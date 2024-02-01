@@ -14,6 +14,8 @@ $lightGray-bg-clr: #f7f7f7;
 $lightGray-clr: #717171;
 $main-clr: #ff385c;
 $darkGray-clr: #222222;
+$demo-login-btn-bg-clr: #407dff;
+$demo-login-btn-hover-bg-clr: #416fd1;
 
 //ON HOVER
 $filter-icon-hover-clr: #000;
@@ -21,10 +23,13 @@ $side-nav-hover-bg-clr: #f7f7f7;
 
 $black: #000;
 $white: #fff;
+$red: #ff0000;
+$border-gray: #dddddd;
 
 // Breakpoints
-$mobile-breakpoint: 460px;
-$narrow-breakpoint: 720px;
+$mobile-breakpoint: 600px;
+$narrow-breakpoint: 960px;
+$normal-breakpoint: 744px;
 $normal-breakpoint: 1920px;
 
 

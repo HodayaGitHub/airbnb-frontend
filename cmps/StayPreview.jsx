@@ -8,10 +8,6 @@ import { utilService } from '../services/util.service'
 
 
 export function StayPreview({ stay, onRemoveStay, params }) {
-<<<<<<< HEAD
-  console.log(params)
-=======
->>>>>>> host-dashboard
   const [isHover, setIsHover] = useState(false)
   const navigate = useNavigate()
   const openStayInNewTab = () => {
@@ -41,7 +37,7 @@ export function StayPreview({ stay, onRemoveStay, params }) {
       <div onClick={openStayInNewTab}>
         {/* <div> */}
         <div className='img-container'>
-          <FavoriteIcon />
+          <FavoriteIcon stay={stay}/>
           <SimpleSlider stay={stay} />
           {/* <ControlledCarousel stay={stay} isHover={isHover} /> */}
         </div>
@@ -52,7 +48,7 @@ export function StayPreview({ stay, onRemoveStay, params }) {
           <span className='stay-star'>🟊 {averageRating.toFixed(1)}</span>
 
           {/* TODO: calc the km between the searched location to the stay location */}
-          <span className='stay-distance'>x Kilometres away</span>
+          <span className='stay-distance'>2354 Kilometres away</span>
 
           {/* TODO: show the available dates */}
           <span className='stay-date'>Sep 29 - Oct 4</span>

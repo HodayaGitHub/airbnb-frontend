@@ -1,10 +1,3 @@
-// .labels-container {
-//     display: flex;
-//     flex-direction: row;
-//     column-gap: 32px;
-//     height: 100%;
-//     width: 100%;
-
 .filter-labels-container {
     display: flex;
     flex-direction: row;
@@ -12,22 +5,26 @@
     align-items: center;
     gap: rem(10px);
     overflow: hidden;
-    max-width: 90dvw;
+    // position: sticky;
+    // top: 0;
+    background: #FFFFFF;
+    // z-index: 4;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+
+    &.sticky {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
     .react-multi-carousel-list {
-        // padding: 0rem 0 2rem 0;
         display: flex;
         flex-direction: row;
-        column-gap: 32px;
         height: 80px;
         width: 90dvw;
         position: sticky;
         top: 0;
         margin-top: 0.5rem;
-
         overflow: hidden;
-        // position: unset;
-
         gap: 8px;
 
         .react-multi-carousel-track {
@@ -50,6 +47,8 @@
 
         .react-multi-carousel-item {
             cursor: pointer;
+            // width: fit-content;
+            width: max-content;
         }
 
         .react-multiple-carousel__arrow--right {
@@ -66,34 +65,69 @@
         // }
 
 
-
-
         .label-item {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 20px;
-            height: 20px;
+            height: max-content;
             color: #717171;
+            opacity: 75%;
+
+            &.selected-label {
+                color: black;
+
+                svg {
+                    fill: black;
+                    stroke: black !important;
+                    stroke-width: 0.6px;
+                }
+
+                .label-title {
+                    border-bottom: 2.5px solid;
+                    padding-bottom: 10px;
+                    color: black;
+                }
+
+            }
 
             .label-icon {
-                width: 24px;
-                height: 24px;
-                aspect-ratio: 1 /1;
-                // color: #717171;
-                opacity: 0.6425339366515838;
+                aspect-ratio: 1/1;
             }
 
             span {
                 line-break: strict;
-                width: min-content;
                 width: max-content;
                 display: block;
                 font-weight: 600;
-                font-size: 12px;
+
+                svg {
+                    fill: #717171;
+                    stroke: #717171;
+                    stroke-width: 0.1px;
+
+                    &:hover {
+                        fill: black;
+                        stroke: black !important;
+                        stroke-width: 0.6px;
+                    }
+
+
+                }
+
             }
 
+
+            .label-title {
+                font-size: 12px;
+
+                &.selected-label {
+                    border-bottom: 1px solid;
+                    padding-bottom: 10px;
+                    color: black;
+                }
+
+            }
         }
 
         .react-multiple-carousel__arrow {
@@ -126,5 +160,15 @@
         //     /* Ensure it's behind the carousel items */
         // }
 
+    }
+}
+
+.dymanic-header {
+    &.sticky {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 4;
+        background-color: #FFFFFF;
     }
 }

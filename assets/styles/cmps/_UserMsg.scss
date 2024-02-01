@@ -1,11 +1,14 @@
 .user-msg {
-    color:white;
+    color:$darkGray-clr;
     padding: 10px;
     font-size: 1.4em;
     position: fixed;
-    top:0;
-    right:0;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
     background-color: grey;
+    border-radius: 10px;
+    z-index: 2000;
 }
 .user-msg button {
     float:right;
@@ -16,7 +19,22 @@
 }
 
 .user-msg.success {
-    background-color: rgb(41, 189, 73);
+    background-color: rgb(255, 255, 255);
+    border: 1px solid $lightGray-clr;
+    top: 50%;
+    left: 50%; 
+}
+.user-msg.linkCopied {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid $lightGray-clr;
+    top: 72%;
+    left: 50%; 
+}
+.user-msg.imgUpload {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid $lightGray-clr;
+    top: 10%;
+    left: 50%; 
 }
 .user-msg.error {
     background-color: rgb(216, 59, 59);

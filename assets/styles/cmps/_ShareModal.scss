@@ -41,7 +41,18 @@
       grid-template-rows: auto-fill;
       column-gap: 16px;
       row-gap: 16px;
+      .react-share__ShareButton{
+        width: 100%;
+        border: 1px solid $lightGray-bg-clr1 !important;
+        border-radius: 10px;
+        font-weight: 600 !important;
+        padding: 5px 10px !important;
+        &:hover{
+          background-color: $lightGray-bg-clr !important;
+        }
+      }
       .share-to{
+        width: 100%;
         background-color: $white;
         border: 1px solid $lightGray-bg-clr1;
         border-radius: 10px;

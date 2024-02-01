@@ -1,0 +1,6 @@
+.dashboard{
+ display: grid;
+ grid-template-columns: repeat(auto-fit,minmax(300px,450px));
+    justify-content: center;
+  column-gap: 20px;
+}
