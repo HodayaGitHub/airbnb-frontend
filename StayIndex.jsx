@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useSearchParams } from "react-router-dom"
-
+import classnames from 'classnames'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { userService } from '../services/user.service.js'
 import { stayService } from '../services/stay.service.js'
@@ -15,6 +15,7 @@ import { LabelsFilter } from '../cmps/filter/LabelsFilter.jsx'
 import { AutoCompleteCmp } from '../cmps/search/AutoCompleteCmp.jsx'
 import { Restcountries } from '../cmps/search/Restcountries.jsx'
 import { ShowMoreStays } from '../cmps/ShowMoreStays.jsx'
+import {ChatApp} from './ChatApp.jsx'
 
 export function StayIndex() {
     const stays = useSelector(storeState => storeState.stayModule.stays)
@@ -25,13 +26,27 @@ export function StayIndex() {
     const [params, setParams] = useState(stayService.generateQueryString(filterBy))
 
     const [loadingMore, setLoadingMore] = useState(false)
-    const [scroll, setScroll] = useState(false)
+    const [isHeaderSticky, setIsHeaderSticky] = useState(false);
+
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    const handleScroll = () => {
+        setScrollPosition(window.scrollY);
+    };
 
     useEffect(() => {
-        window.addEventListener("scroll", () => {
-            setScroll(window.scrollY > 30)
-        })
-    }, [])
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    const headerClassNames = classnames({
+        'sticky': scrollPosition > 0,
+        'full': scrollPosition > 0,
+    });
+
 
     useEffect(() => {
         loadStays(filterBy, false)
@@ -104,45 +119,34 @@ export function StayIndex() {
     }
 
 
-    // if (!stays) return <div className='loader'></div>
-
     return (
         <>
+            <MainHeader
+                // headerClassNames={headerClassNames}
+            />
+            <StaySearch
+                // headerClassNames={headerClassNames}
+                filterBy={filterBy}
+                onSetFilter={onSetFilter}
+            />
 
-            <div className={`dymanic-header ${scroll ? "sticky full" : ""}`}>
-                {scroll &&
-                    < MainHeader />
-                }
+            <div className={`${headerClassNames} filter-labels-container`}>
+                <LabelsFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+                <StayFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+            </div>
 
-                <StaySearch
-                    filterBy={filterBy}
-                    onSetFilter={onSetFilter}
-                />
-
-                <div className='filter-labels-container'>
-                    <LabelsFilter
-                        filterBy={filterBy}
-                        onSetFilter={onSetFilter}
-                    />
-                    <StayFilter
-                        filterBy={filterBy}
-                        onSetFilter={onSetFilter}
-                    />
-
-                </div>
-
-            </div >
-
-
-            {/* <button> <Link className='add-btn' to={`/edit`}>Add</Link></button> */}
             {isLoading ? (
-                <div className='stay-index-loader'><div className='loader'></div></div>
+                <div className='stay-index-loader'>
+                    <div className='loader'></div>
+                </div>
             ) : (
                 <>
                     <StayList params={params} stays={stays} onRemoveStay={onRemoveStay} />
                     <ShowMoreStays onLoadMore={onLoadMore} />
                 </>
             )}
+
+            <ChatApp></ChatApp>
         </>
-    )
+    );
 }
