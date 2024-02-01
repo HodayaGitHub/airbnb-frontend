@@ -18,7 +18,7 @@ export function ConfirmPage() {
     return (
         <div className='confirm-page'>
             <div className='title'>
-                <button className='return-btn' onClick={() => navigate(`/stay/${stayId}`)}>{'‹'}</button>
+                <button className='return-btn' onClick={() => navigate(`/`)}>{'‹'}</button>
                 <h1>Confirm and pay</h1>
             </div>
             <div className='reservation'>

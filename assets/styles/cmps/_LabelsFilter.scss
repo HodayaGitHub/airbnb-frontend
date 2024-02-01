@@ -1,0 +1,62 @@
+.labels-container {
+    display: flex;
+    flex-direction: row;
+    column-gap: 32px;
+
+    .label-item {
+        padding: 1rem 0;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        font-size: 12px;
+        line-height: 16px;
+        text-align: center;
+        align-items: center;
+
+        span {
+            width:max-content;
+        }
+        .label-icon {
+            height: 24px;
+            width: 24px;
+        }
+
+        .react-multi-carousel-list {
+            padding: 0rem 0 2rem 0;
+        }
+
+        .slider {
+            margin: 0 20px;
+            overflow: "hidden";
+            padding: 2rem 0;
+        }
+
+        .slider img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .react-multi-carousel-arrow-prev,
+        .react-multi-carousel-arrow-next {
+            font-size: 2rem;
+            background-color: #ce1f1f;
+            border: 1px solid #e21616;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+
+        }
+
+        .react-multi-carousel-arrow-prev {
+            left: 0;
+        }
+
+        .react-multi-carousel-arrow-next {
+            right: 0;
+        }
+    }
+}

@@ -36,7 +36,8 @@ export function StayDetails() {
   function handleChange(target) {
     const field = target.name
     let value = target.value
-    setStay((prevStay) => ({ ...prevStay, [field]: value }))
+    setStay(prevStay => ({ ...prevStay, [field]: value }))
+
   }
   function handleSubmit(e) {
     e.preventDefault()
@@ -48,7 +49,8 @@ export function StayDetails() {
     try {
       await updateStay(stay)
       setIsEdit(false)
-    } catch (err) {
+    }
+    catch (err) {
       console.log('Cannot add stay', err)
     }
   }
@@ -59,34 +61,11 @@ export function StayDetails() {
       <div className='stay-name'>
         {isEdit && (
           <form onSubmit={handleSubmit}>
-            <input
-              onChange={(e) => handleChange(e.target)}
-              value={stay.name}
-              type='text'
-              name='name'
-              id='name'
-            />
+            <input onChange={(e) => handleChange(e.target)} value={stay.name} type="text" name="name" id="name" />
           </form>
         )}
-        {!isEdit && (
-          <>
-            <h1
-              onMouseLeave={() => {
-                setIsOver(false)
-              }}
-              onMouseOver={() => {
-                setIsOver(true)
-              }}
-            >
-              {stay.name}
-              {isOver && (
-                <button className='edit-btn' onClick={() => setIsEdit(true)}>
-                  🖉
-                </button>
-              )}
-            </h1>
-          </>
-        )}
+        {!isEdit && <><h1 onMouseLeave={() => { setIsOver(false) }} onMouseOver={() => { setIsOver(true) }}>{stay.name}
+          {isOver && <button className="edit-btn" onClick={() => setIsEdit(true)}>🖉</button>}</h1></>}
         <div className='stay-name-actions'>
           <div className='action'>Share</div>
           <div className='action'>Save</div>
@@ -188,32 +167,6 @@ export function StayDetails() {
           </div>
         </section>
       </section>
-      <section className='stay-reviews'>
-        <h2>
-          ★ 4.95 • {stay.reviews.length} review
-          {stay.reviews.length !== 1 && <span>s</span>}
-        </h2>
-        <div className='reviews'>
-          {stay.reviews.map((review, index) => {
-            return (
-              <div className='review' key={index}>
-                <div className='review-by'>
-                  <Avatar className='avatar' alt='Remy Sharp' src={reviewer1} />
-                  <h3 className='name'>{review.by.fullname}</h3>
-                  <p className='review-date'>
-                    {new Date(review.postAt).toLocaleString('en', {
-                      month: 'short'
-                    })}{' '}
-                    {''}
-                    {new Date(review.postAt).getFullYear()}
-                  </p>
-                </div>
-                <p className='text'>{review.txt}</p>
-              </div>
-            )
-          })}
-        </div>
-      </section>
-    </section>
+    </section >
   )
 }

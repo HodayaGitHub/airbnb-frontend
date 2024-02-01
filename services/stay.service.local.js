@@ -63,7 +63,7 @@ window.cs = stayService
 
 async function query(filterBy) {
   var stays = await storageService.query(STORAGE_KEY)
-  if (filterBy?.location && filterBy.location !== `I'm flexible`) {
+  if (filterBy?.location && filterBy.location.name !== `I'm flexible`) {
     stays = stays.filter((stay) => stay.loc.region === filterBy.location)
   }
   if (filterBy?.guests) {

@@ -153,6 +153,7 @@ export function StaySearch({ filterBy, onSetFilter }) {
             </div>
 
             <>
+
                 {modalOpen === REGION_MODAL && (
                     <div className="region-modal">
                         <div className="region-title">Search by region</div>
@@ -181,7 +182,28 @@ export function StaySearch({ filterBy, onSetFilter }) {
 
                 )}
 
-
+                {modalOpen === GUEST_MODAL && (
+                    <div>
+                        {Object.entries(filterByToEdit.guests).map(([guestType, count]) => (
+                            <div key={guestType}>
+                                <label htmlFor={guestType}>{guestType}</label>
+                                <div>
+                                    <button
+                                        onClick={(event) => updateGuestCount(event, guestType, 1)}
+                                    >
+                                        +
+                                    </button>
+                                    <span>{count}</span>
+                                    <button
+                                        onClick={(event) => updateGuestCount(event, guestType, -1)}
+                                    >
+                                        -
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </>
         </section>
     )
