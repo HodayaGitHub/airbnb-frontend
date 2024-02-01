@@ -4,7 +4,7 @@ import { stayService } from '../../services/stay.service.local.js'
 import { userService } from '../../services/user.service.js'
 import { store } from '../store.js'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
-import { SET_GUESTS, ADD_STAY, ADD_TO_CART, CLEAR_CART, REMOVE_STAY, REMOVE_FROM_CART, SET_STAYS, UNDO_REMOVE_STAY, UPDATE_STAY, SET_FILTER_BY } from '../reducers/stay.reducer.js'
+import { ADD_STAY, ADD_TO_CART, CLEAR_CART, REMOVE_STAY, REMOVE_FROM_CART, SET_STAYS, UNDO_REMOVE_STAY, UPDATE_STAY, SET_FILTER_BY, SET_FILTER_LABEL} from '../reducers/stay.reducer.js'
 import { SET_SCORE } from '../reducers/user.reducer.js'
 
 // Action Creators:
@@ -27,9 +27,9 @@ export function getActionUpdateStay(stay) {
     }
 }
 
-export async function loadStays() {
+export async function loadStays(filterBy) {
     try {
-        const stays = await stayService.query()
+        const stays = await stayService.query(filterBy)
         // console.log('Stays from DB:', stays)
         store.dispatch({
             type: SET_STAYS,
@@ -136,6 +136,6 @@ export function setFilterBy(filterBy) {
     return store.dispatch({ type: SET_FILTER_BY, filterBy })
 }
 
-export function setGuestsCount(guests) {
-    return store.dispatch({ type: SET_GUESTS, guests})
+export function setSelectedLabel(selectedLabel) {
+    return store.dispatch({ type: SET_FILTER_LABEL, selectedLabel })
 }
