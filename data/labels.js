@@ -1,297 +1,423 @@
 export const labels = [
     {
-        "title": "OMG",
-        "imgUrl": "../src/assets/img/labels/omg.jpeg",
-        "label": "omg"
-    },
-    {
-        "title": "Rooms",
-        "imgUrl": "../src/assets/img/labels/rooms.jpeg",
-        "label": "rooms"
-    },
-    {
-        "title": "A-frames",
-        "imgUrl": "../src/assets/img/labels/a-frames.jpeg",
-        "label": "aFrames"
+        "title": "OMG!",
+        "svg": "Omg",
+        "label": "OMG!",
     },
     {
         "title": "Caves",
-        "imgUrl": "../src/assets/img/labels/caves.jpeg",
-        "label": "caves"
-    },
-    {
-        "title": "Golfing",
-        "imgUrl": "../src/assets/img/labels/golfing.jpeg",
-        "label": "golfing"
-    },
-    {
-        "title": "Arctic",
-        "imgUrl": "../src/assets/img/labels/golfing.jpeg",
-        "label": "Arctic"
-    },
-    {
-        "title": "Iconic Cities",
-        "imgUrl": "../src/assets/img/labels/golfing.jpeg",
-        "label": "Iconic Cities"
-    },
-    {
-        "title": "Beach Front",
-        "imgUrl": "../src/assets/img/labels/golfing.jpeg",
-        "label": "Beach Front"
-    },
-    {
-        "title": "Creative spaces",
-        "imgUrl": "../src/assets/img/labels/golfing.jpeg",
-        "label": "Creative spaces"
-    },
-    {
-        "title": "Farms",
-        "imgUrl": "../src/assets/img/labels/golfing.jpeg",
-        "label": "Farms"
-    },
-    {
-        "title": "Raids",
-        "imgUrl": "../src/assets/img/labels/golfing.jpeg",
-        "label": "Raids"
-    },
-    {
-        "title": "Luxe",
-        "imgUrl": "../src/assets/img/labels/rooms.jpeg",
-        "label": "Luxe"
-    },
-    {
-        "title": "Grand pianos",
-        "imgUrl": "../src/assets/img/labels/rooms.jpeg",
-        "label": "Grand pianos"
-    },
-    {
-        "title": "Historical homes",
-        "imgUrl": "../src/assets/img/labels/rooms.jpeg",
-        "label": "Historical homes"
-    },
-    {
-        "title": "Mentions",
-        "imgUrl": "../src/assets/img/labels/rooms.jpeg",
-        "label": "Mentions"
-    },
-    {
-        "title": "Towers",
-        "imgUrl": "../src/assets/img/labels/rooms.jpeg",
-        "label": "Towers"
-    },
-    {
-        "title": "Top of the world",
-        "imgUrl": "../src/assets/img/labels/omg.jpeg",
-        "label": "Top of the world"
-    },
-    {
-        "title": "Skiing",
-        "imgUrl": "../src/assets/img/labels/omg.jpeg",
-        "label": "Skiing"
-    },
-    {
-        "title": "Earth homes",
-        "imgUrl": "../src/assets/img/labels/omg.jpeg",
-        "label": "Earth homes"
-    },
-    {
-        "title": "Amazing views",
-        "imgUrl": "../src/assets/img/labels/omg.jpeg",
-        "label": "Amazing views"
+        "svg": "Caves",
+        "label": "Caves",
+
     },
     {
         "title": "Cabins",
-        "imgUrl": "../src/assets/img/labels/omg.jpeg",
-        "label": "Cabins"
-    },
-    {
-        "title": "Treehouse",
-        "imgUrl": "../src/assets/img/labels/omg.jpeg",
-        "label": "Treehouse"
-    },
-    {
-        "title": "Boats",
-        "imgUrl": "../src/assets/img/labels/omg.jpeg",
-        "label": "Boats"
-    },
-    {
-        "title": "Design",
-        "imgUrl": "../src/assets/img/labels/omg.jpeg",
-        "label": "Design"
+        "svg": "Cabins",
+        "label": "Cabins",
     },
     {
         "title": "Amazing pools",
-        "imgUrl": "../src/assets/img/labels/rooms.jpeg",
-        "label": "Amazing pools"
-    },
-    {
-        "title": "Camping",
-        "imgUrl": "../src/assets/img/labels/rooms.jpeg",
-        "label": "Camping"
-    },
-    {
-        "title": "New",
-        "imgUrl": "../src/assets/img/labels/rooms.jpeg",
-        "label": "New"
-    },
-    {
-        "title": "Desert",
-        "imgUrl": "../src/assets/img/labels/rooms.jpeg",
-        "label": "Desert"
-    },
-    {
-        "title": "Islands",
-        "imgUrl": "../src/assets/img/labels/rooms.jpeg",
-        "label": "Islands"
-    },
-    {
-        "title": "Off-the-grid",
-        "imgUrl": "",
-        "label": "Off-the-grid"
+        "svg": "AmazingPools",
+        "label": "Pool"
     },
     {
         "title": "Castles",
-        "imgUrl": "",
-        "label": "Castles"
+        "svg": "Castles",
+        "label": "Castles",
     },
     {
         "title": "National parks",
-        "imgUrl": "",
+        "svg": "Arctic",
         "label": "National parks"
     },
     {
-        "title": "Tiny homes",
-        "imgUrl": "",
-        "label": "Tiny homes"
-    },
-    {
-        "title": "Surfing",
-        "imgUrl": "",
-        "label": "Surfing"
-    },
-    {
-        "title": "Lakefront",
-        "imgUrl": "",
-        "label": "Lakefront"
-    },
-    {
-        "title": "Lake",
-        "imgUrl": "",
-        "label": "Lake"
-    },
-    {
-        "title": "Countryside",
-        "imgUrl": "",
-        "label": "Countryside"
-    },
-    {
-        "title": "Campers",
-        "imgUrl": "",
-        "label": "Campers"
-    },
-    {
-        "title": "Tropical",
-        "imgUrl": "",
-        "label": "Tropical"
-    },
-    {
-        "title": "Trending",
-        "imgUrl": "",
-        "label": "Trending"
-    },
-    {
-        "title": "Vineyards",
-        "imgUrl": "",
-        "label": "Vineyards"
-    },
-    {
-        "title": "Bed & breakfast",
-        "imgUrl": "",
-        "label": "Bed & breakfast"
-    },
-    {
-        "title": "Chef's kitchens",
-        "imgUrl": "",
-        "label": "Chef's kitchens"
-    },
-    {
         "title": "Minsus",
-        "imgUrl": "",
+        "svg": "Minsus",
         "label": "Minsus"
     },
     {
         "title": "Yurts",
-        "imgUrl": "",
+        "svg": "Yurts",
         "label": "Yurts"
     },
     {
         "title": "Domes",
-        "imgUrl": "",
+        "svg": "Domes",
         "label": "Domes"
     },
     {
         "title": "Casas particulares",
-        "imgUrl": "",
-        "label": "Casas particulares"
+        "svg": "CasasParticulares",
+        "label": "Casa"
     },
     {
         "title": "Ryokans",
-        "imgUrl": "",
+        "svg": "Ryokans",
         "label": "Ryokans"
     },
     {
-        "title": "Play",
-        "imgUrl": "",
-        "label": "Play"
+        "title": "Wifi",
+        "svg": "Wifi",
+        "label": "Wifi",
     },
     {
-        "title": "Shepherd's huts",
-        "imgUrl": "",
-        "label": "Shepherd's huts"
+        "title": "Beachfront",
+        "svg": "Beachfront",
+        "label": "Beachfront",
     },
     {
-        "title": "Ski-in/out",
-        "imgUrl": "",
-        "label": "Ski-in/out"
+        "title": "TV",
+        "svg": "TV",
+        "label": "TV",
     },
     {
         "title": "Windmills",
-        "imgUrl": "",
+        "svg": "Windmills",
         "label": "Windmills"
     },
     {
         "title": "Barns",
-        "imgUrl": "",
-        "label": "Barns"
+        "svg": "Barns",
+        "label": "Barns",
     },
     {
         "title": "Adapted",
-        "imgUrl": "",
+        "svg": "Arctic",
         "label": "Adapted"
     },
     {
         "title": "Houseboats",
-        "imgUrl": "",
+        "svg": "Houseboat",
         "label": "Houseboats"
     },
     {
         "title": "Containers",
-        "imgUrl": "",
-        "label": "Containers"
+        "svg": "Containers",
+        "label": "Containers",
+
     },
     {
         "title": "Dammusi",
-        "imgUrl": "",
+        "svg": "Dammusi",
         "label": "Dammusi"
     },
     {
         "title": "Trulli",
-        "imgUrl": "",
+        "svg": "Trulli",
         "label": "Trulli"
     },
     {
         "title": "Beach",
-        "imgUrl": "",
+        "svg": "Arctic",
         "label": "Beach"
     },
+    {
+        "title": "Arctic",
+        "svg": "Arctic",
+        "label": "Air conditioning",
+    },
+    {
+        "title": "Apartment",
+        "svg": "Apartment",
+        "label": "Apartment",
+    },
+    {
+        "title": "BBQ Grill",
+        "svg": "BBQGrill",
+        "label": "BBQ grill"
+    },
+ 
+    {
+        "title": "Campervan",
+        "svg": "Campervan",
+        "label": " Campervan",
+    },
+    {
+        "title": "Cycladic homes",
+        "svg": "CycladicHomes",
+        "label": "Cycladic homes",
+    },
+    {
+        "title": "Workspace",
+        "svg": "Workspace",
+        "label": "Laptop friendly workspace",
+    },
+    {
+        "title": "Camping",
+        "svg": "Camping",
+        "label": "Camping",
+    },
+    {
+        "title": "Fire extinguisher",
+        "svg": "FireExtinguisher",
+        "label": "Fire extinguisher",
+    },
+    {
+        "title": "Shower head",
+        "svg": "HandheldShowerHead",
+        "label": "Handheld shower head",
+    },
+    {
+        "title": "Shepherd's huts",
+        "svg": "ShepherHut",
+        "label": "Shepherd's huts",
+    },
+    {
+        "title": "Fireplace",
+        "svg": "Fireplace",
+        "label": "Indoor fireplace",
+    },
+    {
+        "title": "First aid kit",
+        "svg": "FirstAidKit",
+        "label": "First aid kit",
+    },
+    {
+        "title": "Guest house",
+        "svg": "GuestHouse",
+        "label": "GuestHouse",
+    },
+    {
+        "title": "Gym",
+        "svg": "Gym",
+        "label": "Gym",
+    },
+    {
+        "title": "Hot tub",
+        "svg": "HotTub",
+        "label": "Hot tub",
+    },
+    {
+        "title": "Hotel",
+        "svg": "Hotel",
+        "label": "Hotel",
+    },
+    {
+        "title": "House",
+        "svg": "House",
+        "label": "House",
+    },
+    {
+        "title": "Kezhan",
+        "svg": "Kezhan",
+        "label": "Kezhan",
+    },
+    {
+        "title": "Kitchen",
+        "svg": "Kitchen",
+        "label": "Kitchen",
+    },
+    {
+        "title": "Outdoor dining",
+        "svg": "OutdoorDining",
+        "label": "Outdoor dining",
+    },
+    {
+        "title": "Patio",
+        "svg": "Patio",
+        "label": "Patio or balcony",
+    },
+    {
+        "title": "Pool table",
+        "svg": "PoolTable",
+        "label": "Pool table",
+    },
+    {
+        "title": "Tower",
+        "svg": "Tower",
+        "label": "Tower"
+    },
+    {
+        "title": "Top of the world",
+        "svg": "Arctic",
+        "label": "Top of the world"
+    },
+    {
+        "title": "Skiing",
+        "svg": "Skiing",
+        "label": "Skiing"
+    },
+    {
+        "title": "Raids",
+        "svg": "Raids",
+        "label": "Cabins"
+    },
+    {
+        "title": "TreeHouse",
+        "svg": "TreeHouse",
+        "label": "TreeHouse"
+    },
+    {
+        "title": "Farms",
+        "svg": "Farms",
+        "label": "Farms"
+    },
+    {
+        "title": "Grand pianos",
+        "svg": "GrandPianos",
+        "label": "Grand pianos"
+    },
+    {
+        "title": "Rooms",
+        "svg": "Arctic",
+        "label": "rooms"
+    },
+    {
+        "title": "A-frames",
+        "svg": "Arctic",
+        "label": "aFrames"
+    },
+    {
+        "title": "Tiny homes",
+        "svg": "TinyHomes",
+        "label": "Tiny homes"
+    },
+    {
+        "title": "Lakefront",
+        "svg": "Lakefront",
+        "label": "Lakefront"
+    },
+    // {
+    //     "title": "Bed & breakfast",
+    //     "svg": "BedBreakfast",
+    //     "label": "Breakfast",
+    // },
+    // {
+    //     "title": "Chef's kitchens",
+    //     "svg": "Arctic",
+    //     "label": "Chef's kitchens"
+    // },
 ]
+
+
+
+// {
+//     "title": "Washing Machine",
+//     "svg": "WashingMachine",
+//     "label": "Washing Machine",
+// },
+// {
+//     "title": "Lake",
+//     "svg": "",
+//     "label": "Lake"
+// },
+// {
+//     "title": "Countryside",
+//     "svg": "",
+//     "label": "Countryside"
+// },
+// {
+//     "title": "Campers",
+//     "svg": "",
+//     "label": "Campers"
+// },
+// {
+//     "title": "Tropical",
+//     "svg": "",
+//     "label": "Tropical"
+// },
+// {
+//     "title": "Trending",
+//     "svg": "",
+//     "label": "Trending"
+// },
+// {
+//     "title": "Vineyards",
+//     "svg": "",
+//     "label": "Vineyards"
+// },
+// {
+//     "title": "Play",
+//     "svg": "",
+//     "label": "Play"
+// },
+// {
+//     "title": "Shepherd's huts",
+//     "svg": "",
+//     "label": "Shepherd's huts"
+// },
+// {
+//     "title": "Ski-in/out",
+//     "svg": "",
+//     "label": "Ski-in/out"
+// },
+// {
+//     "title": "Golfing",
+//     "svg": "../src/assets/img/labels/golfing.jpeg",
+//     "label": "golfing"
+// },
+// {
+//     "title": "Arctic",
+//     "svg": "../src/assets/img/labels/golfing.jpeg",
+//     "label": "Arctic"
+// },
+// {
+//     "title": "Iconic Cities",
+//     "svg": "../src/assets/img/labels/golfing.jpeg",
+//     "label": "Iconic Cities"
+// },
+// {
+//     "title": "Historical homes",
+//     "svg": "../src/assets/img/labels/rooms.jpeg",
+//     "label": "Historical homes"
+// },
+// {
+//     "title": "Mentions",
+//     "svg": "../src/assets/img/labels/rooms.jpeg",
+//     "label": "Mentions"
+// },
+// {
+//     "title": "Luxe",
+//     "svg": "../src/assets/img/labels/rooms.jpeg",
+//     "label": "Luxe"
+// },
+// {
+//     "title": "Creative spaces",
+//     "svg": "../src/assets/img/labels/golfing.jpeg",
+//     "label": "Creative spaces"
+// },
+// {
+//     "title": "Earth homes",
+//     "svg": "../src/assets/img/labels/omg.jpeg",
+//     "label": "Earth homes"
+// },
+// {
+//     "title": "Amazing views",
+//     "svg": "../src/assets/img/labels/omg.jpeg",
+//     "label": "Amazing views"
+// },
+// {
+//     "title": "Boats",
+//     "svg": "../src/assets/img/labels/omg.jpeg",
+//     "label": "Boats"
+// },
+// {
+//     "title": "Design",
+//     "svg": "../src/assets/img/labels/omg.jpeg",
+//     "label": "Design"
+// },
+// {
+//     "title": "Camping",
+//     "svg": "../src/assets/img/labels/rooms.jpeg",
+//     "label": "Camping"
+// },
+// {
+//     "title": "New",
+//     "svg": "../src/assets/img/labels/rooms.jpeg",
+//     "label": "New"
+// },
+// {
+//     "title": "Desert",
+//     "svg": "../src/assets/img/labels/rooms.jpeg",
+//     "label": "Desert"
+// },
+// {
+//     "title": "Islands",
+//     "svg": "../src/assets/img/labels/rooms.jpeg",
+//     "label": "Islands"
+// },
+// {
+//     "title": "Surfing",
+//     "svg": "",
+//     "label": "Surfing"
+// },

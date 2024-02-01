@@ -66,7 +66,7 @@ export function MainHeader({ headerClassNames }) {
         className='logo-container'
       >
         <img src={appLogo} alt='Logo' className='app-logo' />
-        <span>JourneyJoy</span>
+        <span className="logo-name">Journey</span>
       </div>
 
       <div className='login' onClick={openUserModal} ref={modalRef}>
@@ -94,6 +94,9 @@ export function MainHeader({ headerClassNames }) {
                 <button onClick={() => navigate('/become-a-host')}>
                   Become a host
                 </button>
+                 {/* <button onClick={() => navigate('/become-a-host/stay-edit')}>
+      Become a host
+    </button> */}
                 <button onClick={onLogout}>Logout</button>
               </div>
             )}

@@ -11,24 +11,27 @@ import { UserDetails } from './pages/UserDetails'
 import { StayDetails } from './pages/StayDetails.jsx'
 import { MainHeader } from './cmps/MainHeader.jsx'
 
-const getMainLayoutClasses = () => {
-  if (location.pathname === '/') {
+const getMainLayoutClasses = (pathname) => {
+  if (pathname === '/') {
     return 'main-layout'
-  } else if (location.pathname.includes('/stay/')) {
+  } else if (pathname.includes('/stay/')) {
     return 'stay-detail-layout'
-  } else if (location.pathname.includes('/book/')) {
+  } else if (pathname.includes('/book/')) {
     return 'confirm-layout'
-  } else if ((location.pathname.includes('/dashBoard'))) {
+  } else if (pathname.includes('/DashBoard')) {
     return 'dashboard-layout'
-  }else{
+  } else {
     return 'main-layout'
   }
 }
 
 export function RootCmp() {
+  const location = useLocation(); // Import useLocation from 'react-router'
+  const showFooter = !location.pathname.includes('/become-a-host')
+
   return (
-    <main className={getMainLayoutClasses()}>
-      <MainHeader />
+    <main className={getMainLayoutClasses(location.pathname)}>
+      {/* <MainHeader /> */}
       <Routes>
         {routes.map((route) => (
           <Route
@@ -40,7 +43,7 @@ export function RootCmp() {
         ))}
         <Route path='user/:id' element={<UserDetails />} />
       </Routes>
-      <AppFooter />
+      {showFooter && <AppFooter />}
     </main>
   )
 }

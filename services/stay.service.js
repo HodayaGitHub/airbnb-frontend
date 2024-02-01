@@ -140,7 +140,7 @@ function formatDateFromUnix(unixTimestamp) {
     const options = { day: 'numeric', month: 'short' };
     const formattedDate = new Date(unixTimestamp * 1000).toLocaleDateString('en-US', options);
     return formattedDate;
-}
+  }
 
 function generateQueryString(filterBy) {
     const { stayDates, checkIn, checkOut, guests, region, label } = filterBy
@@ -164,20 +164,15 @@ function buildQueryParams(filterBy) {
 }
 
 function getDefaultDates() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set time to the beginning of the day
-
-    const defaultCheckIn = Math.floor(today.getTime() / 1000);
-
-    const oneDayInSeconds = 24 * 60 * 60;
-    const defaultCheckOut = defaultCheckIn + oneDayInSeconds;
-
-    console.log(defaultCheckIn, defaultCheckOut);
+    const today = new Date()
+    const defaultCheckIn = Math.floor(Date.now() / 1000)
+    const oneDayInSeconds = 24 * 60 * 60
+    const defaultCheckOut = defaultCheckIn + oneDayInSeconds
 
     return {
         defaultCheckIn,
         defaultCheckOut,
-    };
+    }
 }
 
 function totalGuests(filterBy) {
@@ -194,6 +189,6 @@ function getLabels() {
 function calcNights(firstDate, secondDate) {
     const timeDifference = secondDate - firstDate;
     const daysDifference = Math.ceil(timeDifference / (24 * 60 * 60)); // seconds to days
-
+  
     return daysDifference;
-}
+  }
