@@ -1,25 +1,49 @@
-
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 
-
 import { labels } from '../data/labels.js'
 import { stays } from '../data/stays.js'
 import { orders } from '../data/orders.js'
-
 
 const STORAGE_KEY = 'stay'
 const LABELS_KEY = 'labels'
 const ORDERS_KEY = 'orders'
 
 const AMENTITIES = {
-  Essentials: ['Wifi', 'Washer', 'Air conditioning', 'Dedicated workspace', 'Hair dryer', 'Kitchen', 'Dryer', 'Heating', 'TV', 'Iron'],
-  Features: ['Pool', 'Free parkring', 'Crib', 'Gym', 'Breakfast', 'smoking allowed', 'Hot tub', 'EV charger', 'King bed', 'BBQ grill', 'Indoor fireplace'],
-  Location: ['Beachfront', 'Waterfront'],
-  Safty: ['Smoke alarm', 'Carbon monoxide alarm']
+  Essentials: [
+    'Wifi',
+    'Washer',
+    'Air conditioning',
+    'Dedicated workspace',
+    'Hair dryer',
+    'Kitchen',
+    'Dryer',
+    'Heating',
+    'TV',
+    'Iron'
+  ],
+  Features: [
+    'Pool',
+    'Free parkring',
+    'Crib',
+    'Gym',
+    'Breakfast',
+    'smoking allowed',
+    'Hot tub',
+    'EV charger',
+    'King bed',
+    'BBQ grill',
+    'Indoor fireplace'
+  ],
+  Location: ['Beachfront', 'Waterfront', 'Ski-in', 'Ski-out'],
+  Safty: [
+    'Smoke alarm',
+    'Carbon monoxide alarm',
+    'Fire extinguisher',
+    'First aid kit'
+  ]
 }
-
 
 export const stayService = {
   query,
@@ -32,18 +56,22 @@ export const stayService = {
   getAmentities,
   getLabels,
   initializeLocalStorage,
+  getLocalLabels
 }
 
 window.cs = stayService
 
 async function query(filterBy) {
   var stays = await storageService.query(STORAGE_KEY)
-  if (filterBy?.location && filterBy.location !== "Flexible") {
-    stays = stays.filter(stay => stay.loc.region === filterBy.region)
+  if (filterBy?.location && filterBy.location !== 'Flexible') {
+    stays = stays.filter((stay) => stay.loc.region === filterBy.location)
   }
   if (filterBy?.guests) {
-    const totalGuests = filterBy.guests.adults + filterBy.guests.children + filterBy.guests.infants
-    stays = stays.filter(stay => stay.capacity >= totalGuests)
+    const totalGuests =
+      filterBy.guests.adults +
+      filterBy.guests.children +
+      filterBy.guests.infants
+    stays = stays.filter((stay) => stay.capacity >= totalGuests)
   }
   return stays
 }
@@ -86,7 +114,6 @@ async function addStayMsg(stayId, txt) {
   await storageService.put(STORAGE_KEY, stay)
 
   return msg
-
 }
 
 function getEmptyStay() {
@@ -94,18 +121,14 @@ function getEmptyStay() {
     name: '',
     type: '',
     imgUrls: [],
+    privacy: '',
     price: '',
     roomCount: '',
     bedCount: '',
     bathroomCounts: '',
     summary: '',
     capacity: '',
-    amenities: {
-      Essentials: [],
-      Features: [],
-      Location: [],
-      Safty: []
-    },
+    amentities: [],
     labels: [],
     host: {},
     loc: {},
@@ -115,36 +138,42 @@ function getEmptyStay() {
 
 // Filtring:
 function getDefaultSearchFilter() {
-  return { location: '', stayDates: '', checkIn: '', checkOut: '', guests: '' }
+  return {
+    location: '',
+    stayDates: '',
+    checkIn: '',
+    checkOut: '',
+    guests: '',
+    region: ''
+  }
 }
 
 function getAmentities() {
   return AMENTITIES
 }
 
-
+function getLocalLabels() {
+  return labels
+}
 async function getLabels() {
   try {
     const labels = await storageService.query(LABELS_KEY)
     return labels
   } catch (error) {
     console.error('Error getting labels:', error)
-    throw error;
+    throw error
   }
 }
 
-
-
 // TEST DATA
 async function initializeLocalStorage() {
+  localStorage.setItem(STORAGE_KEY, null)
+  localStorage.setItem(LABELS_KEY, null)
+  localStorage.setItem(ORDERS_KEY, null)
 
-   localStorage.setItem(STORAGE_KEY, null);
-   localStorage.setItem(LABELS_KEY, null);
-   localStorage.setItem(ORDERS_KEY, null);
-
-  storageService.addEntities(STORAGE_KEY, stays);
-  storageService.addEntities(LABELS_KEY, labels);
-  storageService.addEntities(ORDERS_KEY, orders);
+  storageService.addEntities(STORAGE_KEY, stays)
+  storageService.addEntities(LABELS_KEY, labels)
+  storageService.addEntities(ORDERS_KEY, orders)
 }
 
-// initializeLocalStorage();
+// initializeLocalStorage()
