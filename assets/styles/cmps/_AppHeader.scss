@@ -1,6 +1,97 @@
 .app-header {
   // background-color: $clr4;
-  padding: 10px;
+  padding: 10px 0 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .login {
+    position: relative;
+    padding: 10px 20px;
+    border-radius: 16px;
+    border: 1px solid $border-gray;
+    transition: box-shadow 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+    }
+
+    img {
+      width: 20px;
+    }
+
+    .hamburger {
+      margin-right: 16px;
+    }
+
+    .logo {
+      width: 25px;
+    }
+  }
+
+  .user-modal {
+    position: absolute;
+    z-index: 10;
+    top: 15px;
+    right: 10px;
+    background-color: #fff;
+    width: 240px;
+    box-shadow: 0 2px 16px #0000001f;
+    border-radius: 12px;
+    padding: 8px 0;
+    margin-top: 50px;
+    font-size: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    color: $darkGray-clr;
+
+    span {
+      color: $darkGray-clr;
+      font-weight: 600;
+      background-color: $white;
+      text-align: start;
+      padding: 10px 12px;
+
+      &:hover {
+        background-color: $lightGray-bg-clr;
+
+        .login-form {
+
+          .login-btn {
+            background-color: $lightGray-bg-clr;
+          }
+        }
+      }
+    }
+
+    .login-user-modal {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .notLogin-user-modal {
+      display: flex;
+      flex-direction: column;
+
+      .login-form {
+        background-color: inherit;
+
+        &:hover {
+          background-color: $lightGray-bg-clr;
+        }
+
+        button {
+          background: none;
+          color: $darkGray-clr;
+        }
+
+      }
+    }
+
+
+
+  }
 
   .logo-container {
     font-family: roboto, sans-serif;
@@ -12,10 +103,6 @@
       height: 32px;
     }
 
-    .logo-name {
-      // color: $main-clr;
-      // color: #ff385c;
-    }
   }
 
   .user-info {

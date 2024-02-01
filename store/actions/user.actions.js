@@ -32,7 +32,7 @@ export async function login(credentials) {
         const user = await userService.login(credentials)
         store.dispatch({
             type: SET_USER,
-            user
+            loggedInUser:user
         })
         socketService.login(user)
         return user
@@ -47,7 +47,7 @@ export async function signup(credentials) {
         const user = await userService.signup(credentials)
         store.dispatch({
             type: SET_USER,
-            user
+            loggedInUser:user
         })
         socketService.login(user)
         return user
@@ -62,8 +62,9 @@ export async function logout() {
         await userService.logout()
         store.dispatch({
             type: SET_USER,
-            user: null
+            loggedInUser: null
         })
+        userService.removeLoacalUserFromSession()
         socketService.logout()
     } catch (err) {
         console.log('Cannot logout', err)

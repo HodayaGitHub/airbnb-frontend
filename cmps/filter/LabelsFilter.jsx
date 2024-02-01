@@ -1,56 +1,66 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
-import { stayService } from "../../services/stay.service.local.js"
-import { NavRightIcon, NavLeftIcon } from '../../services/icons.service.jsx'
-
+import { stayService } from "../../services/stay.service.js"
+import * as labelsSvg from '../../services/labels.icons.service.jsx'
+import * as React from 'react'
 
 export function LabelsFilter({ filterBy, onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
-
     const [labels, setLabels] = useState([])
 
     useEffect(() => {
-
-        async function fetchLabels() {
-            try {
-                const fetchedLabels = await stayService.getLabels()
-                setLabels(fetchedLabels)
-            } catch (error) {
-                console.error('Error fetching labels:', error)
-            }
-        }
-
         fetchLabels()
+    }, [])
+
+    useEffect(() => {
+        onSetFilter({ ...filterByToEdit })
     }, [filterByToEdit])
 
+    function fetchLabels() {
+        const fetchedLabels = stayService.getLabels()
+        setLabels(fetchedLabels)
+    }
+
+
     const responsive = {
-        desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 14,
+        desktopLarge: {
+            breakpoint: { max: 3000, min: 1600 },
+            items: 16,
             slidesToSlide: 4
         },
-        tablet: {
-            breakpoint: { max: 1024, min: 768 },
-            items: 8,
+        desktop: {
+            breakpoint: { max: 1600, min: 1200 },
+            items: 12,
             slidesToSlide: 3
         },
-        mobile: {
-            breakpoint: { max: 767, min: 360 },
+        laptop: {
+            breakpoint: { max: 1200, min: 992 },
+            items: 10,
+            slidesToSlide: 3
+        },
+        tablet: {
+            breakpoint: { max: 992, min: 768 },
+            items: 8,
+            slidesToSlide: 2
+        },
+        mobileLarge: {
+            breakpoint: { max: 768, min: 480 },
             items: 5,
             slidesToSlide: 2
+        },
+        mobile: {
+            breakpoint: { max: 480, min: 0 },
+            items: 3,
+            slidesToSlide: 1
         }
     }
 
     function handleLabelPick(value) {
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, label: value }))
-        onSetFilter({ ...filterByToEdit })
     }
 
-
     return (
-
-
         <Carousel
             responsive={responsive}
             autoPlay={false}
@@ -59,15 +69,17 @@ export function LabelsFilter({ filterBy, onSetFilter }) {
             keyBoardControl
             infinite={false}
             partialVisible={false}
+        // ref={containerRef}
+
         >
-            {/* <div className="labels-container parent"> */}
             {Object.entries(labels).map(([key, value]) => (
                 <div className="label-item slider" key={key} onClick={() => handleLabelPick(value.title)}>
-                    <img className="label-icon" src={value.imgUrl} alt={value.label} />
-                    <span>{value.title}</span>
+                    <span className="label-icon">
+                        {labelsSvg[value.svg] ? React.createElement(labelsSvg[value.svg]) : ''}
+                    </span>
+                    <span className="label-title">{value.title}</span>
                 </div>
             ))}
-            {/* </div> */}
         </Carousel >
 
 

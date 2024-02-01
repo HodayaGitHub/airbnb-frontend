@@ -61,6 +61,7 @@ export const stayService = {
   totalGuests,
   buildQueryParams,
   getDefaultDates,
+  daysBetweenDates,
 }
 
 window.cs = stayService
@@ -162,6 +163,7 @@ function getLocalLabels() {
   return labels
 }
 
+
 async function getLabels() {
   try {
     const labels = await storageService.query(LABELS_KEY)
@@ -172,7 +174,6 @@ async function getLabels() {
   }
 }
 
-
 function getFormattedDate(date) {
   if (date instanceof Date) {
     return date.toLocaleDateString('en-US', { day: 'numeric', month: 'numeric', year: 'numeric' })
@@ -182,16 +183,25 @@ function getFormattedDate(date) {
 
 function generateQueryString(filterBy) {
   const { stayDates, checkIn, checkOut, guests, region, label } = filterBy
-  const queryParams = { stayDates, checkIn, checkOut, guests, region, label }
+  const guestParam = guestParams(guests)
+  const queryParams = { stayDates, checkIn, checkOut, guestParam, region, label }
   const queryString = new URLSearchParams(queryParams).toString()
   return queryString
 }
 
+function guestParams(guests) {
+  const queryString = Object.keys(guests)
+    .map((key) => {
+      const param = guests[key];
+      return `${key}=${param}`;
+    })
+    .join('&')
+  return queryString
+}
 
 function buildQueryParams(filterBy) {
   const { region, checkIn, checkOut, guests, label } = filterBy
   const { defaultCheckIn, defaultCheckOut } = getDefaultDates()
-  console.log(defaultCheckIn)
   const params = {
     region: region || `I'm flexible`,
     checkIn: getFormattedDate(checkIn) || getFormattedDate(defaultCheckIn),
@@ -219,7 +229,17 @@ function totalGuests(filterBy) {
 }
 
 
+function daysBetweenDates(firstDate, secondDate) {
+  // Calculate the time difference in milliseconds
+  const date1 = new Date(firstDate)
+  const date2 = new Date(secondDate)
+  const timeDifference = date2.getTime() - date1.getTime();
 
+  // Convert the time difference to days
+  const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24)) + 1;
+
+  return daysDifference;
+}
 
 // TEST DATA
 async function initializeLocalStorage() {

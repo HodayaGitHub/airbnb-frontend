@@ -1,3 +1,4 @@
+import { storageService } from "./async-storage.service"
 
 const STORAGE_KEY = 'order'
 
@@ -7,7 +8,8 @@ export const orderService = {
     save,
     remove,
     getEmptyOrder,
-    daysCount
+    daysCount,
+    fixTime
 }
 window.cs = orderService
 
@@ -33,7 +35,6 @@ async function save(order) {
     if (order._id) {
         savedOrder = await storageService.put(STORAGE_KEY, order)
     } else {
-        // Later, owner is set by the backend
         savedOrder = await storageService.post(STORAGE_KEY, order)
     }
     return savedOrder
@@ -47,8 +48,8 @@ function getEmptyOrder() {
             fullname: ""
         },
         totalPrice: 0,
-        checkIn: "",
-        checkOut: "",
+        checkIn: Date.now(),
+        checkOut: Date.now(),
         guests: {
             adults: 1,
             children: 0,
@@ -68,4 +69,14 @@ function daysCount(startDate, endDate) {
     const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
     return daysDifference;
+}
+function fixTime() {
+    let time = new Date(Date.now())
+    if (!isNaN(time.getTime())) {
+        var day = ("0" + time.getDate()).slice(-2);
+        var month = ("0" + (time.getMonth() + 1)).slice(-2);
+        var year = time.getFullYear().toString().slice(-2);
+        time = day + '/' + month + '/' + year;
+    }
+    return time
 }
