@@ -21,7 +21,7 @@ export function LabelsFilter({ filterBy, onSetFilter }) {
         }
 
         fetchLabels()
-    }, [filterBy])
+    }, [filterByToEdit])
 
     const responsive = {
         desktop: {

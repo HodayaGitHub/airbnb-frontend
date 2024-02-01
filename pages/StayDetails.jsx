@@ -112,7 +112,7 @@ export function StayDetails() {
       </div>
       <section className='mid-section'>
         <div className='reservation'>
-          <ReservationModal />
+          <ReservationModal stayId={stayId} />
         </div>
         <section className='stay-information'>
           <h1>

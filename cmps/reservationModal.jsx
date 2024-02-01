@@ -1,73 +1,85 @@
-import { useState } from "react";
-import { DateSelect } from "./filtring/DateSelect";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from 'react'
+import { DateSelect } from './filtring/DateSelect'
+import { useSelector } from 'react-redux'
+import { orderService } from '../services/order.service'
 
-
-
-export function ReservationModal() {
+export function ReservationModal({ stayId }) {
   const [modalOpen, setModalOpen] = useState(null)
-  const [order, setOreder] = useState({
-    checkIn: useSelector(storeState => storeState.stayModule.filterBy.checkIn) || '',
-    checkOut: useSelector(storeState => storeState.stayModule.filterBy.checkOut) || '',
-    guests: useSelector(storeState => storeState.stayModule.filterBy.guests) || {
-      adults: 1,
-      children: 0,
-      infants: 0,
-      pets: 0
-    }
-  })
+  const [order, setOreder] = useState(orderService.getEmptyOrder())
 
-  let count = order.guests.adults + order.guests.children + order.guests.infants + order.guests.pets
+  let count =
+    order.guests.adults +
+    order.guests.children +
+    order.guests.infants +
+    order.guests.pets
+  var checkIn = useSelector(
+    (storeState) => storeState.stayModule.filterBy.checkIn
+  )
+  var checkOut = useSelector(
+    (storeState) => storeState.stayModule.filterBy.checkOut
+  )
+  var guests = useSelector(
+    (storeState) => storeState.stayModule.filterBy.guests
+  )
+  order.stayId = stayId
+
+  useEffect(() => {
+    setOreder((prevOrder) => ({ ...prevOrder, checkOut, checkIn, guests }))
+  }, [])
+
   function handleDateSelectChange(field, value) {
-    if (field === 'checkIn') order.checkOut = ''
-    setOreder((prevOrder) => ({ ...prevOrder, [field]: value.toDateString() }))
+    if (field === 'checkIn') var checkOut = ''
+    const formattedDate = value.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    })
+    setOreder((prevOrder) => ({
+      ...prevOrder,
+      checkOut,
+      [field]: formattedDate
+    }))
     if (field === 'checkOut') setModalOpen(false)
   }
 
   return (
     <section className='reservation-modal'>
       <div className='reservation-header'>
-        <div className='check-in' onClick={() => setModalOpen(true)}>
-          <p>Check in</p>
-          <input
-            type='text'
-            value={order.checkIn}
-            readOnly
-          />
-        </div>
-
-        <div className='check-out' onClick={() => setModalOpen(true)}>
-          <p>Check out</p>
-          <input
-            type='text'
-            value={order.checkOut}
-            readOnly
-          />
-        </div>
-        {modalOpen && <DateSelect
-          onSetField={(field, value) => handleDateSelectChange(field, value)}
-          checkIn={order.checkIn}
-          checkOut={order.checkOut}
-        />}
-        {<span>{count} guest{count !== 1 && <span>s</span>}</span>}
         <div className='price'>
           <p>
-            <span>$485</span> night{' '}
+            <span>$1485</span> night{' '}
           </p>
         </div>
-        <div className='review'>
-          <p>★ 4.95 • 8 reviews</p>
-        </div>
       </div>
-      <div className='reservation-data'></div>
-      <div className='reserve-button'>
-        {/* {modalOpen === DATE_MODAL && (
+      <div className='reservation-data'>
+        <div className='reservation-date'>
+          <div className='check-in' onClick={() => setModalOpen(true)}>
+            <button>
+              <span>Check-in</span>
+              <input type='text' value={order.checkIn} readOnly />
+            </button>
+          </div>
+          <div className='check-out' onClick={() => setModalOpen(true)}>
+            <button>
+              <span>Check out</span>
+              <input type='text' value={order.checkOut} readOnly />
+            </button>
+          </div>
+        </div>
+        {modalOpen && (
           <DateSelect
             onSetField={(field, value) => handleDateSelectChange(field, value)}
-            checkIn={filterByToEdit.checkIn}
-            checkOut={filterByToEdit.checkOut}
+            checkIn={order.checkIn}
+            checkOut={order.checkOut}
           />
-        )} */}
+        )}
+        {
+          <div className='guest'>
+            {count} guest{count !== 1 && <span>s</span>}
+          </div>
+        }
+      </div>
+      <div className='reserve-button'>
         <button>Reserve</button>
       </div>
     </section>

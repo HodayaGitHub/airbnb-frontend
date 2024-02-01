@@ -12,7 +12,7 @@ export function StaySearch({ filterBy, onSetFilter }) {
     const [regions, setRegion] = useState(stayService.getDefaultRegion())
     const [selectedRegion, setSelectedRegion] = useState(null)
     const [modalOpen, setModalOpen] = useState(null)
-
+    
     const DATE_MODAL = 'dates'
     const REGION_MODAL = 'region'
     const GUEST_MODAL = 'guest'

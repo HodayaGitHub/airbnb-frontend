@@ -101,7 +101,7 @@ function getDefaultRegion() {
 
 function getDefaultGuests() {
     return {
-        adults: 0,
+        adults: 1,
         children: 0,
         infants: 0,
         pets: 0,

@@ -98,13 +98,16 @@ export function StayIndex() {
 
             <div className="filtring-container">
 
-                    <StaySearch
+                <StaySearch
+                    filterBy={filterBy}
+                    onSetFilter={onSetFilter}
+                />
+
+                <div>
+                    <LabelsFilter
                         filterBy={filterBy}
                         onSetFilter={onSetFilter}
                     />
-
-                <div>
-                    <LabelsFilter stays={stays} />
                 </div>
             </div>
 
