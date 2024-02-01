@@ -2,7 +2,7 @@ import { HomePage } from './pages/HomePage.jsx'
 import { AboutUs } from './pages/AboutUs.jsx'
 import { StayIndex } from './pages/StayIndex.jsx'
 import { ReviewIndex } from './pages/ReviewIndex.jsx'
-import { ChatApp } from './pages/ChatApp.jsx'
+// import { ChatApp } from './pages/ChatApp.jsx'
 import { AdminApp } from './pages/AdminIndex.jsx'
 import { StayDetails } from './pages/StayDetails.jsx'
 import { StayEdit } from './pages/StayEdit.jsx'
@@ -32,11 +32,11 @@ const routes = [
     component: <ReviewIndex />,
     label: 'Reviews'
   },
-  {
-    path: 'chat',
-    component: <ChatApp />,
-    label: 'Chat'
-  },
+  // {
+  //   path: 'chat',
+  //   component: <ChatApp />,
+  //   label: 'Chat'
+  // },
   {
     path: 'about',
     component: <AboutUs />,

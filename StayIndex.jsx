@@ -15,7 +15,7 @@ import { LabelsFilter } from '../cmps/filter/LabelsFilter.jsx'
 import { AutoCompleteCmp } from '../cmps/search/AutoCompleteCmp.jsx'
 import { Restcountries } from '../cmps/search/Restcountries.jsx'
 import { ShowMoreStays } from '../cmps/ShowMoreStays.jsx'
-import {ChatApp} from './ChatApp.jsx'
+// import { ChatApp } from './ChatApp.jsx'
 
 export function StayIndex() {
     const stays = useSelector(storeState => storeState.stayModule.stays)
@@ -50,6 +50,7 @@ export function StayIndex() {
 
     useEffect(() => {
         loadStays(filterBy, false)
+    
     }, [filterBy])
 
 
@@ -122,7 +123,7 @@ export function StayIndex() {
     return (
         <>
             <MainHeader
-                // headerClassNames={headerClassNames}
+            // headerClassNames={headerClassNames}
             />
             <StaySearch
                 // headerClassNames={headerClassNames}
@@ -146,7 +147,7 @@ export function StayIndex() {
                 </>
             )}
 
-            <ChatApp></ChatApp>
+            {/* <ChatApp></ChatApp> */}
         </>
     );
 }
