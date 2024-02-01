@@ -9,6 +9,7 @@ export function StayPreview({ stay, onRemoveStay }) {
   const openStayInNewTab = () => {
     const url = `/stay/${stay._id}`
     window.open(url, '_blank')
+    // navigate(`/stay/${stay._id}`)
   }
   return (
     <li

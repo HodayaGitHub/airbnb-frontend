@@ -74,7 +74,7 @@ async function query(filterBy) {
     stays = stays.filter((stay) => stay.capacity >= totalGuests)
   }
 
-  if (filterBy?.label){
+  if (filterBy?.label) {
     stays = stays.filter((stay) => stay.labels.includes(filterBy.label))
   }
   return stays

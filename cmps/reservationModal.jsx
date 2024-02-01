@@ -2,29 +2,20 @@ import { useEffect, useState } from 'react'
 import { DateSelect } from './filtring/DateSelect'
 import { useSelector } from 'react-redux'
 import { orderService } from '../services/order.service'
+import { useNavigate } from 'react-router'
 
 export function ReservationModal({ stayId }) {
   const [modalOpen, setModalOpen] = useState(null)
   const [order, setOreder] = useState(orderService.getEmptyOrder())
-
-  let count =
-    order.guests.adults +
-    order.guests.children +
-    order.guests.infants +
-    order.guests.pets
-  var checkIn = useSelector(
-    (storeState) => storeState.stayModule.filterBy.checkIn
-  )
-  var checkOut = useSelector(
-    (storeState) => storeState.stayModule.filterBy.checkOut
-  )
-  var guests = useSelector(
-    (storeState) => storeState.stayModule.filterBy.guests
-  )
+  const navigate = useNavigate()
+  let count = order.guests.adults + order.guests.children + order.guests.infants + order.guests.pets
+  var checkIn = useSelector((storeState) => storeState.stayModule.filterBy.checkIn)
+  var checkOut = useSelector((storeState) => storeState.stayModule.filterBy.checkOut)
+  var guests = useSelector((storeState) => storeState.stayModule.filterBy.guests)
   order.stayId = stayId
-
   useEffect(() => {
     setOreder((prevOrder) => ({ ...prevOrder, checkOut, checkIn, guests }))
+    if (!count) order.guests.adults = 1
   }, [])
 
   function handleDateSelectChange(field, value) {
@@ -80,8 +71,8 @@ export function ReservationModal({ stayId }) {
         }
       </div>
       <div className='reserve-button'>
-        <button>Reserve</button>
+        <button onClick={() => navigate(`/book/${stayId}`)}>Reserve</button>
       </div>
-    </section>
+    </section >
   )
 }

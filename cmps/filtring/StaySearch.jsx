@@ -33,12 +33,18 @@ export function StaySearch({ filterBy, onSetFilter }) {
 
     function updateRegion(event, region) {
         event.stopPropagation()
+        setModalOpen(null)
         setSelectedRegion(region)
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, location: region }))
     }
 
     function handleDateSelectChange(field, value) {
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
+
+        if (field === 'checkOut' && value) {
+            setModalOpen(null)
+        }
+
     }
 
     function onSearch() {
