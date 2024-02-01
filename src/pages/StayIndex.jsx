@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { Link } from "react-router-dom"
 import { loadStays, addStay, updateStay, removeStay, addToCart, setFilterBy, setGuestsCount } from '../store/actions/stay.actions.js'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
@@ -9,7 +10,7 @@ import { stayService } from '../services/stay.service.local.js'
 
 import { StayList } from '../cmps/StayList.jsx'
 import { StayFilter } from '../cmps/filtring/StayFilter.jsx'
-
+import { LabelsFilter } from '../cmps/filtring/LabelsFilter.jsx'
 
 export function StayIndex() {
 
@@ -31,16 +32,6 @@ export function StayIndex() {
         }
     }
 
-    async function onAddStay() {
-        const stay = stayService.getEmptyStay()
-        stay.vendor = prompt('Vendor?')
-        try {
-            const savedStay = await addStay(stay)
-            showSuccessMsg(`Stay added (id: ${savedStay._id})`)
-        } catch (err) {
-            showErrorMsg('Cannot add stay')
-        }
-    }
 
     async function onUpdateStay(stay) {
         const price = +prompt('New price?')
@@ -81,28 +72,43 @@ export function StayIndex() {
         // console.log('filterBy:', filterBy)
         setFilterBy(filterBy)
     }
-
-    function onSetGuestsCount(guests) {
-        setGuestsCount(guests)
-        console.log(guests)
+    function onRemoveStay(stayId) {
+        try {
+            removeStay(stayId)
+        }
+        catch (err) {
+            showErrorMsg('Cannot remove stay')
+        }
     }
-
 
     return (
         <div>
-            <StayFilter
-                filterBy={filterBy}
-                onSetFilter={onSetFilter}
-                guests={guests}
-                onSetGuestsCount={onSetGuestsCount} />
 
+            <div className="filtring-container">
+
+                <div >
+                    <StayFilter
+                        filterBy={filterBy}
+                        onSetFilter={onSetFilter}
+                        guests={guests}
+                    // onSetGuestsCount={onSetGuestsCount} 
+                    />
+                </div>
+
+                <div>
+                    <LabelsFilter stays={stays} />
+                </div>
+            </div>
+
+            <button> <Link className='add-btn' to={`/edit`}>Add</Link></button>
             <main>
                 {isLoading && 'Loading...'}
                 <StayList
                     stays={stays}
-
+                    onRemoveStay={onRemoveStay}
                 />
             </main>
-        </div>
+        </div >
+
     )
 }

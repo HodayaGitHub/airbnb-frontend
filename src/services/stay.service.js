@@ -13,7 +13,10 @@ export const stayService = {
     save,
     remove,
     getEmptyStay,
-    addStayMsg
+    addStayMsg,
+    getDefaultFilter,
+    getDefaultGuests,
+    getDefaultRegion,
 }
 window.cs = stayService
 
@@ -41,7 +44,7 @@ async function save(stay) {
 }
 
 async function addStayMsg(stayId, txt) {
-    const savedMsg = await httpService.post(`stay/${stayId}/msg`, {txt})
+    const savedMsg = await httpService.post(`stay/${stayId}/msg`, { txt })
     return savedMsg
 }
 
@@ -53,7 +56,47 @@ function getEmptyStay() {
     }
 }
 
+// Filtring:
+function getDefaultFilter() {
+    return {
+        where: '',
+        stayDates: '',
+        checkIn: '',
+        checkOut: '',
+        who: getDefaultGuests(),
+    }
+}
 
+
+// function getDefaultRegion() {
+//     return {
+//         flexible: '',
+//         middleEast: '',
+//         greece: '',
+//         italy: '',
+//         asia: '',
+//     }
+// }
+
+
+function getDefaultRegion() {
+    return [
+        'flexible',
+        'middleEast',
+        'greece',
+        'italy',
+        'asia',
+    ]
+}
+
+function getDefaultGuests() {
+    return {
+        adults: 0,
+        children: 0,
+        infants: 0,
+        pets: 0,
+    }
+}
 
 
 

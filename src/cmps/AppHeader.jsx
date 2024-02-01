@@ -41,13 +41,13 @@ export function AppHeader() {
         <header className="app-header main-layout full">
             <div className='logo-container'>
                 <img src={appLogo} alt="Logo" className="app-logo" />
-                <span>airbnb</span>
+                <span className="logo-name">airbnb</span>
             </div>
-            <nav>
+            {/* <nav> */}
 
                 {/* {routes.map(route => <NavLink key={route.path} to={route.path}>{route.label}</NavLink>)} */}
 
-                {user &&
+                {/* {user &&
                     <span className="user-info">
                         <Link to={`user/${user._id}`}>
                             {user.imgUrl && <img src={user.imgUrl} />}
@@ -60,8 +60,10 @@ export function AppHeader() {
                     <section className="user-info">
                         <LoginSignup onLogin={onLogin} onSignup={onSignup} />
                     </section>
-                }
-            </nav>
+                } */}
+            {/* </nav> */}
+
+            
 
         </header>
     )

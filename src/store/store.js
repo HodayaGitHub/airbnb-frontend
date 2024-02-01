@@ -1,9 +1,9 @@
 import { createStore, combineReducers } from 'redux'
 
-import { stayReducer } from './stay.reducer.js'
-import { userReducer } from './user.reducer.js'
-import { reviewReducer } from './review.reducer'
-import { systemReducer } from './system.reducer'
+import { stayReducer } from './reducers/stay.reducer.js'
+import { userReducer } from './reducers/user.reducer.js'
+import { reviewReducer } from './reducers/review.reducer.js'
+import { systemReducer } from './reducers/system.reducer.js'
 
 const rootReducer = combineReducers({
     stayModule: stayReducer,

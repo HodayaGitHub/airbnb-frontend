@@ -1,0 +1,25 @@
+
+
+.carousel-control-prev-icon{
+  border-radius: 50%;
+  transition: scale 0.5s;
+  &:hover{
+    scale: scale(1.1);;
+  }
+}
+
+.carousel-control-next-icon{
+  border-radius: 50%;
+  transition: scale 0.5s;
+  &:hover{
+    scale: scale(1.1);;
+  }
+}
+
+.carousel-indicators {
+  *{
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50%;
+  }
+}

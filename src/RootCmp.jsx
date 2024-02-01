@@ -9,6 +9,7 @@ import { store } from './store/store.js'
 import { AppHeader } from './cmps/AppHeader'
 import { AppFooter } from './cmps/AppFooter'
 import { UserDetails } from './pages/UserDetails'
+import { StayDetails } from './pages/StayDetails.jsx'
 
 export function RootCmp() {
 
@@ -20,6 +21,7 @@ export function RootCmp() {
                 <Routes>
                     {routes.map(route => <Route key={route.path} exact={true} element={route.component} path={route.path} />)}
                     <Route path="user/:id" element={<UserDetails />} />
+                {/* <Route element={<StayDetails />} path='/stay/:stayId' /> */}
                 </Routes>
             </main>
 
