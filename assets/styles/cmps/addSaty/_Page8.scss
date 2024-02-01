@@ -1,0 +1,33 @@
+.step8 {
+  .upload-imgs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .custom-btn {
+      border: 5px dashed $lightGray-clr;
+      cursor: pointer;
+      width: 350px;
+      height: 228px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.3s ease-in-out;
+      &:hover {
+        background-color: hsla(145, 100%, 61%, 0.13);
+        color: white;
+      }
+    }
+    .imgUpload {
+      display: none;
+    }
+    .Addimg {
+      width: 100%;
+      &.bigImg {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1/1;
+      }
+    }
+  }
+}

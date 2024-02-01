@@ -21,7 +21,8 @@ export const stayService = {
     addMsg,
     removeMsg,
     getLabels,
-    daysBetweenDates,
+    calcNights,
+    formatDateFromUnix,
 }
 
 // for cookies
@@ -34,7 +35,8 @@ window.cs = stayService
 const BASE_URL = 'stay'
 
 function query(filterBy = {}, page = 1, itemsPerPage) {
-    return httpService.get(BASE_URL, { filterBy, page, itemsPerPage, })
+    console.log('hi from query')
+    return httpService.get(BASE_URL, { filterBy, page, itemsPerPage})
 }
 
 function getById(stayId) {
@@ -45,17 +47,17 @@ async function remove(stayId) {
     return httpService.delete(`stay/${stayId}`)
 }
 
-function save(toy) {
-    return httpService.put(BASE_URL, toy)
+function save(stay) {
+    return httpService.put(BASE_URL, stay)
 }
 
-async function addMsg(toyId, txt) {
-    const savedMsg = await httpService.post(`toy/${toyId}/msg`, { txt })
+async function addMsg(stayId, txt) {
+    const savedMsg = await httpService.post(`toy/${stayId}/msg`, { txt })
     return savedMsg
 }
 
-async function removeMsg(toyId, msgId) {
-    const removedId = await httpService.delete(`toy/${toyId}/msg/${msgId}`)
+async function removeMsg(stayId, msgId) {
+    const removedId = await httpService.delete(`toy/${stayId}/msg/${msgId}`)
     return removedId
 }
 
@@ -135,6 +137,11 @@ function getFormattedDate(date) {
     }
     return ''
 }
+function formatDateFromUnix(unixTimestamp) {
+    const options = { day: 'numeric', month: 'short' };
+    const formattedDate = new Date(unixTimestamp * 1000).toLocaleDateString('en-US', options);
+    return formattedDate;
+}
 
 function generateQueryString(filterBy) {
     const { stayDates, checkIn, checkOut, guests, region, label } = filterBy
@@ -149,8 +156,8 @@ function buildQueryParams(filterBy) {
     const { defaultCheckIn, defaultCheckOut } = getDefaultDates()
     const params = {
         region: region || `I'm flexible`,
-        checkIn: getFormattedDate(checkIn) || getFormattedDate(defaultCheckIn),
-        checkOut: getFormattedDate(checkOut) || getFormattedDate(defaultCheckOut),
+        checkIn: checkIn || defaultCheckIn,
+        checkOut: checkOut || defaultCheckOut,
         guests: totalGuests(filterBy) || 1,
         label: label,
     }
@@ -158,23 +165,25 @@ function buildQueryParams(filterBy) {
 }
 
 function getDefaultDates() {
-    const today = new Date()
-    const defaultCheckIn = new Date(today.toISOString())
-    const defaultCheckOut = new Date(today)
-    defaultCheckOut.setDate(today.getDate() + 1)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to the beginning of the day
+
+    const defaultCheckIn = Math.floor(today.getTime() / 1000);
+
+    const oneDayInSeconds = 24 * 60 * 60;
+    const defaultCheckOut = defaultCheckIn + oneDayInSeconds;
+
+    console.log(defaultCheckIn, defaultCheckOut);
+
     return {
         defaultCheckIn,
         defaultCheckOut,
-    }
+    };
 }
 
 function totalGuests(filterBy) {
     const { adults, children, infants } = filterBy.guests
     let totalGuests = adults + children + infants
-
-    if (totalGuests === 0) {
-        return 1
-    }
     return totalGuests
 }
 
@@ -183,15 +192,9 @@ function totalGuests(filterBy) {
 function getLabels() {
     return labels
 }
-
-function daysBetweenDates(firstDate, secondDate) {
-    // Calculate the time difference in milliseconds
-    const date1 = new Date(firstDate)
-    const date2 = new Date(secondDate)
-    const timeDifference = date2.getTime() - date1.getTime();
-
-    // Convert the time difference to days
-    const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24)) + 1;
+function calcNights(firstDate, secondDate) {
+    const timeDifference = secondDate - firstDate;
+    const daysDifference = Math.ceil(timeDifference / (24 * 60 * 60)); // seconds to days
 
     return daysDifference;
 }

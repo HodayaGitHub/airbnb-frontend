@@ -31,7 +31,7 @@ async function add({txt, aboutUserId}) {
     aboutUser: {
       _id: aboutUser._id,
       fullname: aboutUser.fullname,
-      imgUrl: aboutUser.imgUrl
+      imgUrl: aboutUser.imgUrl,
     }
   }
 

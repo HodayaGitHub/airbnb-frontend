@@ -142,10 +142,37 @@ function getEmptyStay() {
   }
 }
 
+// function getEmptyStay() {
+//   return {
+//     name: '',
+//     type: '',
+//     host_id:'',
+//     imgUrls: [],
+//     price:'', 
+//     summary:'', 
+//     capacity:'', 
+//     amenities:[],
+//     bathrooms:'',
+//     bedrooms:'',
+//     roomType:'', 
+//     privacy: '',
+//     price: '',
+//     roomCount: '',
+//     beds: '',
+//     bathroomCounts: '',
+//     summary: '',
+//     capacity: '',
+//     amentities: [],
+//     labels: [],
+//     host: {},
+//     loc: {},
+//     reviews: []  
+//   }
+// }
+
 function getAmentities() {
   return AMENTITIES
 }
-
 
 // filtering :
 function getDefaultSearchFilter() {
@@ -204,8 +231,8 @@ function buildQueryParams(filterBy) {
   const { defaultCheckIn, defaultCheckOut } = getDefaultDates()
   const params = {
     region: region || `I'm flexible`,
-    checkIn: getFormattedDate(checkIn) || getFormattedDate(defaultCheckIn),
-    checkOut: getFormattedDate(checkOut) || getFormattedDate(defaultCheckOut),
+    checkIn: checkIn || defaultCheckIn,
+    checkOut: checkOut || defaultCheckOut,
     guests: totalGuests(filterBy) || 1,
     label: label,
   }

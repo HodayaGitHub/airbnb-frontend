@@ -1,0 +1,22 @@
+.dashboard-btn {
+  border-radius: 15px;
+  width: max-content;
+  padding: 0.5em;
+  transition: 0.3s;
+  &.approve {
+    background-color: hsla(120, 100%, 89%, 0.267);
+    border: 1px solid #08a108;
+    color: #08a108;
+    &:hover {
+      background-color: hsla(120, 74%, 67%, 0.267);
+    }
+  }
+  &.reject {
+    background-color: hsla(0, 100%, 76%, 0.267);
+    border: 1px solid #a10808;
+    color: #a10808;
+    &:hover {
+      background-color: hsla(0, 92%, 67%, 0.267);
+    }
+  }
+}
