@@ -58,11 +58,12 @@ export default function ShareModal({stayImg, stay,  averageRating}) {
                 <p className='stay-contents'>
                 {stay.type === 'House' ? 'Entire ' + stay.type : stay.type} in{' '}
                 {stay.loc.city} • 🟊 {averageRating.toFixed(2)} • {stay.bedrooms} bedroom
-                {stay.bedrooms !== 1 && <span>s</span>} • {stay.bedrooms !== 0 ? stay.beds: 1} bed{stay.bedrooms > 1 && stay.beds > 1 && <span>s</span>} • {stay.bathrooms} bathroom{stay.bathrooms !== 1 && <span>s</span>}
+            {stay.bedrooms !== 1 && <span>s</span>} • 
+            3 beds • {stay.bathrooms} bathroom{stay.bathrooms !== 1 && <span>s</span>}
           </p>
                   </div>
               </div>
-
+            {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}> */}
               <section className='share-buttons'>
               <button className='share-to'>
               <img src={facebook} alt="" />
@@ -80,8 +81,10 @@ export default function ShareModal({stayImg, stay,  averageRating}) {
               <img src={copyLink} alt="" />
                 Copy Link
               </button>
+
               </section>
             
+            {/* </Typography> */}
             <button  className='close-share-modal' onClick={handleClose}>𝝬</button>
           </Box>
         </Fade>

@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react'
 import { DateSelect } from './search/DateSelect'
+import { useSelector } from 'react-redux'
+import { orderService } from '../services/order.service'
 import { useNavigate } from 'react-router'
-import { stayService } from '../services/stay.service'
+import { stayService } from '../services/stay.service.local'
 
-export function ReservationModal({ stayId, price, order, editOrder }) {
-
+export function ReservationModal({ stayId, price, order, setOreder }) {
   const [modalOpen, setModalOpen] = useState(null)
-  const [orderToEdit, setOrderToEdit] = useState(order)
   const navigate = useNavigate()
+  console.log('from modal:', order);
 
-
-  useEffect(() => {
-    editOrder({ ...orderToEdit })
-  }, [orderToEdit])
   function handleDateSelectChange(field, value) {
+    if (field === 'checkIn') var checkOut = ''
+
     const formattedDate = value.toLocaleDateString('en-US', {
       year: 'numeric',
       month: '2-digit',
@@ -27,22 +26,22 @@ export function ReservationModal({ stayId, price, order, editOrder }) {
     if (field === 'checkOut') {
       const totalNights = stayService.daysBetweenDates(order.checkIn, value)
       const totalPrice = totalNights * price
-      setOrderToEdit((prevOrder) => ({ ...prevOrder, totalNights, totalPrice }))
-      setModalOpen(false)
+
+      setOreder((prevOrder) => ({ ...prevOrder, totalNights, totalPrice }))
+
     }
-    // editOrder(orderToEdit)
+
+    if (field === 'checkOut') setModalOpen(false)
   }
 
-  function savePreOrderToLocalStorage(order) {
-    localStorage.setItem('PRE_ORDER', JSON.stringify(order))
-  }
+
 
   return (
     <section className='reservation-modal'>
       <div className='reservation-header'>
         <div className='price'>
           <p>
-            <span>${price}</span>  a night
+            <span>${price}</span>  a night{' '}
           </p>
         </div>
       </div>
@@ -70,26 +69,21 @@ export function ReservationModal({ stayId, price, order, editOrder }) {
         )}
         {
           <div className='guest'>
-            {orderToEdit.totalGuests} guest{orderToEdit.totalGuests !== 1 && <span>s</span>}
-            {orderToEdit.guests.infants !== 0 && <> , {orderToEdit.guests.infants} infant{orderToEdit.guests.infants !== 1 && <span>s</span>}</>}
+            {order.totalGuests} guest{order.totalGuests !== 1 && <span>s</span>}
+            {order.guests.infants !== 0 && <> , {order.guests.infants} infant{order.guests.infants !== 1 && <span>s</span>}</>}
 
           </div>
         }
       </div>
       <div className='reserve-button'>
-        <button className="reserve" onClick={() => {
-          savePreOrderToLocalStorage(orderToEdit)
-          navigate(`/book/${stayId}`)
-        }}>
-          Reserve</button>
-
+        <button className="reserve" onClick={() => navigate(`/book/${stayId}`)}>Reserve</button>
         <span className='no-charge'>you won't be charged yet</span>
       </div>
 
-      <div className='total-price'>
-        <div className='price-calc'>{orderToEdit.totalNights} night{order.totalNights > 1 && <span>s</span>} x ${price}</div>
-        <div className='total-price'>${orderToEdit.totalPrice}</div>
-      </div>
+      {order.checkIn && order.checkOut && <div className='total-price'>
+        <div className='price-calc'>{order.totalNights} night{order.totalNights > 1 && <span>s</span>} x ${price}</div>
+        <div className='total-price'>${order.totalPrice}</div>
+      </div>}
 
     </section >
   )

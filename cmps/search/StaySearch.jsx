@@ -21,36 +21,15 @@ export function StaySearch({ filterBy, onSetFilter }) {
     const CHECK_IN_MODAL = 'checkIn'
     const CHECK_OUT_MODAL = 'checkOut'
 
-    
-    useEffect(() => {
-        function handleOutsideClick(event) {
-          if (
-            !event.target.closest('.region-modal') &&
-            !event.target.closest('.date-modal') &&
-            !event.target.closest('.guest-modal') &&
-            // Add more modal containers if needed
-            !event.target.closest('.search-container') // Assuming the main container has the class 'search-container'
-          ) {
-            setModalOpen(null);
-          }
-        }
-    
-        document.body.addEventListener('click', handleOutsideClick);
-    
-        return () => {
-          document.body.removeEventListener('click', handleOutsideClick);
-        };
-      }, []);
-
-
     function updateGuestCount(event, option, amount) {
         event.stopPropagation()
         setFilterByToEdit((prevFilter) => {
-            const currentCount = +prevFilter.guests[option]
+            const currentCount = +prevFilter.guests[option].count
             const newCount = Math.max(0, currentCount + amount)
             const newCounts = {
                 ...prevFilter.guests,
-                [option]: newCount
+                [option]: { ...prevFilter.guests[option], count: newCount },
+
             }
             const updatedFilterBy = { ...prevFilter, guests: newCounts }
             return updatedFilterBy
@@ -102,7 +81,7 @@ export function StaySearch({ filterBy, onSetFilter }) {
     }
 
     function getGuestsString() {
-        let totalGuests = stayService.totalGuests(filterByToEdit)
+        const totalGuests = stayService.totalGuests(filterByToEdit)
 
         if (totalGuests > 0) {
             return `${totalGuests} ${totalGuests === 1 ? 'guest' : 'guests'}`
@@ -111,14 +90,17 @@ export function StaySearch({ filterBy, onSetFilter }) {
         }
     }
 
-    const guestsDesc = {
-        adults: 'Ages 13 or above',
-        children: 'Ages 2-12',
-        infants: 'Under 2',
-        pets: 'Bringing a service animal?',
-    }
+    // function guestsAmount(guests) {
+    //     const totalGuests =
+    //         guests.adults.count +
+    //         guests.children.count +
+    //         guests.infants.count
 
-    
+    //     if (totalGuests > 0) {
+    //         return `${totalGuests} guests`
+    //     }
+    //     return ''
+    // }
 
     return (
         <section className='stay-search'>
@@ -190,17 +172,17 @@ export function StaySearch({ filterBy, onSetFilter }) {
                                                 <span className="guest-title">{guestType}</span>
                                                 <span className={`guest-desc ${index === array.length - 1 ? 'service-animal' : ''}`}
                                                     onClick={index === array.length - 1 ? serviceAnimalModalOpen : null}>
-                                                    {guestsDesc[guestType]}
+                                                    {guestInfo.desc}
                                                 </span>
                                             </div>
 
                                             <div className="guest-counter-btns">
                                                 <button className="guest-counter-btn" onClick={(event) => updateGuestCount(event, guestType, -1)}
-                                                    style={{ cursor: guestInfo <= 0 ? 'not-allowed' : 'pointer' }}
-                                                    disabled={guestInfo <= 0}>
+                                                    style={{ cursor: guestInfo.count <= 0 ? 'not-allowed' : 'pointer' }}
+                                                    disabled={guestInfo.count <= 0}>
                                                     <MinusIcon />
                                                 </button>
-                                                <span className="counter">{guestInfo}</span>
+                                                <span className="counter">{guestInfo.count}</span>
                                                 <button className="guest-counter-btn" onClick={(event) => updateGuestCount(event, guestType, 1)}>
                                                     <PlusIcon />
                                                 </button>

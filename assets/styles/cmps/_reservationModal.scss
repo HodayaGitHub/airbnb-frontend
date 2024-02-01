@@ -1,12 +1,107 @@
 .reservation-modal {
-  width: 320px;
-  height: 330px;
   padding: 24px;
-  border: 1px solid black;
-  background-color: antiquewhite;
+  border: 1px solid $border-gray;
+  border-radius: 10px;
+  background-color: $white;
   position: sticky;
-  top: 0px;
-  h1 {
-    background-color: red;
+  top: 5dvh;
+  width: 322px;
+
+  box-shadow: #0000001f 0 6px 16px;
+
+  .reserve-button {
+
+
+    .reserve {
+      background-color: $main-clr;
+      width: 100%;
+      line-height: 1.5rem;
+      font-size: 1rem;
+      text-align: center;
+      height: 3.5rem;
+      border-radius: 0.625rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    text-align: center;
   }
+
+  .total-price {
+    padding-top: 1rem;
+    display: grid;
+    grid-template-columns: max-content 1fr 1fr;
+    align-items: end;
+    font-weight: 600;
+
+    .total-price {
+      grid-column: 3;
+      justify-self: end;
+    }
+
+  }
+
+  .reservation-header {
+    margin-bottom: 24px;
+
+    .price {
+      p {
+        margin: 0;
+
+        span {
+          font-size: 1.375rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .reservation-data {
+    border: 1px solid $lightGray-bg-clr1;
+    border-radius: 10px;
+    margin-bottom: 16px;
+
+    .reservation-date {
+      display: flex;
+
+      .check-in {
+        button {
+          border-radius: 10px 0 0 0;
+        }
+      }
+
+      .check-out {
+        button {
+          border-radius: 0 10px 0 0;
+        }
+      }
+
+      button {
+        outline: 1px solid $lightGray-bg-clr1;
+        background-color: $white;
+        color: #000;
+
+        span {
+          text-transform: uppercase;
+          font-size: 0.625rem;
+          font-weight: bold;
+        }
+      }
+
+      input {
+        width: 100%;
+        border: none;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .guest {
+      padding: 26px 36px 10px 12px;
+    }
+  }
+
+
 }

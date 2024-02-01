@@ -1,96 +1,32 @@
-import * as React from 'react'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
-// import { Modal } from '@mui/base/Modal';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { FilterIcon } from '../../services/icons.service.jsx'
 
-
-import { useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
-import { FilterIcon, TopTierIcon } from '../../services/icons.service.jsx'
-import { PriceRange } from './PriceRange.jsx'
-import _debounce from 'lodash/debounce'
-
-// import { setFilterBy } from '../store/actions/stay.actions.js'
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '60dvw',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-}
-
-export function StayFilter({ filterBy, onSetFilter }) {
-    const { stays, totalDocumentsCount } = useSelector(storeState => storeState.stayModule)
-    const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+export function StayFilter() {
 
     const [open, setOpen] = React.useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    // Room Type 
-    const ANY_TYPE = 'Any type'
-    const ROOM = 'Private room'
-    const ENTIRE_HOME = 'Entire home/apt'
-
-
-    // Rooms and beds 
-    const BEDROOMS = 'bedrooms'
-    const BEDS = 'beds'
-    const BATHROOMS = 'bathrooms'
-
-    useEffect(() => {
-        onSetFilter({ ...filterByToEdit })
-    }, [filterByToEdit])
-
-
-    function handlePlaceTypeClick(event, placeType) {
-        event.stopPropagation()
-        setFilterByToEdit((prevFilter) => {
-            const updatedFilter = { ...prevFilter, roomType: placeType }
-            // setFilterByToEdit(updatedFilter)
-            return updatedFilter
-
-        })
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
     }
 
-    function handlePriceChange(priceType, priceToupdate) {
-        _debounce(() => {
-            setFilterByToEdit((prevFilter) => {
-                const updatedFilter = { ...prevFilter, price: { ...prevFilter.price, [priceType]: priceToupdate } }
-                return updatedFilter
-            })
-        }, 400)()
-    }
-
-    function handleRoomFilterClick(event, category, number) {
-        event.stopPropagation()
-
-        setFilterByToEdit((prevFilter) => {
-            const updatedFilter = { ...prevFilter, [category]: number }
-            return updatedFilter
-        })
-        console.log(`Clicked ${category} - Number: ${number}`)
-    }
-
-    function GuestFavorites() {
-        setFilterByToEdit((prevFilter) => {
-            const updatedFilter = { ...prevFilter,  guestFavorite: !prevFilter.guestFavorite }
-            return updatedFilter
-        })
-
-    }
-    const numbers = Array.from({ length: 9 }, (_, index) => index + 1)
 
 
     return (
-        <div className="stay-filter-container">
+        <div>
             <div className="filter-btn" onClick={handleOpen}>
                 <FilterIcon />
                 <span> Filter </span>
@@ -103,59 +39,44 @@ export function StayFilter({ filterBy, onSetFilter }) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <button className="close-btn" onClick={handleClose}> x </button>
+                    <button onClick={handleClose}> x </button>
 
-                    <div className="btn-container">
-                        <h2> Type of place</h2>
-                        <button onClick={(event) => handlePlaceTypeClick(event, ANY_TYPE)} className="place-type-btn">Any type</button>
-                        <button onClick={(event) => handlePlaceTypeClick(event, ROOM)} className="place-type-btn">Room</button>
-                        <button onClick={(event) => handlePlaceTypeClick(event, ENTIRE_HOME)} className="place-type-btn">Entire home</button>
-                    </div>
-
-                    <div className="btn-container">
-                        <h2> Price range</h2>
-                        <PriceRange handlePriceChange={handlePriceChange} filterBy={filterBy} stays={stays} />
-                    </div>
-
-                    <section className="rooms-beds-container">
-                        <span>Rooms and beds</span>
-                        <div>
-                            <span>Bedrooms</span>
-                            {numbers.map((number) => (
-                                <button onClick={(event) => handleRoomFilterClick(event, BEDROOMS, number)} key={number}>{number}</button>
-                            ))}
-                        </div>
-
-                        <div>
-                            <span>Beds</span>
-                            {numbers.map((number) => (
-                                <button onClick={(event) => handleRoomFilterClick(event, BEDS, number)} key={number}>{number}</button>
-                            ))}
-                        </div>
-
-                        <div>
-                            <span>Bathrooms</span>
-                            {numbers.map((number) => (
-                                <button onClick={(event) => handleRoomFilterClick(event, BATHROOMS, number)} key={number}>{number}</button>
-                            ))}
-                        </div>
-
-                    </section>
-
-                    <div>
-                        Top-tier stays
-                        <div className={`top-tier-details ${filterByToEdit.guestFavorite ? 'active' : ''}`} onClick={GuestFavorites}>
-                            <TopTierIcon />
-                            <span> Guest favorites</span>
-                            <span>The most loved homes on Airbnb, according to guests</span>
-                        </div>
-
-                    </div>
-
-                    <button>{totalDocumentsCount.length}</button>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Text in a modal
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                    </Typography>
                 </Box>
             </Modal>
-
         </div>
     )
 }
+
+
+
+// import React from "react"
+// import { DynamicModal } from '../DynamicModal.jsx'
+// import { FilterIcon } from '../../services/icons.service.jsx'
+
+
+
+// export function StayFilter() {
+//     const [modalShown, toggleModal] = React.useState(false)
+
+//     return (
+//         <div className="dynamic-modal">
+
+//             <div className="filter-btn" onClick={() => { toggleModal(!modalShown) }}>
+//                 <FilterIcon />
+//                 <span> Filter </span>
+//             </div>
+
+//             <DynamicModal shown={modalShown} close={() => { toggleModal(false) }}>
+
+//                 <h1>Look! I'm inside the modal!</h1>
+
+//             </DynamicModal>
+//         </div>
+//     )
+// }

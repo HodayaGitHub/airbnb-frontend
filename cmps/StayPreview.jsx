@@ -4,10 +4,10 @@ import { ControlledCarousel } from './ControlledCarousel'
 import { useState } from 'react'
 import { FavoriteIcon } from './favoriteIcon'
 import { SimpleSlider } from './SimpleSlider'
-import { utilService } from '../services/util.service'
 
 
 export function StayPreview({ stay, onRemoveStay, params }) {
+  console.log(params)
   const [isHover, setIsHover] = useState(false)
   const navigate = useNavigate()
   const openStayInNewTab = () => {
@@ -35,17 +35,17 @@ export function StayPreview({ stay, onRemoveStay, params }) {
       onMouseLeave={() => setIsHover(false)}
     >
       <div onClick={openStayInNewTab}>
-        {/* <div> */}
+      {/* <div> */}
         <div className='img-container'>
           <FavoriteIcon />
-          <SimpleSlider stay={stay} />
+          <SimpleSlider stay={stay}/>
           {/* <ControlledCarousel stay={stay} isHover={isHover} /> */}
         </div>
         <div className='stay-desc'>
           <span className='stay-name'>
             {stay.loc?.city}, {stay.loc?.country}{' '}
           </span>
-          <span className='stay-star'>🟊 {averageRating.toFixed(1)}</span>
+          <span className='stay-star'>🟊 4.95</span>
 
           {/* TODO: calc the km between the searched location to the stay location */}
           <span className='stay-distance'>x Kilometres away</span>

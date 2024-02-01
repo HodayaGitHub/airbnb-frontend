@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useSearchParams } from "react-router-dom"
 
@@ -6,8 +6,8 @@ import { loadStays, addStay, updateStay, removeStay, addToCart, setFilterBy } fr
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { userService } from '../services/user.service.js'
-// import { stayService } from '../services/stay.service.local.js'
-import { stayService } from '../services/stay.service.js'
+import { stayService } from '../services/stay.service.local.js'
+// import { stayService } from '../services/stay.service.js'
 
 import { StayList } from '../cmps/StayList.jsx'
 import { StaySearch } from '../cmps/search/StaySearch.jsx'
@@ -23,7 +23,7 @@ export function StayIndex() {
     const stays = useSelector(storeState => storeState.stayModule.stays)
     const isLoading = useSelector(storeState => storeState.userModule.isLoading)
     const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
-
+    const [params, setParams] = useState(stayService.generateQueryString(filterBy))
     useEffect(() => {
         loadStays(filterBy)
     }, [filterBy])
@@ -76,6 +76,8 @@ export function StayIndex() {
     function onSetFilter(filterBy) {
         setFilterBy(filterBy)
         setSearchParams(stayService.buildQueryParams(filterBy))
+        setParams(stayService.generateQueryString(filterBy))
+
     }
 
     function onRemoveStay(stayId) {
@@ -106,9 +108,10 @@ export function StayIndex() {
 
             {isLoading && 'Loading...'}
             <StayList
+                params={params}
                 stays={stays}
                 onRemoveStay={onRemoveStay}
             />
-       </>
+        </>
     )
 }
