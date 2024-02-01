@@ -7,7 +7,7 @@ export function StayList({ stays }) {
             {stays.map(stay =>
                 <StayPreview
                     key={stay._id}
-                    toy={stay}
+                    stay={stay}
                 />
             )}
         </ul>

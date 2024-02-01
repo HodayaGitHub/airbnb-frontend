@@ -2,9 +2,10 @@ import { Link, NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import routes from '../routes'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-import { login, logout, signup } from '../store/user.actions.js'
+import { login, logout, signup } from '../store/actions/user.actions.js'
+
 import { LoginSignup } from './LoginSignup.jsx'
-import appLogo from '../../public/img/airbnb-logo.svg'
+import appLogo from '../assets/img/airbnb-logo.svg'
 
 
 
@@ -37,14 +38,14 @@ export function AppHeader() {
     }
 
     return (
-        <header className="app-header">
+        <header className="app-header main-layout full">
             <div className='logo-container'>
                 <img src={appLogo} alt="Logo" className="app-logo" />
                 <span>airbnb</span>
             </div>
             <nav>
 
-                {routes.map(route => <NavLink key={route.path} to={route.path}>{route.label}</NavLink>)}
+                {/* {routes.map(route => <NavLink key={route.path} to={route.path}>{route.label}</NavLink>)} */}
 
                 {user &&
                     <span className="user-info">
@@ -52,7 +53,6 @@ export function AppHeader() {
                             {user.imgUrl && <img src={user.imgUrl} />}
                             {user.fullname}
                         </Link>
-                        <span className="score">{user.score?.toLocaleString()}</span>
                         <button onClick={onLogout}>Logout</button>
                     </span>
                 }
@@ -62,7 +62,7 @@ export function AppHeader() {
                     </section>
                 }
             </nav>
-            <h1>My App</h1>
+
         </header>
     )
 }

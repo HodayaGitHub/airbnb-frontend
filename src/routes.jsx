@@ -10,11 +10,6 @@ import {  StayDetails} from './pages/StayDetails.jsx'
 const routes = [
     {
         path: '/',
-        component: <HomePage />,
-        // label: 'airbnb',
-    },
-    {
-        path: 'stay',
         component: <StayIndex />,
         label: 'Stays'
     },

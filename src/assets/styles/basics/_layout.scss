@@ -1,9 +1,9 @@
-.main-container {
+.main-layout {
     display: grid;
-    grid-template-columns: 20px 1fr 20px;
+    // grid-template-columns: 20px 1fr 20px;
+    grid-template-columns: 1.6rem 1fr 1.6rem;
 
-
-    > * {
+    >* {
         grid-column: 2;
 
         &.full {
@@ -12,28 +12,33 @@
     }
 
     @include for-narrow-layout {
-        grid-template-columns: 
-            minmax(20px, 1fr)
-            minmax(auto, $mobile-breakpoint)
-            minmax(20px, 1fr);
+        grid-template-columns:
+        minmax(20px, 1fr)
+        minmax(auto, $mobile-breakpoint)
+        minmax(20px, 1fr);
     }
+
     @include for-normal-layout {
-        grid-template-columns: 
-            minmax(20px, 1fr)
-            minmax(auto, $narrow-breakpoint)
+        grid-template-columns:
+            minmax(20px, 1fr) 
+            minmax(auto, $narrow-breakpoint) 
             minmax(20px, 1fr);
+        // display: grid;
+        // grid-template-columns: 1.6rem 1fr $narrow-breakpoint 1.6rem;
     }
+
     @include for-wide-layout {
-        grid-template-columns: 
+        grid-template-columns:
             minmax(20px, 1fr)
-            minmax(auto, $normal-breakpoint)
+            minmax(auto, $normal-breakpoint) 
             minmax(20px, 1fr);
+        // display: grid;
+        // grid-template-columns: 1.6rem 1fr $normal-breakpoint 1.6rem;
     }
 }
 
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 20px;
-}
-
+// .card-grid {
+//     display: grid;
+//     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+//     grid-gap: 20px;
+// }
