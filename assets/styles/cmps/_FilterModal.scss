@@ -1,0 +1,99 @@
+.region-modal {
+    display: grid;
+    position: absolute;
+    z-index: 3;
+    margin-top: 1rem;
+    border-radius: 20px;
+    box-shadow: 0 0 5px hsl(0, 0%, 78%);
+    line-height: 1.43rem;
+    background: #ffff;
+    padding: 1rem;
+    height: 466px;
+    width: 498px;
+    // padding-inline: $section-spacing-inline;
+    justify-content: center;
+
+
+    // .test {
+    //     height: 100%;
+
+
+    .region-title {
+        line-height: 1.125rem;
+        // margin: 0 0 20px 5px;
+        font-weight: 700;
+        font-size: 0.875rem;
+    }
+
+
+    .region-container {
+        cursor: pointer;
+        display: grid;
+        // overflow: hidden;
+        // max-height: $big-search-panel-medium-plus-above-max-height;
+        grid-template-columns: $destination-card-columns;
+        grid-template-rows: $destination-card-rows;
+        row-gap: 24px;
+        column-gap: 5px;
+
+
+        .region-item {
+            // grid-template-columns: $destination-card-columns-tablet, repeat(3, min-content);
+            width: $destination-card-item-tablet-width;
+            height: $destination-card-item-tablet-height;
+            display: flex;
+            flex-direction: column;
+
+            .region-img {
+                // width: 100%;
+                // height: 100%;
+                border: 1px solid #DDDDDD;
+                border-radius: 12px;
+
+
+                &:hover {
+                    border-color: #000000;
+                }
+
+                // width: $destination-card-item-tablet-width, 132px;
+            }
+        }
+
+
+
+        .rdrCalendarWrapper.rdrDateRangeWrapper {
+            width: fit-content;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+
+
+            .rdrMonthAndYearWrapper {
+                // width: fit-content;
+                // background-color: #ff385c;
+            }
+
+        }
+
+    }
+
+    // }
+}
+
+
+
+.date-modal {
+    display: grid;
+    position: absolute;
+    z-index: 3;
+    margin-top: 1rem;
+    border-radius: 20px;
+    box-shadow: 0 0 5px hsl(0, 0%, 78%);
+    line-height: 1.43rem;
+    background: #ffff;
+    padding: 1rem;
+    // height: 466px;
+    // width: 498px;
+    // padding-inline: $section-spacing-inline;
+    justify-content: center;
+}

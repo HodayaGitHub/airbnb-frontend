@@ -22,7 +22,7 @@ window.cs = stayService
 
 
 async function query(filterBy, selectedLabel) {
-    return httpService.post(`stay/getAll`, {filterBy, selectedLabel })
+    return httpService.post(`stay/getAll`, { filterBy, selectedLabel })
 }
 
 function getById(stayId) {
@@ -64,18 +64,37 @@ function getDefaultSearchFilter() {
         checkIn: '',
         checkOut: '',
         guests: getDefaultGuests(),
-        region: '', 
+        region: '',
     }
 }
 
 
 function getDefaultRegion() {
     return [
-        'Flexible',
-        'Middle East',
-        'Greece',
-        'Italy',
-        'Asia',
+        {
+            name: `I'm flexible`,
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/united-states.png'
+        },
+        {
+            name: 'Middle East',
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/middle-east.png'
+        },
+        {
+            name: 'Greece',
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/greece.png'
+        },
+        {
+            name: 'United States',
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/united-states.png'
+        },
+        {
+            name: 'Italy',
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/italy.png'
+        },
+        {
+            name: 'Southeast Asia',
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/southeast-asia.png'
+        },
     ]
 }
 

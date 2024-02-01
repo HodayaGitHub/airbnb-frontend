@@ -104,26 +104,34 @@ export function StaySearch({ filterBy, onSetFilter }) {
 
             </div>
 
-            <div className='filter-modal'>
-
-                {modalOpen === DATE_MODAL && (
-                    <DateSelect
-                        onSetField={(field, value) => handleDateSelectChange(field, value)}
-                        checkIn={filterByToEdit.checkIn}
-                        checkOut={filterByToEdit.checkOut}
-                    />
-                )}
+            <>
 
                 {modalOpen === REGION_MODAL && (
-                    <div>
-                        {regions.map((region) => (
-                            <div key={region}>
-                                <button onClick={(event) => updateRegion(event, region)}>
-                                    {region}
-                                </button>
-                            </div>
-                        ))}
+                    <div className="region-modal">
+                        <div className="region-title">Search by region</div>
+                        <div className="region-container">
+                            {regions.map((region) => (
+                                <div className="region-item" key={region.name} onClick={(event) => updateRegion(event, region.name)}>
+                                    <img className="region-img" src={region.imgUrl} />
+                                    <div>
+                                        {region.name}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
+                )}
+
+
+                {modalOpen === DATE_MODAL && (
+                    <div className="date-modal">
+                        <DateSelect
+                            onSetField={(field, value) => handleDateSelectChange(field, value)}
+                            checkIn={filterByToEdit.checkIn}
+                            checkOut={filterByToEdit.checkOut}
+                        />
+                    </div>
+
                 )}
 
                 {modalOpen === GUEST_MODAL && (
@@ -148,7 +156,7 @@ export function StaySearch({ filterBy, onSetFilter }) {
                         ))}
                     </div>
                 )}
-            </div>
+            </>
         </section>
     )
 }

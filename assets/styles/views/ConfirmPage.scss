@@ -1,0 +1,121 @@
+.confirm-page {
+    .title {
+        display: flex;
+
+        .return-btn {
+            padding: 0;
+            background: $clr6;
+            color: $darkGray-clr;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            font-size: 2rem;
+            font-weight: 600;
+            text-align: center;
+
+            &:hover {
+                color: #000;
+                background-color: $lightGray-bg-clr;
+            }
+        }
+    }
+
+    .reservation {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2.5rem;
+        padding: 0 80px;
+
+        section {
+            border-bottom: 1px rgb(221, 221, 221) solid;
+            padding-bottom: 1.5rem;
+
+        }
+
+        h2 {
+            font-size: 1.375rem;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1rem;
+        }
+
+        a {
+            color: $darkGray-clr;
+            font-weight: 600;
+        }
+
+        .reservation-info {
+
+            .edit-btn {
+                background-color: $clr6;
+                color: $darkGray-clr;
+                text-decoration: underline;
+                font-weight: 600;
+            }
+
+            p {
+                margin-top: 2rem;
+                line-height: 1rem;
+                font-size: 0.75rem;
+
+            }
+
+            .confirm-btn {
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+                line-height: 1.5rem;
+                font-size: 1.125rem;
+                text-align: center;
+                width: 12.753875rem;
+                height: 3.5rem;
+                border-radius: 0.625rem;
+            }
+
+            .order-attribute {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            ul {
+                margin-top: 1rem;
+            }
+
+            li {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        .oreder-preview {
+            position: sticky;
+            top: 5dvh;
+            justify-self: end;
+            border: 1px solid rgb(221, 221, 221);
+            height: max-content;
+            width: 20.62rem;
+            border-radius: 12px;
+            padding: 1.5rem;
+
+
+            ul {
+                list-style: none;
+                padding: 0;
+
+                li {
+                    margin-top: 1.5rem;
+                    margin-bottom: 1.5rem;
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+                & li:nth-child(2) {
+                    border-bottom: 1px solid rgb(221, 221, 221);
+                    padding-bottom: 1.5rem;
+                }
+
+            }
+        }
+    }
+}

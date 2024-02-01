@@ -8,7 +8,7 @@ export function ConfirmPage() {
     return (
         <div className='confirm-page'>
             <div className='title'>
-                <button className='return-btn' onClick={() => navigate(`/stay/:${stayId}`)}>{'‹'}</button>
+                <button className='return-btn' onClick={() => navigate(`/`)}>{'‹'}</button>
                 <h1>Confirm and pay</h1>
             </div>
             <div className='reservation'>
@@ -51,7 +51,7 @@ export function ConfirmPage() {
                             <li>Treat your Host’s home like your own</li>
                         </ul>
                     </section>
-                    <p>By selecting the button below, I agree to the<a href="#">Host's House Rules</a>,
+                    <p>By selecting the button below, I agree to the <a href="#">Host's House Rules</a>,
                         <a href="#">Ground rules for guests</a>, <a href="#">Airbnb's Rebooking and Refund Policy</a>,
                         and that Airbnb can <a href="#">charge my payment method</a> if I’m responsible for damage.</p>
 

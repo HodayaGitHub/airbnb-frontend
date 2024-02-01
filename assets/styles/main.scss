@@ -1,0 +1,39 @@
+// Setup
+@import 'setup/variables';
+@import 'setup/functions';
+@import 'setup/mixins';
+@import 'setup/typography';
+
+// Basics
+@import 'basics/helpers';
+@import 'basics/layout';
+@import 'basics/base';
+@import 'basics/links';
+@import 'basics/forms';
+
+// Views
+@import 'views/AboutUs';
+@import 'views/HomePage';
+@import 'views/StayIndex';
+@import 'views/ReviewIndex';
+@import 'views/UserDetails';
+@import 'views/StayDetail.scss';
+@import "views/ConfirmPage";
+
+// Components
+@import 'cmps/AppHeader';
+@import 'cmps/AppFooter';
+@import 'cmps/StayPreview';
+@import 'cmps/UserMsg';
+@import 'cmps/ShoppingCart';
+@import 'cmps/StayEdit';
+@import 'cmps/reservationModal';
+
+// Filter cmps
+@import 'cmps/StaySearch';
+@import 'cmps/LabelsFilter';
+@import 'cmps/FilterModal';
+
+// REACT BOOTSTRAP
+@import 'bootstrap/scss/bootstrap';
+@import 'cmps/Carousel';

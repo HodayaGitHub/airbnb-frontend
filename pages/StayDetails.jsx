@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import Avatar from '@mui/material/Avatar'
 // import { stayService } from '../services/stay.service.js'
 import { stayService } from '../services/stay.service.local.js'
+import { updateStay } from '../store/actions/stay.actions.js'
 // HARD CODED
 import img from '../assets/img/host-img/stay-host-img.jpg'
 import key from '../assets/img/svgs/key.svg'
@@ -13,6 +14,8 @@ import { ReservationModal } from '../cmps/reservationModal.jsx'
 export function StayDetails() {
   // const [msg, setMsg] = useState(getEmptyMsg())
   const [stay, setStay] = useState(null)
+  const [isEdit, setIsEdit] = useState(false)
+  const [isOver, setIsOver] = useState(false)
   const { stayId } = useParams()
   const navigate = useNavigate()
 
@@ -29,15 +32,42 @@ export function StayDetails() {
       navigate('/stay')
     }
   }
+  function handleChange(target) {
+    const field = target.name
+    let value = target.value
+    setStay(prevStay => ({ ...prevStay, [field]: value }))
+
+  }
+  function handleSubmit(e) {
+    e.preventDefault()
+    if (!stay.name) return
+    onUpdate(stay)
+  }
+
+  async function onUpdate(stay) {
+    try {
+      await updateStay(stay)
+      setIsEdit(false)
+    }
+    catch (err) {
+      console.log('Cannot add stay', err)
+    }
+  }
 
   if (!stay) return <div></div>
   return (
     <section className='stay-details'>
       <div className='stay-name'>
-        <h1>{stay.name}</h1>
+        {isEdit && (
+          <form onSubmit={handleSubmit}>
+            <input onChange={(e) => handleChange(e.target)} value={stay.name} type="text" name="name" id="name" />
+          </form>
+        )}
+        {!isEdit && <><h1 onMouseLeave={() => { setIsOver(false) }} onMouseOver={() => { setIsOver(true) }}>{stay.name}
+          {isOver && <button className="edit-btn" onClick={() => setIsEdit(true)}>🖉</button>}</h1></>}
         <div className='stay-name-actions'>
-          <button>Share</button>
-          <button>Save</button>
+          <div className='action'>Share</div>
+          <div className='action'>Save</div>
         </div>
       </div>
 
@@ -136,6 +166,6 @@ export function StayDetails() {
           </div>
         </section>
       </section>
-    </section>
+    </section >
   )
 }

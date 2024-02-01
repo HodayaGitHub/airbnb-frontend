@@ -1,0 +1,44 @@
+// Colors
+$clr1: #ce2e6c;
+$clr2: #4f3a65;
+$clr3: #574f7d;
+$clr4: #95adbe;
+$clr5: #dff0ea;
+$clr6: #fff;
+$clr7: #222;
+
+//AIR BNB CLRS
+$main-bg-clr: #fff;
+$lightGray-bg-clr1: #ebebeb;
+$lightGray-bg-clr: #f7f7f7;
+$lightGray-clr: #717171;
+$main-clr: #ff385c;
+$darkGray-clr: #222222;
+
+//ON HOVER
+$filter-icon-hover-clr: #000;
+$side-nav-hover-bg-clr: #f7f7f7;
+
+$black: #000;
+$white: #fff;
+
+// Breakpoints
+$mobile-breakpoint: 460px;
+$narrow-breakpoint: 720px;
+$normal-breakpoint: 1920px;
+
+
+// search cmp 
+$big-search-panel-max-height: calc(100vh - 300px);
+$big-search-panel-medium-plus-above-max-height: calc(100vh - 240px);
+$destination-card-columns: repeat(3, min-content);
+$destination-card-rows: repeat(2, min-content);
+$destination-card-columns-tablet: repeat(4, min-content);
+$autosuggest-section-width: 322px;
+$destination-card-item-tablet-width: 122px;
+$destination-card-item-tablet-height: 122px;
+$destination-card-item-width: 86px;
+$destination-card-item-height: 158px;
+// $section-spacing-inline: 48px 24px;
+$section-spacing-inline: 24px;
+$big-search-panel_padding: 1rem 0;
