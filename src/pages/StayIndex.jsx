@@ -1,39 +1,72 @@
-import { useEffect } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from "react-router-dom"
-import { loadStays, addStay, updateStay, removeStay, addToCart, setFilterBy } from '../store/actions/stay.actions.js'
-
+import { Link, useSearchParams } from "react-router-dom"
+import classnames from 'classnames'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { userService } from '../services/user.service.js'
-// import { stayService } from '../services/stay.service.js'
-import { stayService } from '../services/stay.service.local.js'
+import { stayService } from '../services/stay.service.js'
+import { loadStays, addStay, updateStay, removeStay, setFilterBy } from '../store/actions/stay.actions.js'
+import { MainHeader } from '../cmps/MainHeader.jsx'
+import { MainHeaderOnScroll } from '../cmps/MainHeaderOnScroll.jsx'
 
 import { StayList } from '../cmps/StayList.jsx'
-import { StaySearch } from '../cmps/filtring/StaySearch.jsx'
-import { LabelsFilter } from '../cmps/filtring/LabelsFilter.jsx'
+import { StaySearch } from '../cmps/search/StaySearch.jsx'
+import { StayFilter } from '../cmps/filter/StayFilter.jsx'
+import { LabelsFilter } from '../cmps/filter/LabelsFilter.jsx'
+import { AutoCompleteCmp } from '../cmps/search/AutoCompleteCmp.jsx'
+import { Restcountries } from '../cmps/search/Restcountries.jsx'
+import { ShowMoreStays } from '../cmps/ShowMoreStays.jsx'
+// import { ChatApp } from './ChatApp.jsx'
 
 export function StayIndex() {
-
     const stays = useSelector(storeState => storeState.stayModule.stays)
-    const isLoading = useSelector(storeState => storeState.userModule.isLoading)
+    const isLoading = useSelector(storeState => storeState.systemModule.isLoading)
     const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
 
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [params, setParams] = useState(stayService.generateQueryString(filterBy))
+
+
+    const [loadingMore, setLoadingMore] = useState(false)
+    const [isHeaderSticky, setIsHeaderSticky] = useState(false);
+    const [initialLoad, setInitialLoad] = useState(true);
+
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    const handleScroll = () => {
+        setScrollPosition(window.scrollY);
+    };
+
     useEffect(() => {
-        loadStays(filterBy)
+        window.addEventListener('scroll', handleScroll);
 
-        // async function initializeAndLoadStays(filterBy) {
-        //     try {
-        //         await stayService.initializeLocalStorage()
-        //         console.log('initialize local storage')
-        //         await loadStays(filterBy)
-        //         console.log('loaded stays')
-        //     } catch (error) {
-        //         console.error('An error occurred:', error)
-        //     }
-        // }
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
-        // initializeAndLoadStays()
-    }, [filterBy])
+    const headerClassNames = classnames({
+        'sticky': scrollPosition > 20,
+    })
+
+    useEffect(() => {
+        loadStays(filterBy, false);
+    }, [filterBy]);
+
+
+
+    async function onLoadMore() {
+        if (!loadingMore) {
+            try {
+                setLoadingMore(true)
+                await loadStays(filterBy, true)
+            } catch (err) {
+                console.error('Error loading more stays', err)
+            } finally {
+                setLoadingMore(false)
+            }
+        }
+    }
 
     async function onRemoveStay(stayId) {
         try {
@@ -44,7 +77,6 @@ export function StayIndex() {
         }
     }
 
-
     async function onUpdateStay(stay) {
         const price = +prompt('New price?')
         const stayToSave = { ...stay, price }
@@ -54,12 +86,6 @@ export function StayIndex() {
         } catch (err) {
             showErrorMsg('Cannot update stay')
         }
-    }
-
-    function onAddToCart(stay) {
-        console.log(`Adding ${stay.vendor} to Cart`)
-        addToCart(stay)
-        showSuccessMsg('Added to Cart')
     }
 
     function onAddStayMsg(stay) {
@@ -79,11 +105,12 @@ export function StayIndex() {
         return stay.owner?._id === user._id
     }
 
-
     function onSetFilter(filterBy) {
-        // console.log('filterBy:', filterBy)
         setFilterBy(filterBy)
+        setSearchParams(stayService.buildQueryParams(filterBy))
+        setParams(stayService.generateQueryString(filterBy))
     }
+
     function onRemoveStay(stayId) {
         try {
             removeStay(stayId)
@@ -93,32 +120,47 @@ export function StayIndex() {
         }
     }
 
+
     return (
-        <div>
+        <>
+            <div className={`header-wrapper full main-layout  ${headerClassNames}`}>
 
-            <div className="filtring-container">
-
-                <div >
-                    <StaySearch
+                {headerClassNames ? (
+                    <MainHeaderOnScroll
                         filterBy={filterBy}
-                        onSetFilter={onSetFilter}
-                    />
-                </div>
+                        onSetFilter={onSetFilter} />
+                ) : (
+                    <>
+                        <MainHeader />
+                        <StaySearch
+                            filterBy={filterBy}
+                            onSetFilter={onSetFilter}
+                        />
+                    </>
+                )}
 
-                <div>
-                    <LabelsFilter stays={stays} />
+                <div className={` filter-labels-container`}>
+                    <LabelsFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+                    <StayFilter filterBy={filterBy} onSetFilter={onSetFilter} />
                 </div>
             </div>
 
-            <button> <Link className='add-btn' to={`/edit`}>Add</Link></button>
-            <main>
-                {isLoading && 'Loading...'}
-                <StayList
-                    stays={stays}
-                    onRemoveStay={onRemoveStay}
-                />
-            </main>
-        </div >
 
-    )
+
+            {isLoading && initialLoad ? (
+                <div className='stay-index-loader'>
+                    <div className='loader'></div>
+                </div>
+            ) : (
+                <>
+                    <StayList params={params} stays={stays} onRemoveStay={onRemoveStay} />
+                </>
+            )}
+
+            <ShowMoreStays onLoadMore={onLoadMore} />
+
+
+        </>
+
+    );
 }

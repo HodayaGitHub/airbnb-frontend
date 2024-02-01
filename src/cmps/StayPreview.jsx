@@ -1,45 +1,77 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, NavLink, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ControlledCarousel } from './ControlledCarousel'
 import { useState } from 'react'
+import { FavoriteIcon } from './favoriteIcon'
+import { SimpleSlider } from './SimpleSlider'
+import { utilService } from '../services/util.service'
+import star from '../assets/img/svgs/star.svg'
+export function StayPreview({ stay, onRemoveStay, params }) {
+  const [isHover, setIsHover] = useState(false)
+  const navigate = useNavigate()
+  const openStayInNewTab = () => {
+    const url = `/stay/${stay._id}?${JSON.stringify(params)}`
+    window.open(url, '_blank')
+    // navigate(`/stay/${stay._id}`)
+  }
+
+  function calculateAverageRating() {
+    if (!stay || !stay.reviews || stay.reviews.length === 0) {
+      return 0
+    }
+
+    const totalRating = stay.reviews.reduce((acc, review) => acc + review.rate, 0)
+    return totalRating / stay.reviews.length
+  }
+
+  let averageRating = calculateAverageRating()
+
+  return (
+    <li
+      className='stay-preview'
+      key={stay._id}
+      onMouseOver={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
+      <div onClick={openStayInNewTab}>
+        <div className='img-container'>
+          <FavoriteIcon stay={stay} />
+          <FavoriteIcon stay={stay} />
+          <SimpleSlider stay={stay} />
+        </div>
+        <div className='stay-desc'>
+          <span className='stay-name'>
+            {stay.loc?.city || "Tel Aviv"}, {stay.loc?.country || "Israel"}{' '}
+          </span>
+          <span className='stay-star'>🟊 {averageRating.toFixed(1)}</span>
+
+          <span className='stay-distance'>  {stay.kmAway ? `${stay.kmAway} Kilometres away` : '25 Kilometres away'}</span>
 
 
-export function StayPreview({ stay, onRemoveStay }) {
-    const [isHover, setIsHover] = useState(false)
-    const navigate = useNavigate()
+          <span className='stay-date'>
+            {stay.beds || 2} bed{stay.beds !== 1 ? <span>s</span> : ''}{' '}
+          </span>
 
-    // function onStayClick(){
-    //     navigate(`/stay/${stay._id}`)
-    // }
-    return (
+          <span className='stay-price'>
+            {stay.price ? (
+              <>
+                <span className='stay-price-number'>
+                  ${stay.price.toLocaleString()}
+                </span>{' '}
+                night
+              </>
+            ) : (
+              '80 night'
+            )}
+          </span>
 
-        <li className="stay-preview" key={stay._id} onMouseOver={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-            <Link className='linki' target={"_blank"} to={`/stay/${stay._id}?`}>
-                <div className="img-container" >
-                    <ControlledCarousel stay={stay} isHover={isHover} />
-                </div>
-                <div className="stay-desc">
-                    <h4 className='stay-name'>{stay.name}</h4>
 
-
-                    {/* TODO: calc the km between the searched location to the stay location */}
-                    <span className='stay-distance'>x Kilometres away</span>
-
-                    {/* TODO: show the available dates */}
-                    <span className='stay-date'>Sep 29 - Oct 4</span>
-
-                    <span className="stay-price"><span>${stay.price.toLocaleString()}</span> night</span>
-
-                    <div className="actions-btns-container">
-                        <button> <Link className='details-btn' to={`/stay/details/${stay._id}`}>Details</Link></button>
+          {/* <div className="actions-btns-container">
                         <button onClick={() => onRemoveStay(stay._id)}> remove</button>
 
-                    </div>
-
-                </div>
-            </Link>
-        </li>
-
-
-    )
+                    </div> */}
+        </div>
+      </div>
+    </li>
+  )
 }

@@ -1,0 +1,162 @@
+.stay-filter-container {
+    .filter-btn {
+        color: black;
+        padding: 10px;
+        display: flex;
+        flex-direction: row;
+        border: 1px solid;
+        border-radius: 12px;
+        border-color: rgb(221, 221, 221);
+        height: 48px;
+        // width: 20%;
+        align-items: center;
+        padding: 7px;
+        cursor: pointer;
+
+        .filter-icon {
+            width: 5px;
+            height: 5px;
+        }
+
+
+        svg {
+            display: block;
+            fill: none;
+            height: 16px;
+            width: 16px;
+            stroke: currentColor;
+            stroke-width: 3;
+            overflow: visible
+        }
+
+    }
+}
+
+
+
+
+
+.Slider__StyledSliderContent-sc-a8zzil-1 .cTuNki {
+    background-color: pink;
+}
+// .Slider__StyledSlider-sc-a8zzil-0.YZQqD {
+
+//     .Slider__StyledSliderContent-sc-a8zzil-1 {
+//         &.cTuNki {
+//           @media screen and (min-width: 500px) {
+//             background: rgb(201, 215, 219) !important; 
+//             visibility: visible !important;// Background color for smaller screens
+//             opacity: 1 !important;
+//             margin-top: 50px;
+//             padding: 0;
+//           }
+//         }
+//       }
+
+// }
+
+  
+// .Slider__StyledSlider-sc-a8zzil-0.esIdlO {
+//     .Slider__StyledSliderContent-sc-a8zzil-1 {
+//         &.isFsaz {
+//             padding: 40px;
+//             visibility: visible !important;
+//             opacity: 1 !important;
+//             background-color: rgb(224, 204, 204) !important;
+//         }
+//     }
+// }
+
+.MuiBox-root.css-qqowxp {
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 40dvw;
+
+    .place-type-btn {
+        color: black;
+        margin: 15px;
+    }
+
+    button {
+        background-color: none;
+        color: black;
+    }
+
+
+    .place-range-container {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+    }
+
+
+    .btn-container {
+        display: flex;
+        gap: 15px;
+
+        button {
+            background-color: #ffff;
+            border-radius: 12px;
+            color: black;
+        }
+    }
+
+
+    .rooms-beds-container {
+        display: flex;
+        gap: 15px;
+        flex-direction: column;
+
+        .rooms-option {
+            display: flex;
+            flex-direction: row;
+            // justify-content: ;
+            gap: 15px;
+
+            .first-item {
+                width: 20%;
+                background-color: #ffff;
+                color: black;
+            }
+
+            .second-item {
+                background-color: #ffff;
+                color: black;
+            }
+
+            button {
+                margin: 10px;
+                background-color: #ffff;
+                border-radius: 12px;
+                color: black;
+                border: 0.5px solid;
+            }
+        }
+    }
+
+    .top-tier {
+
+        border: 1px solid;
+        width: 300px;
+        padding: 20px;
+
+        .top-tier-details {
+
+            &.active {
+                background-color: gray;
+            }
+
+            svg {
+                display: block;
+                height: 72px;
+                width: 96px;
+                stroke: currentColor;
+                stroke-width: 0.1px;
+                overflow: visible;
+
+            }
+        }
+
+    }
+}

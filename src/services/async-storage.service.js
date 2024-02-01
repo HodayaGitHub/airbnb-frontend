@@ -24,7 +24,7 @@ async function post(entityType, newEntity) {
     newEntity = JSON.parse(JSON.stringify(newEntity))
     newEntity._id = _makeId()
     const entities = await query(entityType)
-    entities.push(newEntity)
+    entities.unshift(newEntity)
     _save(entityType, entities)
     return newEntity
 }

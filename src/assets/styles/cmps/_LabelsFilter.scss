@@ -1,18 +1,169 @@
-.labels-container {
+.filter-labels-container {
     display: flex;
-    gap: 10px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: rem(10px);
+    overflow: hidden;
+    // position: sticky;
+    // top: 0;
+    background: #FFFFFF;
+    // z-index: 4;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-    .label-item {
+
+    &.sticky {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .react-multi-carousel-list {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        cursor: pointer;
+        flex-direction: row;
+        height: 80px;
+        width: 90dvw;
+        position: sticky;
+        top: 0;
+        margin-top: 0.5rem;
+        overflow: hidden;
+        gap: 8px;
 
-
-        .label-icon {
-            width: 50px;
-            height: 50px;
+        .react-multi-carousel-track {
+            padding-left: rem(6px);
+            height: 100%;
+            align-items: center;
         }
+
+        .react-multiple-carousel__arrow {
+            min-width: rem(15px);
+            min-height: rem(15px);
+
+            &:before {
+                font-size: rem(12.8px);
+                font-weight: 900;
+                text-shadow: 0px 0.8px 0px #000000;
+                line-height: rem(14.4px);
+            }
+        }
+
+        .react-multi-carousel-item {
+            cursor: pointer;
+            // width: fit-content;
+            width: max-content;
+        }
+
+        .react-multiple-carousel__arrow--right {
+            right: calc(0% + 1px);
+        }
+
+        .react-multiple-carousel__arrow--left {
+            left: calc(0% + 1px);
+        }
+
+        // .react-multi-carousel-track {
+        //     height: 100%;
+        //     align-items: center;
+        // }
+
+
+        .label-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: max-content;
+            color: #717171;
+            opacity: 75%;
+
+            &.selected-label {
+                color: black;
+
+                svg {
+                    // fill: black;
+                    fill: #605353;
+                    stroke: black !important;
+                    stroke-width: 0.6px;
+                }
+
+                .label-title {
+                    border-bottom: 2.5px solid;
+                    padding-bottom: 10px;
+                    color: black;
+                }
+
+            }
+
+            .label-icon {
+                aspect-ratio: 1/1;
+            }
+
+            span {
+                line-break: strict;
+                width: max-content;
+                display: block;
+                font-weight: 600;
+
+                svg {
+                    fill: #717171;
+                    stroke: #717171;
+                    stroke-width: 0.1px;
+
+                    &:hover {
+                        fill: black;
+                        stroke: black !important;
+                        stroke-width: 0.6px;
+                    }
+
+
+                }
+
+            }
+
+
+            .label-title {
+                font-size: 12px;
+
+                &.selected-label {
+                    border-bottom: 1px solid;
+                    padding-bottom: 10px;
+                    color: black;
+                }
+
+            }
+        }
+
+        .react-multiple-carousel__arrow {
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, .3);
+            background-color: #fff;
+            box-shadow: 0 0 10px 20px #fff;
+            text-align: center;
+            color: black;
+
+            &:before {
+                color: black;
+
+            }
+        }
+
+        // &:before {
+        //     content: "";
+        //     position: absolute;
+        //     top: 0;
+        //     left: 0;
+        //     width: 5rem;
+        //     /* Full width */
+        //     height: 5rem;
+        //     background: rgba(172, 99, 99, 0.5);
+        //     /* Adjust the color and transparency */
+        //     filter: blur(10px);
+        //     /* Adjust the blur strength */
+        //     z-index: 1;
+        //     /* Ensure it's behind the carousel items */
+        // }
 
     }
 }
+
+// .dymanic-header {
+
+// }

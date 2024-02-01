@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-import { socketService, SOCKET_EVENT_REVIEW_ADDED } from '../services/socket.service'
+// import { socketService, SOCKET_EVENT_REVIEW_ADDED } from '../services/socket.service'
 
 import { loadReviews, addReview, removeReview, getActionAddReview } from '../store/actions/review.actions'
 import { loadUsers } from '../store/actions/user.actions'
@@ -21,14 +21,14 @@ export function ReviewIndex() {
     loadReviews()
     loadUsers()
 
-    socketService.on(SOCKET_EVENT_REVIEW_ADDED, (review) => {
-      console.log('GOT from socket', review)
-      dispatch(getActionAddReview(review))
-    })
+    // socketService.on(SOCKET_EVENT_REVIEW_ADDED, (review) => {
+    //   console.log('GOT from socket', review)
+    //   dispatch(getActionAddReview(review))
+    // })
 
-    return () => {
-      socketService.off(SOCKET_EVENT_REVIEW_ADDED)
-    }
+    // return () => {
+    //   socketService.off(SOCKET_EVENT_REVIEW_ADDED)
+    // }
   }, [])
 
   const handleChange = ev => {

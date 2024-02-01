@@ -25,6 +25,12 @@ export function showUserMsg(msg) {
 export function showSuccessMsg(txt) {
     showUserMsg({txt, type: 'success'})
 }
+export function showlinkCopiedSuccessMsg(txt) {
+    showUserMsg({txt, type: 'linkCopied'})
+}
+export function showimgUploadSuccessMsg(txt) {
+    showUserMsg({txt, type: 'imgUpload'})
+}
 export function showErrorMsg(txt) {
     showUserMsg({txt, type: 'error'})
 }

@@ -1,10 +1,10 @@
-import { userService } from "../../services/user.service.js";
-import { socketService } from "../../services/socket.service.js";
+import { userService } from "../../services/user.service.js"
+import { socketService } from "../../services/socket.service.js"
 import { store } from '../store.js'
 
 import { showErrorMsg } from '../../services/event-bus.service.js'
-import { LOADING_DONE, LOADING_START } from "../reducers/system.reducer.js";
-import { REMOVE_USER, SET_USER, SET_USERS, SET_WATCHED_USER } from "../reducers/user.reducer.js";
+import { LOADING_DONE, LOADING_START } from "../reducers/system.reducer.js"
+import { UPDATE_USER, REMOVE_USER, SET_USER, SET_USERS, SET_WATCHED_USER } from "../reducers/user.reducer.js"
 
 export async function loadUsers() {
     try {
@@ -17,6 +17,7 @@ export async function loadUsers() {
         store.dispatch({ type: LOADING_DONE })
     }
 }
+
 
 export async function removeUser(userId) {
     try {
@@ -32,7 +33,7 @@ export async function login(credentials) {
         const user = await userService.login(credentials)
         store.dispatch({
             type: SET_USER,
-            user
+            loggedInUser: user
         })
         socketService.login(user)
         return user
@@ -47,7 +48,7 @@ export async function signup(credentials) {
         const user = await userService.signup(credentials)
         store.dispatch({
             type: SET_USER,
-            user
+            loggedInUser: user
         })
         socketService.login(user)
         return user
@@ -62,8 +63,9 @@ export async function logout() {
         await userService.logout()
         store.dispatch({
             type: SET_USER,
-            user: null
+            loggedInUser: null
         })
+        userService.removeLoacalUserFromSession()
         socketService.logout()
     } catch (err) {
         console.log('Cannot logout', err)
@@ -73,10 +75,29 @@ export async function logout() {
 
 export async function loadUser(userId) {
     try {
-        const user = await userService.getById(userId);
-        store.dispatch({ type: SET_WATCHED_USER, user })
+        const user = await userService.getById(userId)
+        return user
     } catch (err) {
         showErrorMsg('Cannot load user')
         console.log('Cannot load user', err)
+    }
+}
+
+export function getActionUpdateUser(user) {
+    return {
+        type: UPDATE_USER,
+        user
+    }
+}
+
+export async function updateUser(user) {
+    try {
+        const savedUser = await userService.save(user)
+        console.log('Updated user:', savedUser)
+        // store.dispatch(getActionUpdateUser(savedUser))
+        return savedUser
+    } catch (err) {
+        console.log('Cannot save user', err)
+        throw err
     }
 }

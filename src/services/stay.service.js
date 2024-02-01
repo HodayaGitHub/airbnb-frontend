@@ -1,31 +1,42 @@
 
 // import { storageService } from './async-storage.service.js'
+
+import Axios from 'axios'
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
-import { userService } from './user.service.js'
-
-
-const STORAGE_KEY = 'stay'
+import { labels } from '../data/labels.js'
 
 export const stayService = {
     query,
     getById,
     save,
     remove,
-    getEmptyStay,
-    addStayMsg,
-    getDefaultSearchFilter,
     getDefaultSearchFilter,
     getDefaultGuests,
     getDefaultRegion,
+    generateQueryString,
+    totalGuests,
+    buildQueryParams,
+    getDefaultDates,
+    addMsg,
+    removeMsg,
+    getLabels,
+    calcNights,
+    formatDateFromUnix,
 }
+
+// for cookies
+const axios = Axios.create({
+    withCredentials: true
+})
+
+
 window.cs = stayService
+const BASE_URL = 'stay'
 
-
-async function query(filterBy, selectedLabel) {
-    return httpService.post(`stay/getAll`, {filterBy, selectedLabel })
-async function query(filterBy, selectedLabel) {
-    return httpService.post(`stay/getAll`, {filterBy, selectedLabel })
+function query(filterBy = {}, page = 1, itemsPerPage) {
+    console.log('hi from query')
+    return httpService.get(BASE_URL, { filterBy, page, itemsPerPage})
 }
 
 function getById(stayId) {
@@ -35,60 +46,67 @@ function getById(stayId) {
 async function remove(stayId) {
     return httpService.delete(`stay/${stayId}`)
 }
-async function save(stay) {
-    var savedStay
-    if (stay._id) {
-        savedStay = await httpService.put(`stay/${stay._id}`, stay)
 
-    } else {
-        savedStay = await httpService.post('stay', stay)
-    }
-    return savedStay
+function save(stay) {
+    return httpService.put(BASE_URL, stay)
 }
 
-async function addStayMsg(stayId, txt) {
-    const savedMsg = await httpService.post(`stay/${stayId}/msg`, { txt })
+async function addMsg(stayId, txt) {
+    const savedMsg = await httpService.post(`toy/${stayId}/msg`, { txt })
     return savedMsg
 }
 
-
-function getEmptyStay() {
-    return {
-        vendor: 'Susita-' + (Date.now() % 1000),
-        price: utilService.getRandomIntInclusive(1000, 9000),
-    }
+async function removeMsg(stayId, msgId) {
+    const removedId = await httpService.delete(`toy/${stayId}/msg/${msgId}`)
+    return removedId
 }
 
-// Filtring:
-function getDefaultSearchFilter() {
+
+
+// filtering :
 function getDefaultSearchFilter() {
     return {
-        location: '',
-        location: '',
         stayDates: '',
         checkIn: '',
         checkOut: '',
         guests: getDefaultGuests(),
-        region: '', 
+        region: '',
+        label: '',
+        roomType: '',
+        price: { minPrice: -Infinity, maxPrice: Infinity },
+        bedrooms: null,
+        beds: null,
+        bathrooms: null,
+        guestFavorite: false,
     }
 }
-        guests: getDefaultGuests(),
-    }
-}
-
 
 function getDefaultRegion() {
     return [
-        'Flexible',
-        'Middle East',
-        'Greece',
-        'Italy',
-        'Asia',
-        'Flexible',
-        'Middle East',
-        'Greece',
-        'Italy',
-        'Asia',
+        {
+            name: `I'm flexible`,
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/united-states.png'
+        },
+        {
+            name: 'Brazil',
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/middle-east.png'
+        },
+        {
+            name: 'Australia',
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/greece.png'
+        },
+        {
+            name: 'United States',
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/united-states.png'
+        },
+        {
+            name: 'Portugal',
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/italy.png'
+        },
+        {
+            name: 'Turkey',
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/southeast-asia.png'
+        },
     ]
 }
 
@@ -102,4 +120,81 @@ function getDefaultGuests() {
 }
 
 
+function guestParams(guests) {
+    const queryString = Object.keys(guests)
+        .map((key) => {
+            const param = guests[key]
+            return `${key}=${param}`
+        })
+        .join('&')
+    return queryString
+}
 
+
+function getFormattedDate(date) {
+    if (date instanceof Date) {
+        return date.toLocaleDateString('en-US', { day: 'numeric', month: 'numeric', year: 'numeric' })
+    }
+    return ''
+}
+function formatDateFromUnix(unixTimestamp) {
+    const options = { day: 'numeric', month: 'short' };
+    const formattedDate = new Date(unixTimestamp * 1000).toLocaleDateString('en-US', options);
+    return formattedDate;
+}
+
+function generateQueryString(filterBy) {
+    const { stayDates, checkIn, checkOut, guests, region, label } = filterBy
+    const guestParam = guestParams(guests)
+    const queryParams = { stayDates, checkIn, checkOut, guestParam, region, label }
+    const queryString = new URLSearchParams(queryParams).toString()
+    return queryString
+}
+
+function buildQueryParams(filterBy) {
+    const { region, checkIn, checkOut, guests, label, } = filterBy
+    const { defaultCheckIn, defaultCheckOut } = getDefaultDates()
+    const params = {
+        region: region || `I'm flexible`,
+        checkIn: checkIn || defaultCheckIn,
+        checkOut: checkOut || defaultCheckOut,
+        guests: totalGuests(filterBy) || 1,
+        label: label,
+    }
+    return params
+}
+
+function getDefaultDates() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to the beginning of the day
+
+    const defaultCheckIn = Math.floor(today.getTime() / 1000);
+
+    const oneDayInSeconds = 24 * 60 * 60;
+    const defaultCheckOut = defaultCheckIn + oneDayInSeconds;
+
+    console.log(defaultCheckIn, defaultCheckOut);
+
+    return {
+        defaultCheckIn,
+        defaultCheckOut,
+    };
+}
+
+function totalGuests(filterBy) {
+    const { adults, children, infants } = filterBy.guests
+    let totalGuests = adults + children + infants
+    return totalGuests
+}
+
+
+
+function getLabels() {
+    return labels
+}
+function calcNights(firstDate, secondDate) {
+    const timeDifference = secondDate - firstDate;
+    const daysDifference = Math.ceil(timeDifference / (24 * 60 * 60)); // seconds to days
+
+    return daysDifference;
+}

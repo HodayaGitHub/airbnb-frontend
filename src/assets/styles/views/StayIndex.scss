@@ -1,26 +1,25 @@
 .stay-list {
-    padding: 15px 0 0;
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    // grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(auto-fill, minmax(0, 1fr));
+  padding: 15px 0 0;
+  list-style: none;
+  display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  // grid-template-columns: repeat(6, 1fr);
+  // grid-template-rows: repeat(auto-fill, minmax(0, 1fr));
 
-    gap: 15px;
-    list-style: none;
+  grid-column-gap: 24px;
+  list-style: none;
+  grid-row-gap: 40px;
+  li {
+    width: 100%;
+    color: $clr7;
+  }
 
-    li {
-        // background-color: $clr2;
-        width: 100%;
-        // height: 70%;
-        color: $clr7;
-        // padding: 5px;
-        // margin: 5px;
-    }
+  h3 {
+    background-color: #ddd;
+  }
+}
 
-    h3 {
-        background-color: #ddd;
-        // padding: 10px 5px;
-        // margin: 5px;
-    }
+.stay-index-loader {
+  height: 80dvh;
 }

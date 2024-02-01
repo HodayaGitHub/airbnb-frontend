@@ -1,11 +1,14 @@
-// import { stayService } from '../services/stay.service.local.js'
-import { stayService } from '../../services/stay.service.local.js'
+import { stayService } from '../../services/stay.service.js'
+// import { stayService } from '../../services/stay.service.local.js'
 
 import { userService } from '../../services/user.service.js'
 import { store } from '../store.js'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
-import { ADD_STAY, ADD_TO_CART, CLEAR_CART, REMOVE_STAY, REMOVE_FROM_CART, SET_STAYS, UNDO_REMOVE_STAY, UPDATE_STAY, SET_FILTER_BY, SET_FILTER_LABEL} from '../reducers/stay.reducer.js'
+import { SET_STAY_ADDED , APPEND_STAYS, ADD_STAY, REMOVE_STAY, SET_STAYS, UNDO_REMOVE_STAY, UPDATE_STAY, SET_FILTER_BY, SET_FILTER_LABEL } from '../reducers/stay.reducer.js'
 import { SET_SCORE } from '../reducers/user.reducer.js'
+import { LOADING_START, LOADING_DONE } from '../reducers/system.reducer.js'
+
+const ITEMS_PER_PAGE = 24
 
 // Action Creators:
 export function getActionRemoveStay(stayId) {
@@ -27,20 +30,25 @@ export function getActionUpdateStay(stay) {
     }
 }
 
-export async function loadStays(filterBy) {
+export async function loadStays(filterBy, shouldLoadMore) {
     try {
-        const stays = await stayService.query(filterBy)
-        // console.log('Stays from DB:', stays)
+        store.dispatch({ type: LOADING_START, isLoading: true })
+        const page = shouldLoadMore ? store.getState().stayModule.page + 1 : 1
+        const response = await stayService.query(filterBy, page, ITEMS_PER_PAGE)
+        console.log(response.stays)
+        const newStays = Array.isArray(response.stays) ? response.stays : []
         store.dispatch({
             type: SET_STAYS,
-            stays
+            stays: shouldLoadMore ? [...store.getState().stayModule.stays, ...newStays] : [...newStays],
+            page: page,
+            totalDocumentsCount: response.totalDocumentsCount,
         })
-
     } catch (err) {
         console.log('Cannot load stays', err)
         throw err
+    } finally {
+        store.dispatch({ type: LOADING_DONE, isLoading: false })
     }
-
 }
 
 export async function removeStay(stayId) {
@@ -52,8 +60,6 @@ export async function removeStay(stayId) {
         throw err
     }
 }
-
-// }
 
 export async function addStay(stay) {
     try {
@@ -81,25 +87,12 @@ export function updateStay(stay) {
         })
 }
 
-export function addToCart(stay) {
-    store.dispatch({
-        type: ADD_TO_CART,
-        stay
-    })
-}
 
-export function removeFromCart(stayId) {
-    store.dispatch({
-        type: REMOVE_FROM_CART,
-        stayId
-    })
-}
 
 export async function checkout(total) {
     try {
         const score = await userService.changeScore(-total)
         store.dispatch({ type: SET_SCORE, score })
-        store.dispatch({ type: CLEAR_CART })
         return score
     } catch (err) {
         console.log('StayActions: err in checkout', err)
@@ -119,7 +112,7 @@ export function onRemoveStayOptimistic(stayId) {
 
     stayService.remove(stayId)
         .then(() => {
-            console.log('Server Reported - Deleted Succesfully');
+            console.log('Server Reported - Deleted Succesfully')
         })
         .catch(err => {
             showErrorMsg('Cannot remove stay')
@@ -139,3 +132,5 @@ export function setFilterBy(filterBy) {
 export function setSelectedLabel(selectedLabel) {
     return store.dispatch({ type: SET_FILTER_LABEL, selectedLabel })
 }
+
+
