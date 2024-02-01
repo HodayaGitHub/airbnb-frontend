@@ -1,9 +1,81 @@
 .app-header {
-  // background-color: $clr4;
   padding: 10px 0 10px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  .logo-name {
+    color: #FF385C;
+  }
+
+  &.main-header-on-scroll {
+    margin-bottom: 2rem;
+    position: relative;
+    margin-top: 15px;
+
+    &:after {
+      content: "";
+      position: absolute;
+      display: block;
+      bottom: 0;
+      height: 1px;
+      width: 98dvw;
+      background: #DDDDDD;
+      left: 50%;
+      transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+      bottom: -15px;
+    }
+
+    .stay-search {
+
+      height: 100%;
+
+      &::after {
+        content: none;
+      }
+
+      .search-last-section .search-icon {
+        padding: 0.8rem;
+        width: inherit;
+      }
+
+      .search-container {
+        height: 54px;
+        margin-bottom: 0;
+        width: 400px;
+        align-self: center;
+        justify-content: center;
+        // margin-bottom: 50px;
+        height: 93%;
+
+
+
+        > :not(:first-child):not(:last-child) {
+          flex-grow: 0;
+          width: inherit;
+        }
+
+        span {
+          font-size: 14px;
+        }
+
+        .search-div {
+          min-width: 100px;
+
+          &:first-child {
+            padding: 0;
+          }
+
+          .inner-div {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+
 
   .login {
     display: flex;
@@ -13,11 +85,13 @@
     border: 1px solid $border-gray;
     transition: box-shadow 0.3s;
     cursor: pointer;
-    .user-img{
-     img{
-      width: 40px;
-     }
+
+    .user-img {
+      img {
+        width: 40px;
+      }
     }
+
     &:hover {
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
       ;
@@ -61,6 +135,7 @@
 
       &:hover {
         background-color: $lightGray-bg-clr;
+
         .login-form {
           .login-btn {
             background-color: $lightGray-bg-clr;
@@ -77,9 +152,11 @@
     .notLogin-user-modal {
       display: flex;
       flex-direction: column;
-      .login-form:hover{
+
+      .login-form:hover {
         background-color: $lightGray-bg-clr;
-        button{
+
+        button {
           background-color: $lightGray-bg-clr;
         }
       }
@@ -88,11 +165,17 @@
 
   .logo-container {
     font-family: roboto, sans-serif;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 600;
     cursor: pointer;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+
     .app-logo {
-      width: 120px;
+      width: max-content;
       height: 34.08px;
     }
 

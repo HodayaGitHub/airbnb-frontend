@@ -6,8 +6,13 @@ export const labels = [
     },
     {
         "title": "Room",
-        "svg": "Arctic",
+        "svg": "Room",
         "label": "rooms"
+    },
+    {
+        "title": "House",
+        "svg": "House",
+        "label": "House",
     },
     // {
     //     "title": "Apartment",
@@ -15,18 +20,18 @@ export const labels = [
     //     "label": "Apartment",
     // },
     {
-        "title": "Caves",
+        "title": "Cave",
         "svg": "Caves",
         "label": "Caves",
 
     },
+    // {
+    //     "title": "Cabin",
+    //     "svg": "Cabins",
+    //     "label": "Cabins",
+    // },
     {
-        "title": "Cabins",
-        "svg": "Cabins",
-        "label": "Cabins",
-    },
-    {
-        "title": "Castles",
+        "title": "Castle",
         "svg": "Castles",
         "label": "Castles",
     },
@@ -41,12 +46,12 @@ export const labels = [
         "label": "Minsus"
     },
     {
-        "title": "Yurts",
+        "title": "Yurt",
         "svg": "Yurts",
         "label": "Yurts"
     },
     {
-        "title": "Domes",
+        "title": "Dome",
         "svg": "Domes",
         "label": "Domes"
     },
@@ -56,22 +61,22 @@ export const labels = [
     //     "label": "Casa"
     // },
     {
-        "title": "Ryokans",
+        "title": "Ryokan",
         "svg": "Ryokans",
         "label": "Ryokans"
     },
+    // {
+    //     "title": "Beachfront",
+    //     "svg": "Beachfront",
+    //     "label": "Beachfront",
+    // },
+    // {
+    //     "title": "Windmills",
+    //     "svg": "Windmills",
+    //     "label": "Windmills"
+    // },
     {
-        "title": "Beachfront",
-        "svg": "Beachfront",
-        "label": "Beachfront",
-    },
-    {
-        "title": "Windmills",
-        "svg": "Windmills",
-        "label": "Windmills"
-    },
-    {
-        "title": "Barns",
+        "title": "Barn",
         "svg": "Barns",
         "label": "Barns",
     },
@@ -86,11 +91,11 @@ export const labels = [
     //     "label": "Containers",
 
     // },
-    {
-        "title": "Dammusi",
-        "svg": "Dammusi",
-        "label": "Dammusi"
-    },
+    // {
+    //     "title": "Dammusi",
+    //     "svg": "Dammusi",
+    //     "label": "Dammusi"
+    // },
     {
         "title": "Trulli",
         "svg": "Trulli",
@@ -102,7 +107,7 @@ export const labels = [
     //     "label": " Campervan",
     // },
     {
-        "title": "Cycladic homes",
+        "title": "Cycladic home",
         "svg": "CycladicHomes",
         "label": "Cycladic homes",
     },
@@ -120,11 +125,6 @@ export const labels = [
         "title": "Hotel",
         "svg": "Hotel",
         "label": "Hotel",
-    },
-    {
-        "title": "House",
-        "svg": "House",
-        "label": "House",
     },
     {
         "title": "Kezhan",
@@ -157,7 +157,7 @@ export const labels = [
     //     "label": "TreeHouse"
     // },
     {
-        "title": "Farms",
+        "title": "Farm",
         "svg": "Farms",
         "label": "Farms"
     },
@@ -167,7 +167,7 @@ export const labels = [
     //     "label": "aFrames"
     // },
     {
-        "title": "Tiny homes",
+        "title": "Tiny home",
         "svg": "TinyHomes",
         "label": "Tiny homes"
     },
