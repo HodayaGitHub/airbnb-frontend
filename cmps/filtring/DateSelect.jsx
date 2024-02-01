@@ -1,5 +1,5 @@
-import 'react-date-range/dist/styles.css' 
-import 'react-date-range/dist/theme/default.css' 
+import 'react-date-range/dist/styles.css'
+import 'react-date-range/dist/theme/default.css'
 import { DateRange } from 'react-date-range'
 
 import { useState } from 'react'
@@ -7,7 +7,7 @@ import { useState } from 'react'
 export function DateSelect({ onSetField, checkIn, checkOut, monthsToShow = 2 }) {
     checkIn = checkIn || new Date()
     checkOut = checkOut || new Date()
-    
+
     const [range, setRange] = useState([
         {
             startDate: checkIn,
@@ -17,6 +17,7 @@ export function DateSelect({ onSetField, checkIn, checkOut, monthsToShow = 2 }) 
     ])
 
     function handleChange(item) {
+
         const selection = item.selection
         setRange([selection])
         if (selection.startDate === selection.endDate) {

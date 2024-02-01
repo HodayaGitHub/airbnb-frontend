@@ -3,8 +3,10 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import Avatar from '@mui/material/Avatar'
 // import { stayService } from '../services/stay.service.js'
 import { stayService } from '../services/stay.service.local.js'
+import { updateStay } from '../store/actions/stay.actions.js'
 // HARD CODED
 import img from '../assets/img/host-img/stay-host-img.jpg'
+import reviewer1 from '../assets/reviewers-imgs/Emma-Johnson-img.jpg'
 import key from '../assets/img/svgs/key.svg'
 import chat from '../assets/img/svgs/chat.svg'
 import location from '../assets/img/svgs/location.svg'
@@ -13,6 +15,8 @@ import { ReservationModal } from '../cmps/reservationModal.jsx'
 export function StayDetails() {
   // const [msg, setMsg] = useState(getEmptyMsg())
   const [stay, setStay] = useState(null)
+  const [isEdit, setIsEdit] = useState(false)
+  const [isOver, setIsOver] = useState(false)
   const { stayId } = useParams()
   const navigate = useNavigate()
 
@@ -29,15 +33,63 @@ export function StayDetails() {
       navigate('/stay')
     }
   }
+  function handleChange(target) {
+    const field = target.name
+    let value = target.value
+    setStay((prevStay) => ({ ...prevStay, [field]: value }))
+  }
+  function handleSubmit(e) {
+    e.preventDefault()
+    if (!stay.name) return
+    onUpdate(stay)
+  }
+
+  async function onUpdate(stay) {
+    try {
+      await updateStay(stay)
+      setIsEdit(false)
+    } catch (err) {
+      console.log('Cannot add stay', err)
+    }
+  }
 
   if (!stay) return <div></div>
   return (
     <section className='stay-details'>
       <div className='stay-name'>
-        <h1>{stay.name}</h1>
+        {isEdit && (
+          <form onSubmit={handleSubmit}>
+            <input
+              onChange={(e) => handleChange(e.target)}
+              value={stay.name}
+              type='text'
+              name='name'
+              id='name'
+            />
+          </form>
+        )}
+        {!isEdit && (
+          <>
+            <h1
+              onMouseLeave={() => {
+                setIsOver(false)
+              }}
+              onMouseOver={() => {
+                setIsOver(true)
+              }}
+            >
+              {stay.name}
+              {isOver && (
+                <button className='edit-btn' onClick={() => setIsEdit(true)}>
+                  🖉
+                </button>
+              )}
+            </h1>
+          </>
+        )}
         <div className='stay-name-actions'>
-          <button>Share</button>
-          <button>Save</button>
+          <div className='action'>Share</div>
+          <div className='action'>Save</div>
         </div>
       </div>
 
@@ -130,11 +182,37 @@ export function StayDetails() {
         <section className='stay-amenities'>
           <h4>What this place offers</h4>
           <div className='amenities-container'>
-            {stay.amenities.map((amenity) => (
-              <p>{amenity}</p>
+            {stay.amenities.map((amenity, index) => (
+              <p key={index}>{amenity}</p>
             ))}
           </div>
         </section>
+      </section>
+      <section className='stay-reviews'>
+        <h2>
+          ★ 4.95 • {stay.reviews.length} review
+          {stay.reviews.length !== 1 && <span>s</span>}
+        </h2>
+        <div className='reviews'>
+          {stay.reviews.map((review, index) => {
+            return (
+              <div className='review' key={index}>
+                <div className='review-by'>
+                  <Avatar className='avatar' alt='Remy Sharp' src={reviewer1} />
+                  <h3 className='name'>{review.by.fullname}</h3>
+                  <p className='review-date'>
+                    {new Date(review.postAt).toLocaleString('en', {
+                      month: 'short'
+                    })}{' '}
+                    {''}
+                    {new Date(review.postAt).getFullYear()}
+                  </p>
+                </div>
+                <p className='text'>{review.txt}</p>
+              </div>
+            )
+          })}
+        </div>
       </section>
     </section>
   )
