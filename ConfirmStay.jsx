@@ -9,17 +9,25 @@ import { stayService } from '../services/stay.service'
 import { orderService } from '../services/order.service'
 import { MainHeader } from '../cmps/MainHeader.jsx'
 import { userService } from '../services/user.service.js'
+import { ButtonHover } from '../cmps/buttonHover.jsx'
+import { socketService, SOCKET_ORDER_STATUS_UPDATED, SOCKET_ADD_ORDER } from '../services/socket.service.js'
+import { utilService } from '../services/util.service.js'
 
 export function ConfirmPage() {
   const { stayId } = useParams()
   const navigate = useNavigate()
+
+  const [forceRender, setForceRender] = useState(false)
+
   const [card, setCard] = useState(credit[0])
   const order =
     useSelector((storeState) => storeState.orderModule.order) ||
     JSON.parse(localStorage.getItem('PRE_ORDER'))
   const [stay, setStay] = useState(null)
 
-  const loggedInUser = useSelector((storeState) => storeState.userModule.loggedInUser);
+  const loggedInUser = useSelector(
+    (storeState) => storeState.userModule.loggedInUser
+  )
 
   useEffect(() => {
     loadStay()
@@ -28,6 +36,7 @@ export function ConfirmPage() {
   async function loadStay() {
     try {
       const stay = await stayService.getById(stayId)
+      console.log('stay', stay)
       setStay(stay)
     } catch (err) {
       console.log(err)
@@ -40,35 +49,45 @@ export function ConfirmPage() {
     setCard((prevCard) => ({ ...prevCard, [field]: value }))
   }
 
-
   async function saveOrderToDb(order) {
+    console.log('baba', loggedInUser._id);
+    order.buyerId = loggedInUser._id
+    order.id = await utilService.makeId()
+    console.log('mama', order);
+    console.log(order);
+
     try {
       const user = await userService.getById(loggedInUser._id)
+      console.log('user', user)
       const host = await userService.getById('65a59de928c0c04c96622d7f')
 
       const updatedUser = {
         ...user,
-        myOrders: [...(user.myOrders || []), order],
+        myOrders: [...(user.myOrders || []), order]
       }
 
       const updatedHost = {
         ...host,
-        myGuests: [...(host.myGuests || []), order],
+        // myGuests: [...(host.myGuests || []), order]
+        myGuests: [...(host.myGuests || []), order]
       }
 
       await Promise.all([
         orderService.save(order),
         userService.update(updatedUser),
-        userService.update(updatedHost),
+        userService.update(updatedHost)
       ])
 
+      socketService.emit(SOCKET_ADD_ORDER, order)
+
+
       localStorage.removeItem('PRE_ORDER')
-      navigate('/')
+      navigate('/trips')
+      window.location.reload()
     } catch (err) {
       console.error('Failed to update order', err)
     }
   }
-
 
   if (!stay || !order) return <div className='loader'></div>
   return (
@@ -190,14 +209,23 @@ export function ConfirmPage() {
               responsible for damage.
             </p>
 
-            <button
+            {/* <button
               className='confirm-btn'
               onClick={() => {
                 saveOrderToDb(order)
               }}
             >
               Confirm and pay
-            </button>
+            </button> */}
+
+            <div
+              className='confirm-btn'
+              onClick={() => {
+                saveOrderToDb(order)
+              }}
+            >
+              <ButtonHover buttonContent='Confirm and pay' />
+            </div>
           </div>
 
           <div className='oreder-preview'>
