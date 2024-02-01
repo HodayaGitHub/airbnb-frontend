@@ -8,9 +8,17 @@ import { updateStay } from '../store/actions/stay.actions.js'
 import img from '../assets/img/host-img/stay-host-img.jpg'
 import reviewer1 from '../assets/reviewers-imgs/Emma-Johnson-img.jpg'
 import key from '../assets/img/svgs/key.svg'
+import share from '../assets/img/svgs/share.svg'
+import heart from '../assets/img/svgs/heart.svg'
 import chat from '../assets/img/svgs/chat.svg'
 import location from '../assets/img/svgs/location.svg'
 import { ReservationModal } from '../cmps/reservationModal.jsx'
+import { GoogleMap } from '../cmps/GoogleMap.jsx'
+import { FavoriteIcon } from '../cmps/favoriteIcon.jsx'
+import ShareModal from '../cmps/shareModal.jsx'
+import { useLocation } from 'react-router-dom'
+import queryString from 'query-string'
+import { orderService } from '../services/order.service.js'
 
 export function StayDetails() {
   // const [msg, setMsg] = useState(getEmptyMsg())
@@ -19,10 +27,40 @@ export function StayDetails() {
   const [isOver, setIsOver] = useState(false)
   const { stayId } = useParams()
   const navigate = useNavigate()
+  const [order, setOreder] = useState(orderService.getEmptyOrder())
+  const location = useLocation()
 
   useEffect(() => {
     loadStay()
+    createOrder()
   }, [stayId])
+
+  function createOrder() {
+    const searchParams = new URLSearchParams(location.search)
+    const check_In = decodeURIComponent(searchParams.get('checkIn'))
+    const check_Out = decodeURIComponent(searchParams.get('checkOut'))
+    const guestParam = decodeURIComponent(searchParams.get('guestParam'))
+    var guests = queryString.parse(guestParam)
+    guests.adults = +guests.adults
+    guests.children = +guests.children
+    guests.infants = +guests.infants
+    guests.pets = +guests.pets
+    if (!guests.adults) guests.adults = 1
+    const checkIn = new Date(check_In).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    })
+    const checkOut = new Date(check_Out).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    })
+    let count = guests.adults + guests.children
+    const nights = stayService.daysBetweenDates(checkIn, checkOut)
+    setOreder((prevOrder) => ({ ...prevOrder, checkIn, checkOut, totalNights: nights, guests, stayId, totalGuests: count }))
+    console.log('from details: ', order);
+  }
 
   async function loadStay() {
     try {
@@ -52,6 +90,17 @@ export function StayDetails() {
       console.log('Cannot add stay', err)
     }
   }
+
+  function calculateAverageRating() {
+    if (!stay || !stay.reviews || stay.reviews.length === 0) {
+      return 0
+    }
+
+    const totalRating = stay.reviews.reduce((acc, review) => acc + review.rate, 0)
+    return totalRating / stay.reviews.length
+  }
+
+  let averageRating = calculateAverageRating()
 
   if (!stay) return <div></div>
   return (
@@ -88,8 +137,16 @@ export function StayDetails() {
           </>
         )}
         <div className='stay-name-actions'>
-          <div className='action'>Share</div>
-          <div className='action'>Save</div>
+          <div className='action'>
+            <ShareModal stayImg={stay.imgUrls[0]} stay={stay} averageRating={averageRating} />
+          </div>
+
+          {/* <div className='action'> 
+          <img src={heart} alt="" />
+          <p className='text'>save</p>
+          </div> */}
+
+
         </div>
       </div>
 
@@ -112,7 +169,7 @@ export function StayDetails() {
       </div>
       <section className='mid-section'>
         <div className='reservation'>
-          <ReservationModal stayId={stayId} />
+          <ReservationModal stayId={stay._id} price={stay.price} order={order} setOreder={setOreder} />
         </div>
         <section className='stay-information'>
           <h1>
@@ -121,21 +178,24 @@ export function StayDetails() {
           </h1>
           {/* HARD CODED FOR NOW */}
           <p className='stay-contents'>
-            5 guests • 3 bedrooms • 3 beds • 2 baths
+            {stay.capacity} guest
+            {stay.capacity !== 1 && <span>s</span>} • {stay.bedrooms} bedroom
+            {stay.bedrooms !== 1 && <span>s</span>} •
+            3 beds • {stay.bathrooms} bathroom{stay.bathrooms !== 1 && <span>s</span>}
           </p>
           <p className='stay-rating'>
-            ★4.95 • <span>152 reviews</span>
+            🟊 {averageRating.toFixed(2)} • <span>{stay.reviews.length} reviews</span>
           </p>
         </section>
         <section className='hostedBy'>
           {/* <img src={stay.host.imgUrl} alt='' /> */}
           <div className='hostedBy-img'>
             {/* <img src={img} alt='' /> */}
-            <Avatar alt='Remy Sharp' src={img} />
+            <Avatar alt='Remy Sharp' src={stay.host.pictureUrl} />
           </div>
           <div className='hostedBy-name'>
             <h2>{stay.host.fullname}</h2>
-            <p>5 years hosting</p>
+            <p>{stay.host.yearsOfHosting} years hosting</p>
           </div>
         </section>
         <section className='guest-experiences'>
@@ -174,11 +234,7 @@ export function StayDetails() {
           </div>
         </section>
         {/* HARD CODDED */}
-        <section className='stay-descripiton'>
-          The comfortable apartment at the heart of busy Tsim Sha Tsui.2minutes
-          walk to the MTR/Subway station.There are many biggest shopping mall
-          around here:K-11,The One,Harbour city ect.
-        </section>
+        <section className='stay-descripiton'>{stay.summary}</section>
         <section className='stay-amenities'>
           <h4>What this place offers</h4>
           <div className='amenities-container'>
@@ -190,7 +246,7 @@ export function StayDetails() {
       </section>
       <section className='stay-reviews'>
         <h2>
-          ★ 4.95 • {stay.reviews.length} review
+          🟊 {averageRating.toFixed(2)} • {stay.reviews.length} review
           {stay.reviews.length !== 1 && <span>s</span>}
         </h2>
         <div className='reviews'>
@@ -198,14 +254,14 @@ export function StayDetails() {
             return (
               <div className='review' key={index}>
                 <div className='review-by'>
-                  <Avatar className='avatar' alt='Remy Sharp' src={reviewer1} />
+                  <Avatar className='avatar' alt='Remy Sharp' src={review.imgUrl} />
                   <h3 className='name'>{review.by.fullname}</h3>
                   <p className='review-date'>
-                    {new Date(review.postAt).toLocaleString('en', {
+                    {new Date(review.at).toLocaleString('en', {
                       month: 'short'
                     })}{' '}
                     {''}
-                    {new Date(review.postAt).getFullYear()}
+                    {new Date(review.at).getFullYear()}
                   </p>
                 </div>
                 <p className='text'>{review.txt}</p>
@@ -214,6 +270,10 @@ export function StayDetails() {
           })}
         </div>
       </section>
+      {/* <section className='map'>
+        <h2>Where you'll be</h2>
+        <GoogleMap stayLoc={stay.loc}/>
+      </section> */}
     </section>
   )
 }

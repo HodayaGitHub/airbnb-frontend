@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import left_arrow from '../../src/assets/img/svgs/left-arrow.svg'
-import TextField from '@mui/material/TextField';
-import { credit } from '../../src/data/creditcard';
-import { useState } from 'react';
+import TextField from '@mui/material/TextField'
+import { credit } from '../../src/data/creditcard'
+import { useState } from 'react'
 export function ConfirmPage() {
     const { stayId } = useParams()
     const navigate = useNavigate()
@@ -49,7 +49,7 @@ export function ConfirmPage() {
                         <form className='billing-form' onSubmit={(ev) => { ev.preventDefault() }}>
                             <TextField className="billing number" id="number" onChange={(ev) => handleCreditChange(ev.target)} label="Credit card" value={card.number || ''} placeholder='0000 0000 0000 0000' variant="standard" inputProps={{ maxLength: 16 }} />
                             <div>
-                                <TextField className="billing exp-date" id="exp-date" onChange={(ev) => handleCreditChange(ev.target)} label="Expiration date" value={card.expDate || ''} placeholder='MM/YY' variant="standard" inputProps={{ maxLength: 5 }} />
+                                <TextField className="billing exp-date" id="expDate" onChange={(ev) => handleCreditChange(ev.target)} label="Expiration date" value={card.expDate || ''} placeholder='MM/YY' variant="standard" inputProps={{ maxLength: 5 }} />
                                 <TextField className="billing cvv" id="cvv" onChange={(ev) => handleCreditChange(ev.target)} label="CVV" placeholder='123' value={card.cvv || ''} maxRows={1} variant="standard" inputProps={{ maxLength: 3 }} />
                             </div>
                         </form>

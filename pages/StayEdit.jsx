@@ -72,7 +72,7 @@ export function StayEdit() {
         if (checked) {
             label.push(name)
         } else {
-            const index = label.indexOf(name);
+            const index = label.indexOf(name)
             if (index !== -1) {
                 label.splice(index, 1)
             }
@@ -85,7 +85,7 @@ export function StayEdit() {
         if (checked) {
             amentity.push(name)
         } else {
-            const index = amentity.indexOf(name);
+            const index = amentity.indexOf(name)
             if (index !== -1) {
                 amentity.splice(index, 1)
             }

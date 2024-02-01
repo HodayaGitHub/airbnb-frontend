@@ -1,13 +1,17 @@
-import { Link, useNavigate, NavLink } from 'react-router-dom'
+import { Link, useNavigate, NavLink, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ControlledCarousel } from './ControlledCarousel'
 import { useState } from 'react'
+import { FavoriteIcon } from './favoriteIcon'
+import { SimpleSlider } from './SimpleSlider'
 
-export function StayPreview({ stay, onRemoveStay }) {
+
+export function StayPreview({ stay, onRemoveStay, params }) {
+  console.log(params)
   const [isHover, setIsHover] = useState(false)
   const navigate = useNavigate()
   const openStayInNewTab = () => {
-    const url = `/stay/${stay._id}`
+    const url = `/stay/${stay._id}?${JSON.stringify(params)}`
     window.open(url, '_blank')
     // navigate(`/stay/${stay._id}`)
   }
@@ -19,14 +23,17 @@ export function StayPreview({ stay, onRemoveStay }) {
       onMouseLeave={() => setIsHover(false)}
     >
       <div onClick={openStayInNewTab}>
+      {/* <div> */}
         <div className='img-container'>
-          <ControlledCarousel stay={stay} isHover={isHover} />
+          <FavoriteIcon />
+          <SimpleSlider stay={stay}/>
+          {/* <ControlledCarousel stay={stay} isHover={isHover} /> */}
         </div>
         <div className='stay-desc'>
           <span className='stay-name'>
             {stay.loc.city}, {stay.loc.country}{' '}
           </span>
-          <span className='stay-star'>★ 4.95</span>
+          <span className='stay-star'>🟊 4.95</span>
 
           {/* TODO: calc the km between the searched location to the stay location */}
           <span className='stay-distance'>x Kilometres away</span>

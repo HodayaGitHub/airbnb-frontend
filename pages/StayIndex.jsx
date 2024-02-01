@@ -1,38 +1,31 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
+
 import { loadStays, addStay, updateStay, removeStay, addToCart, setFilterBy } from '../store/actions/stay.actions.js'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { userService } from '../services/user.service.js'
-// import { stayService } from '../services/stay.service.js'
 import { stayService } from '../services/stay.service.local.js'
+// import { stayService } from '../services/stay.service.js'
 
 import { StayList } from '../cmps/StayList.jsx'
-import { StaySearch } from '../cmps/filtring/StaySearch.jsx'
-import { LabelsFilter } from '../cmps/filtring/LabelsFilter.jsx'
+import { StaySearch } from '../cmps/search/StaySearch.jsx'
+import { StayFilter } from '../cmps/filter/StayFilter.jsx'
+import { LabelsFilter } from '../cmps/filter/LabelsFilter.jsx'
+import { AutoCompleteCmp } from '../cmps/search/AutoCompleteCmp.jsx'
+import { Restcountries } from '../cmps/search/Restcountries.jsx'
+
 
 export function StayIndex() {
 
+    const [searchParams, setSearchParams] = useSearchParams()
     const stays = useSelector(storeState => storeState.stayModule.stays)
     const isLoading = useSelector(storeState => storeState.userModule.isLoading)
     const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
-
+    const [params, setParams] = useState(stayService.generateQueryString(filterBy))
     useEffect(() => {
         loadStays(filterBy)
-
-        // async function initializeAndLoadStays(filterBy) {
-        //     try {
-        //         await stayService.initializeLocalStorage()
-        //         console.log('initialize local storage')
-        //         await loadStays(filterBy)
-        //         console.log('loaded stays')
-        //     } catch (error) {
-        //         console.error('An error occurred:', error)
-        //     }
-        // }
-
-        // initializeAndLoadStays()
     }, [filterBy])
 
     async function onRemoveStay(stayId) {
@@ -81,9 +74,12 @@ export function StayIndex() {
 
 
     function onSetFilter(filterBy) {
-        // console.log('filterBy:', filterBy)
         setFilterBy(filterBy)
+        setSearchParams(stayService.buildQueryParams(filterBy))
+        setParams(stayService.generateQueryString(filterBy))
+
     }
+
     function onRemoveStay(stayId) {
         try {
             removeStay(stayId)
@@ -94,32 +90,28 @@ export function StayIndex() {
     }
 
     return (
-        <div>
+        <>
+            <StaySearch
+                filterBy={filterBy}
+                onSetFilter={onSetFilter}
+            />
 
-            <div className="filtring-container">
-
-                <StaySearch
+            <div className="filter-labels-container">
+                <LabelsFilter
                     filterBy={filterBy}
                     onSetFilter={onSetFilter}
                 />
-
-                <div>
-                    <LabelsFilter
-                        filterBy={filterBy}
-                        onSetFilter={onSetFilter}
-                    />
-                </div>
-            </div>
+                <StayFilter />
+            </div >
 
             <button> <Link className='add-btn' to={`/edit`}>Add</Link></button>
-            <main>
-                {isLoading && 'Loading...'}
-                <StayList
-                    stays={stays}
-                    onRemoveStay={onRemoveStay}
-                />
-            </main>
-        </div >
 
+            {isLoading && 'Loading...'}
+            <StayList
+                params={params}
+                stays={stays}
+                onRemoveStay={onRemoveStay}
+            />
+        </>
     )
 }
