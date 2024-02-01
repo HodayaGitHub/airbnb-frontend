@@ -8,20 +8,25 @@
     .stay-name-actions {
       font-size: 0.875rem;
       display: flex;
-    
+      align-items: center;
+      justify-content: center;
+
       .action {
         padding: 8px;
         border-radius: 10px;
         cursor: pointer;
         display: flex;
-        p{
-          margin: 0 0 0 4px;
+
+        p {
+          margin: 0;
           text-decoration: underline 1px $darkGray-clr;
         }
-        img{
+
+        img {
           width: 16px;
         }
-        &:hover{
+
+        &:hover {
           // background-color: $lightGray-bg-clr;
         }
       }
@@ -85,7 +90,7 @@
     display: grid;
     grid-template-columns: 653px 1fr;
 
-    > * {
+    >* {
       grid-column: 1;
     }
 
@@ -157,7 +162,7 @@
       border-bottom: 1px solid $lightGray-bg-clr1;
 
       h2 {
-        margin: 0;
+        margin-bottom: 5px;
         font-size: 1rem;
         font-weight: bold;
       }
@@ -165,9 +170,10 @@
       p {
         margin: 0;
         font-size: 0.875rem;
+        color: $lightGray-clr;
       }
 
-      > * {
+      >* {
         margin-bottom: 24px;
       }
 
@@ -204,40 +210,78 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: auto-fill;
+        margin-top: 25px;
+        color: #403636e3;
+
+        .icons-wrap {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+
+          span {
+            line-break: strict;
+            width: max-content;
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+
+            svg {
+              fill: #403636e3;
+              stroke: #403636e3;
+              stroke-width: 0.1px;
+
+              &:hover {
+                fill: black;
+                stroke: black !important;
+                stroke-width: 0.6px;
+              }
+            }
+
+          }
+        }
       }
     }
   }
+
   .stay-reviews {
     padding: 48px 0;
     border-bottom: 1px solid $lightGray-bg-clr1;
+
     h2 {
       font-size: 1.625rem;
       margin-bottom: 32px;
     }
+
     .reviews {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-gap: 40px 1px;
+
       .review {
         padding: 0 8px;
         margin-right: 95px;
+
         .review-by {
           display: flex;
           align-items: center;
           gap: 14px;
           margin-bottom: 13px;
+
           p {
             margin: 0;
           }
+
           h3 {
             font-size: 1rem;
             margin: 0;
             font-weight: 600;
           }
         }
+
         .review-date {
           font-size: 0.875rem;
         }
+
         .text {
           display: -webkit-box;
           -webkit-line-clamp: 3;
@@ -249,9 +293,26 @@
         }
       }
     }
+
+    .showMore-btn {
+      color: white;
+      background-color: #222222;
+      width: max-content;
+      height: max-content;
+      font-weight: bold;
+      border-radius: 10px;
+      padding: 15px 20px;
+      transition: background-color 0.5s;
+      align-self: flex-end;
+
+      &:hover {
+        background-color: #272727;
+      }
+    }
   }
-  .map{
-    h2{
+
+  .map {
+    h2 {
       padding: 24px 0;
       margin: 0;
     }

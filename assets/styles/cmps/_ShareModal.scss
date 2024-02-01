@@ -7,13 +7,16 @@
       color: $darkGray-clr; 
       font-weight:  600;
       text-decoration: underline 1px solid black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
   }
 }
 .share-modal{
  
     h2{
       font-size: 1.625rem;
-      margin-bottom: 24px;
+      margin: 20px 0;
     }
     .little-img{
       display: flex;
@@ -72,6 +75,9 @@
 .close-share-modal{
   background-color: rgb(255, 255, 255);
   color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   padding: 1px;
   top: 5px;

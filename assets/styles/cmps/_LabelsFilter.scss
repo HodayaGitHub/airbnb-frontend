@@ -78,7 +78,8 @@
                 color: black;
 
                 svg {
-                    fill: black;
+                    // fill: black;
+                    fill: #605353;
                     stroke: black !important;
                     stroke-width: 0.6px;
                 }
@@ -163,12 +164,6 @@
     }
 }
 
-.dymanic-header {
-    &.sticky {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        position: sticky;
-        top: 0;
-        z-index: 4;
-        background-color: #FFFFFF;
-    }
-}
+// .dymanic-header {
+
+// }

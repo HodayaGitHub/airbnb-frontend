@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-around;
   margin-top: 15px;
+
   .dashboard-data {
     display: flex;
     flex-direction: column;
@@ -10,11 +11,42 @@
     align-self: flex-start;
     z-index: 1;
   }
+  
+  
+  .dashboard-btn {
+    border-radius: 15px;
+    width: max-content;
+    padding: 0.5em;
+    transition: 0.3s;
+
+    &.approved {
+      background-color: hsla(120, 100%, 89%, 0.267);
+      border: 1px solid #08a108;
+      color: #08a108;
+
+      &:hover {
+        background-color: hsla(120, 74%, 67%, 0.267);
+      }
+    }
+
+    &.reject {
+      background-color: hsla(0, 100%, 76%, 0.267);
+      border: 1px solid #a10808;
+      color: #a10808;
+
+      &:hover {
+        background-color: hsla(0, 92%, 67%, 0.267);
+      }
+    }
+  }
 }
+
+
 
 @media (max-width: 1400px) {
   .dashboard {
     flex-direction: column;
+
     .dashboard-data {
       // flex-direction: row;
       // justify-content: space-between;

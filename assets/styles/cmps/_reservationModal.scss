@@ -5,12 +5,19 @@
   background-color: $white;
   position: sticky;
   top: 5dvh;
-  width: 322px;
+  width: 370px;
+  flex-direction: column;
+  gap: 15px;
 
   box-shadow: #0000001f 0 6px 16px;
 
   .reserve-button {
 
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    margin-top: 30px;
 
     .reserve {
       background-color: $main-clr;
@@ -24,19 +31,42 @@
       margin-bottom: 0.5rem;
     }
 
-    text-align: center;
+    .no-charge {
+      color: gray;
+    }
+
   }
 
-  .total-price {
+  // .total-price {
+  //   padding-top: 1rem;
+  //   display: grid;
+  //   grid-template-columns: max-content 1fr 1fr;
+  //   align-items: end;
+  //   font-weight: 600;
+
+  //   .total-price {
+  //     grid-column: 3;
+  //     justify-self: end;
+  //   }
+
+  // }
+
+
+  .total-price-container {
     padding-top: 1rem;
     display: grid;
     grid-template-columns: max-content 1fr 1fr;
     align-items: end;
     font-weight: 600;
+    border-top: 1px solid;
+    margin-top: 20px;
+    border-color: #8080804f;
+    font-size: 1.2rem;
 
     .total-price {
       grid-column: 3;
       justify-self: end;
+      width: max-content;
     }
 
   }

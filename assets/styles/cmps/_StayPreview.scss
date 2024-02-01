@@ -1,12 +1,14 @@
-
 .stay-preview {
   cursor: pointer;
-&:hover .slick-prev{
-    opacity: 1;   
-}
-&:hover .slick-next{
-    opacity: 1;    
-}
+
+  &:hover .slick-prev {
+    opacity: 1;
+  }
+
+  &:hover .slick-next {
+    opacity: 1;
+  }
+
   a {
     text-decoration: none;
     color: $lightGray-clr;
@@ -15,16 +17,18 @@
   .img-container {
     position: relative;
     border-radius: 10px;
+
     .stay-img {
       object-fit: cover;
       aspect-ratio: 1.050583657587549 / 1;
-      
+
     }
-    .heart{
+
+    .heart {
       position: absolute;
       z-index: 2;
-     right: 0; 
-     cursor: pointer;  
+      right: 0;
+      cursor: pointer;
     }
 
   }
@@ -35,6 +39,7 @@
     grid-template-columns: 225px 46px;
     grid-template-rows: repeat(3, 19px) 25px;
     font-size: 0.938rem;
+
     .stay-name {
       grid-column: 1;
       grid-row: 1;
@@ -47,6 +52,7 @@
       grid-column: 2;
       grid-row: 1;
       color: #000;
+      font-size: 1.05rem;
     }
 
     .stay-distance {
@@ -58,12 +64,14 @@
       grid-column: 1;
       grid-row: 3;
     }
+
     .stay-price {
       grid-column: 1;
       grid-row: 4;
       margin-top: 6px;
       //   margin-bottom: 15px;
     }
+
     .stay-price-number {
       color: $darkGray-clr;
       font-weight: bold;

@@ -128,6 +128,12 @@
           font-size: rem(20px);
         }
 
+        &.selected {
+          background-color: #b09f9f4d;
+          border: 2px solid black;
+
+        }
+
         svg {
           // height: 50px !important;
           // width: 50px !important;
@@ -185,6 +191,7 @@
     flex-direction: column;
     width: 50%;
     gap: 15px;
+
   }
 
 
@@ -196,6 +203,13 @@
     justify-content: space-between;
     border-radius: 15px;
     padding: 20px;
+    cursor: pointer;
+
+    &.selected {
+      background-color: #b09f9f4d;
+      border: 2px solid black;
+
+    }
 
 
     .place-title {
@@ -209,6 +223,11 @@
         color: #717171;
         padding-top: 5px;
       }
+    }
+
+    img {
+      align-self: flex-start;
+      width: 50px;
     }
   }
 }
@@ -230,7 +249,7 @@
         font-weight: 400;
         color: #717171;
         padding-top: 5px;
-
+        margin-bottom: 45px
       }
 
       .map {
@@ -322,6 +341,73 @@
   }
 }
 
+.step8 {
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  h3 {
+    color: $lightGray-clr;
+    font-size: 1.125rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    input {
+      margin-bottom: 100px;
+      color: $darkGray-clr;
+
+      &::placeholder {
+        color: $darkGray-clr;
+      }
+    }
+
+    .placeName {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      width: 500px;
+      font-size: 1.3rem;
+      font-weight: bold;
+
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .placePrice {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      width: 500px;
+      font-size: 1.3rem;
+      font-weight: bold;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+
+
 .step9 {
   .mini-lodaer {
     margin: 0;
@@ -374,12 +460,14 @@
   }
 
   .upload-imgs {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: repeat(2, 350px);
+    gap: 10px;
 
     .custom-btn {
-      border: 5px dashed $lightGray-clr;
+      border: 3px dashed $lightGray-clr;
       cursor: pointer;
       width: 350px;
       height: 228px;
@@ -387,11 +475,12 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      transition: background-color 0.3s ease-in-out;
+      transition: all 0.6s ease-in-out;
 
       &:hover {
-        background-color: hsla(145, 100%, 61%, 0.13);
+        background-color: hsla(0, 0%, 57%, 0.308);
         color: white;
+        border: 3px solid $lightGray-clr;
       }
     }
 
@@ -399,14 +488,55 @@
       display: none;
     }
 
-    .Addimg {
+    .img {
       width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
 
-      &.bigImg {
-        width: 100%;
-        height: 100%;
-        aspect-ratio: 1/1;
-      }
+    .svg {
+      position: absolute;
+      width: 30px;
+    }
+
+    input {
+      overflow: hidden;
     }
   }
+
+  .mini-loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 4px solid #FFF;
+    border-right: 4px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+
+    &::after {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border-left: 4px solid #FF3D00;
+      border-bottom: 4px solid transparent;
+      animation: rotation 0.5s linear infinite reverse;
+    }
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
 }

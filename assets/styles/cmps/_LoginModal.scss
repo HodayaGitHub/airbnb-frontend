@@ -91,6 +91,7 @@
       background-color: $main-clr;
       transition: all 0.5s;
       margin-top: 15px;
+      color: #fff;
       &:hover{
         background-color: #bb3049;
       }
@@ -109,9 +110,11 @@
       background-color: $demo-login-btn-bg-clr;
       transition: all 0.5s;
       margin-top: 15px;
+      color: #fff;
       &:hover{
         background-color: $demo-login-btn-hover-bg-clr;
       }
     }
   }
+  
 }

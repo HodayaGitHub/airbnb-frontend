@@ -18,7 +18,7 @@
 @import 'views/ReviewIndex';
 @import 'views/UserDetails';
 @import 'views/StayDetail.scss';
-@import "views/ConfirmPage";
+@import 'views/ConfirmPage';
 
 // Components
 @import 'cmps/AppHeader';
@@ -35,15 +35,23 @@
 @import 'cmps/Loader';
 @import 'cmps/LoginModal';
 @import 'cmps/ShowMoreStays';
+@import 'cmps/ButtonHover';
 
 //DASHBOARD
 @import 'cmps/MyDonut';
 @import 'cmps/MyBar';
+@import 'cmps/MyRevenue';
 @import 'cmps/ReservationStatus';
+@import 'cmps/DataTable';
+@import 'cmps/Trips';
+@import 'cmps/TripsTable';
+@import 'cmps/DashboardButtons';
+@import 'cmps/DashBoardTable';
 @import 'cmps/DashBoard';
 
-
-
+//ADD STAY
+@import 'cmps/addSaty/Page1';
+@import 'cmps/addSaty/Page8';
 
 // Filter cmps
 @import 'cmps/StaySearch';
@@ -51,8 +59,6 @@
 @import 'cmps/SearchModal';
 @import 'cmps/ServiceAnimalModal';
 @import 'cmps/StayFilter';
-
-
 
 // REACT BOOTSTRAP
 @import 'bootstrap/scss/bootstrap';
