@@ -2,6 +2,16 @@
     background-color: $clr4;
     padding: 10px;
 
+    .logo-container {
+        font-family: roboto, sans-serif;
+        font-size: 2rem;
+        font-weight: 600;
+        .app-logo {
+            max-width: 2rem;
+            font-weight: bold;
+        }
+    }
+
 
     .user-info {
         // background-color: $clr2;

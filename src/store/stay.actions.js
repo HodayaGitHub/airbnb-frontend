@@ -1,4 +1,6 @@
-import { stayService } from '../services/stay.service.local.js'
+// import { stayService } from '../services/stay.service.local.js'
+import { stayMockService as stayService } from '../services/stay.mock.service.js'
+
 import { userService } from '../services/user.service.js'
 import { store } from '../store/store.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'

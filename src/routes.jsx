@@ -11,7 +11,7 @@ const routes = [
     {
         path: '/',
         component: <HomePage />,
-        label: 'airbnb',
+        // label: 'airbnb',
     },
     {
         path: 'stay',

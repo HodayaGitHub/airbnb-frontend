@@ -22,7 +22,7 @@ async function query(filterBy = { txt: '', price: 0 }) {
     return httpService.get(STORAGE_KEY, filterBy)
 }
 
-function getById(StayId) {
+function getById(stayId) {
     return httpService.get(`stay/${stayId}`)
 }
 

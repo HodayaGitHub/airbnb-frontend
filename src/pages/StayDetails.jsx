@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { stayService } from '../services/stay.service.js'
+// import { stayService } from '../services/stay.service.js'
+import { stayMockService as stayService } from '../services/stay.mock.service.js'
 
 
 function getEmptyMsg() {
