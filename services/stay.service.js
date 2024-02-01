@@ -65,6 +65,7 @@ function getDefaultSearchFilter() {
         checkOut: '',
         guests: getDefaultGuests(),
         region: '',
+        label: '',
     }
 }
 

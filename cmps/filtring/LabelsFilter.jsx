@@ -4,7 +4,8 @@ import "react-multi-carousel/lib/styles.css"
 import { stayService } from "../../services/stay.service.local.js"
 
 
-export function LabelsFilter({ stays }) {
+export function LabelsFilter({ filterBy, onSetFilter }) {
+    const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
 
     const [labels, setLabels] = useState([])
 
@@ -20,7 +21,7 @@ export function LabelsFilter({ stays }) {
         }
 
         fetchLabels()
-    }, [])
+    }, [filterBy])
 
     const responsive = {
         desktop: {
@@ -38,6 +39,11 @@ export function LabelsFilter({ stays }) {
             items: 2,
             slidesToSlide: 1
         }
+    }
+
+    function handleLabelPick(value) {
+        setFilterByToEdit((prevFilter) => ({ ...prevFilter, label: value }))
+        onSetFilter({ ...filterByToEdit })
     }
 
 
@@ -64,7 +70,7 @@ export function LabelsFilter({ stays }) {
             >
                 <div className="labels-container parent">
                     {Object.entries(labels).map(([key, value]) => (
-                        <div className="label-item slider" key={key}>
+                        <div className="label-item slider" key={key} onClick={() => handleLabelPick(value.title)}>
                             <img className="label-icon" src={value.imgUrl} alt={value.label} />
                             <span>{value.title}</span>
                         </div>

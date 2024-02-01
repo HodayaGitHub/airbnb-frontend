@@ -73,6 +73,10 @@ async function query(filterBy) {
       filterBy.guests.infants
     stays = stays.filter((stay) => stay.capacity >= totalGuests)
   }
+
+  if (filterBy?.label){
+    stays = stays.filter((stay) => stay.labels.includes(filterBy.label))
+  }
   return stays
 }
 
@@ -144,7 +148,9 @@ function getDefaultSearchFilter() {
     checkIn: '',
     checkOut: '',
     guests: '',
-    region: ''
+    region: '',
+    label: '',
+
   }
 }
 
@@ -155,6 +161,7 @@ function getAmentities() {
 function getLocalLabels() {
   return labels
 }
+
 async function getLabels() {
   try {
     const labels = await storageService.query(LABELS_KEY)
