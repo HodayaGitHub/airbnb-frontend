@@ -10,15 +10,15 @@ export const CLEAR_CART = 'CLEAR_CART'
 export const UNDO_REMOVE_STAY = 'UNDO_REMOVE_STAY'
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 export const SET_FILTER_BY = 'SET_FILTER_BY'
-export const SET_GUESTS = 'SET_GUESTS'
+export const SET_FILTER_LABEL = 'SET_FILTER_LABEL'
 
 
 const initialState = {
     stays: [],
     cart: [],
     lastRemovedStay: null,
-    filterBy: stayService.getDefaultFilter(),
-    guests: stayService.getDefaultGuests(),
+    filterBy: stayService.getDefaultSearchFilter(),
+    selectedLabel: '',
 }
 
 export function stayReducer(state = initialState, action) {
@@ -58,14 +58,13 @@ export function stayReducer(state = initialState, action) {
                 newState = { ...state, stays: [...state.stays, state.lastRemovedStay], lastRemovedStay: null }
             }
             break
-
-        // case SET_GUESTS:
-        //     return { ...state, guests: { ...state.guests, ...action.guests } }
-
         case SET_FILTER_BY:
-            return { ...state, filterBy: { ...state.filterBy, ...action.filterBy } }
-
+            newState = { ...state, filterBy: { ...state.filterBy, ...action.filterBy } }
+            break
+        case SET_FILTER_LABEL:
+            newState = { ...state, selectedLabel: action.selectedLabel }
         default:
+            break
     }
     return newState
 }

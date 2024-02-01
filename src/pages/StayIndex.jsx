@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from "react-router-dom"
-import { loadStays, addStay, updateStay, removeStay, addToCart, setFilterBy, setGuestsCount } from '../store/actions/stay.actions.js'
+import { loadStays, addStay, updateStay, removeStay, addToCart, setFilterBy } from '../store/actions/stay.actions.js'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { userService } from '../services/user.service.js'
@@ -9,7 +9,7 @@ import { userService } from '../services/user.service.js'
 import { stayService } from '../services/stay.service.local.js'
 
 import { StayList } from '../cmps/StayList.jsx'
-import { StayFilter } from '../cmps/filtring/StayFilter.jsx'
+import { StaySearch } from '../cmps/filtring/StaySearch.jsx'
 import { LabelsFilter } from '../cmps/filtring/LabelsFilter.jsx'
 
 export function StayIndex() {
@@ -17,10 +17,22 @@ export function StayIndex() {
     const stays = useSelector(storeState => storeState.stayModule.stays)
     const isLoading = useSelector(storeState => storeState.userModule.isLoading)
     const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
-    const guests = useSelector(storeState => storeState.stayModule.guests)
 
     useEffect(() => {
-        loadStays()
+        loadStays(filterBy)
+
+        // async function initializeAndLoadStays(filterBy) {
+        //     try {
+        //         await stayService.initializeLocalStorage()
+        //         console.log('initialize local storage')
+        //         await loadStays(filterBy)
+        //         console.log('loaded stays')
+        //     } catch (error) {
+        //         console.error('An error occurred:', error)
+        //     }
+        // }
+
+        // initializeAndLoadStays()
     }, [filterBy])
 
     async function onRemoveStay(stayId) {
@@ -87,11 +99,9 @@ export function StayIndex() {
             <div className="filtring-container">
 
                 <div >
-                    <StayFilter
+                    <StaySearch
                         filterBy={filterBy}
                         onSetFilter={onSetFilter}
-                        guests={guests}
-                    // onSetGuestsCount={onSetGuestsCount} 
                     />
                 </div>
 

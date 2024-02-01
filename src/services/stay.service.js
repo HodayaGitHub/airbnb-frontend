@@ -14,15 +14,15 @@ export const stayService = {
     remove,
     getEmptyStay,
     addStayMsg,
-    getDefaultFilter,
+    getDefaultSearchFilter,
     getDefaultGuests,
     getDefaultRegion,
 }
 window.cs = stayService
 
 
-async function query(filterBy = { txt: '', price: 0 }) {
-    return httpService.get(STORAGE_KEY, filterBy)
+async function query(filterBy, selectedLabel) {
+    return httpService.post(`stay/getAll`, {filterBy, selectedLabel })
 }
 
 function getById(stayId) {
@@ -57,35 +57,25 @@ function getEmptyStay() {
 }
 
 // Filtring:
-function getDefaultFilter() {
+function getDefaultSearchFilter() {
     return {
-        where: '',
+        location: '',
         stayDates: '',
         checkIn: '',
         checkOut: '',
-        who: getDefaultGuests(),
+        guests: getDefaultGuests(),
+        region: '', 
     }
 }
 
 
-// function getDefaultRegion() {
-//     return {
-//         flexible: '',
-//         middleEast: '',
-//         greece: '',
-//         italy: '',
-//         asia: '',
-//     }
-// }
-
-
 function getDefaultRegion() {
     return [
-        'flexible',
-        'middleEast',
-        'greece',
-        'italy',
-        'asia',
+        'Flexible',
+        'Middle East',
+        'Greece',
+        'Italy',
+        'Asia',
     ]
 }
 

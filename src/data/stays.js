@@ -54,7 +54,6 @@ export const stays = [
         ],
         likedByUsers: ["mini-user"]
     },
-
     {
         _id: "s102",
         name: "Ribeira Charming Duplex",
