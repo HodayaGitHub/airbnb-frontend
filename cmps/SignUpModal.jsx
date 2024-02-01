@@ -9,6 +9,12 @@ import { event } from 'jquery';
 import {useState} from 'react'
 //SIGNUP
 import { signup, login } from '../store/actions/user.actions';
+<<<<<<< HEAD
+=======
+import { ImgUploader } from './ImgUploader';
+import { uploadService } from '../services/upload.service.js'
+import { showErrorMsg, showSuccessMsg, showimgUploadSuccessMsg } from '../services/event-bus.service'
+>>>>>>> host-dashboard
 
 function getEmptyCredentials() {
   return {
@@ -36,7 +42,11 @@ const style = {
 export default function SignUpModal() {
   const [open, setOpen] = React.useState(false);
   const [credentials, setCredentials] = useState(getEmptyCredentials())
+<<<<<<< HEAD
 
+=======
+  const [isUploading, setIsUploading] = useState(false)
+>>>>>>> host-dashboard
   const handleOpen = (event) => {
     event.stopPropagation()
     setOpen(true)
@@ -54,6 +64,10 @@ export default function SignUpModal() {
      username: 'joy2210',
      password: '123',
      email:'defEmail@',
+<<<<<<< HEAD
+=======
+     imgUrl:'../assets/img/host-img/anonumus-user.png'
+>>>>>>> host-dashboard
    }
    try {
      const user = await login(demoCredentials)
@@ -80,6 +94,10 @@ export default function SignUpModal() {
         setOpen(false)
         window.location.reload();
       } catch (err) {
+<<<<<<< HEAD
+=======
+        console.log(err)
+>>>>>>> host-dashboard
       }
   }
 
@@ -87,6 +105,18 @@ export default function SignUpModal() {
     setCredentials({ ...credentials, imgUrl })
 }
 
+<<<<<<< HEAD
+=======
+async function uploadImg(ev) {
+  setIsUploading(true)
+  const { secure_url } = await uploadService.uploadImg(ev)
+  setCredentials({ ...credentials,  imgUrl: secure_url })
+  setIsUploading(false)
+  showimgUploadSuccessMsg(`✅ Img uploaded successfully`)
+
+}
+
+>>>>>>> host-dashboard
   const {username, password, fullname, imgUrl} = credentials
 
   return (
@@ -136,9 +166,22 @@ export default function SignUpModal() {
               onChange={handleCredentialsChange}  
               id='password'
               required
+<<<<<<< HEAD
               />
               
                 <div className='login-button'>
+=======
+              />        
+                <div className='login-button'>
+
+                {/* <ImgUploader onUploaded={onUploaded} /> */}
+                <section className="upload-imgs">
+                    <label htmlFor="imgUpload" className='custom-btn'> upload a profile img</label>
+                    <input type="file" onChange={uploadImg} accept="img/*" id="imgUpload" className='imgUpload' />
+                    {isUploading && <p className='uploading-msg'>uploading please wait...</p>}
+                </section>
+
+>>>>>>> host-dashboard
                 <button >Sign up</button>
                 </div>
               </form>
@@ -147,6 +190,10 @@ export default function SignUpModal() {
                 <button onClick={handleDemoLogIn}>Demo Log in</button>
                 </div>
             <button  className='close-login-modal' onClick={handleClose}>𝝬</button>
+<<<<<<< HEAD
+=======
+            
+>>>>>>> host-dashboard
           </Box>
         </Fade>
       </Modal>

@@ -20,7 +20,7 @@ const getMainLayoutClasses = () => {
     return 'confirm-layout'
   } else if ((location.pathname.includes('/dashBoard'))) {
     return 'dashboard-layout'
-  } else {
+  }else{
     return 'main-layout'
   }
 }
@@ -28,7 +28,7 @@ const getMainLayoutClasses = () => {
 export function RootCmp() {
   return (
     <main className={getMainLayoutClasses()}>
-      {/* <MainHeader /> */}
+      <MainHeader />
       <Routes>
         {routes.map((route) => (
           <Route

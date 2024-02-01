@@ -20,6 +20,12 @@ export function StayIndex() {
     const stays = useSelector(storeState => storeState.stayModule.stays)
     const isLoading = useSelector(storeState => storeState.systemModule.isLoading)
     const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
+    
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [params, setParams] = useState(stayService.generateQueryString(filterBy))
+    
+    const [loadingMore, setLoadingMore] = useState(false)
+    const [scroll, setScroll] = useState(false)
 
     const [searchParams, setSearchParams] = useSearchParams()
     const [params, setParams] = useState(stayService.generateQueryString(filterBy))

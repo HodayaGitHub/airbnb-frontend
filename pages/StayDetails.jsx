@@ -22,8 +22,11 @@ import queryString from 'query-string'
 import { addOrder, updateOrder } from '../store/actions/order.actions.js'
 import { useSelector } from 'react-redux'
 import { orderService } from '../services/order.service.js'
+<<<<<<< HEAD
 import { MainHeader } from '../cmps/MainHeader.jsx'
 
+=======
+>>>>>>> host-dashboard
 
 export function StayDetails() {
   // const [msg, setMsg] = useState(getEmptyMsg())
@@ -39,7 +42,10 @@ export function StayDetails() {
   }, [stayId])
 
   function createOrder(stay) {
+<<<<<<< HEAD
     localStorage.removeItem('PRE_ORDER')
+=======
+>>>>>>> host-dashboard
     const searchParams = new URLSearchParams(location.search);
     const check_In = decodeURIComponent(searchParams.get('checkIn'));
     const check_Out = decodeURIComponent(searchParams.get('checkOut'));
@@ -73,6 +79,10 @@ export function StayDetails() {
     const order = {
       checkIn, checkOut, hostId, totalNights: nights, guests, stayId, totalGuests: count
     }
+<<<<<<< HEAD
+=======
+    console.log(order);
+>>>>>>> host-dashboard
     addOrder(order);
   }
 

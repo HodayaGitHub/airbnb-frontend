@@ -13,8 +13,14 @@ export function AppFooter() {
 
   return (
     <footer className='app-footer full'>
+<<<<<<< HEAD
       <p>Inspiration for future getaways</p>
       
+=======
+      <p>coffeerights - count: {count}</p>
+
+      <UserMsg />
+>>>>>>> host-dashboard
     </footer>
   )
 }
