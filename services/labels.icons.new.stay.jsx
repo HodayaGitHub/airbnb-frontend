@@ -98,6 +98,15 @@ export function Omg() {
       </svg>
     )
   }
+
+
+export function Room(){
+<svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 512 512">
+  <path fill="var(--ci-primary-color, #000000)" d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z" class="ci-primary"/>
+  <rect width="32" height="64" x="256" y="232" fill="var(--ci-primary-color, #000000)" class="ci-primary"/>
+</svg>
+}
+
   
   export function Arctic() {
     return (
@@ -316,6 +325,15 @@ version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http:/
   }
   
   export function GuestHouse() {
+    return (
+      <svg width="50" height="50" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M27 37H17V35H27V37ZM25 33H19V31H25V33ZM35 8V11H37V13H35V28C35 28.513 34.614 28.936 34.117 28.993L34 29H10C9.487 29 9.064 28.614 9.007 28.117L9 28V13H7V11H33V8H35ZM33 13H11V27H18V19C18 18.487 18.386 18.064 18.883 18.007L19 18H25C25.513 18 25.936 18.386 25.993 18.883L26 19V27H33V13ZM24 20H20V27H24V20ZM30 15C30.552 15 31 15.448 31 16C31 16.552 30.552 17 30 17C29.448 17 29 16.552 29 16C29 15.448 29.448 15 30 15Z" />
+      </svg>
+  
+    )
+  }
+
+  export function Adapted() {
     return (
       <svg width="50" height="50" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M27 37H17V35H27V37ZM25 33H19V31H25V33ZM35 8V11H37V13H35V28C35 28.513 34.614 28.936 34.117 28.993L34 29H10C9.487 29 9.064 28.614 9.007 28.117L9 28V13H7V11H33V8H35ZM33 13H11V27H18V19C18 18.487 18.386 18.064 18.883 18.007L19 18H25C25.513 18 25.936 18.386 25.993 18.883L26 19V27H33V13ZM24 20H20V27H24V20ZM30 15C30.552 15 31 15.448 31 16C31 16.552 30.552 17 30 17C29.448 17 29 16.552 29 16C29 15.448 29.448 15 30 15Z" />

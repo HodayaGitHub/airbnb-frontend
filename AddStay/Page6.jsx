@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router'
 import { MainHeader } from '../../cmps/MainHeader'
 
-export function Page6({ goToNextPage }) {
+export function Page6() {
   const navigate = useNavigate()
 
   return (
@@ -37,9 +37,6 @@ export function Page6({ goToNextPage }) {
 
       </div>
 
-      <div className='nav-button-wrapper'>
-      <button className="add-stay-next-page"onClick={goToNextPage}>Next</button>
-      </div>
     </section>
   )
 }

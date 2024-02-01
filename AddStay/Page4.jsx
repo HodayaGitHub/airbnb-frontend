@@ -2,7 +2,7 @@ import { GoogleMap2 } from '../../cmps/GoogleMap2'
 import { MainHeader } from '../../cmps/MainHeader'
 import { useNavigate } from 'react-router'
 
-export function Page4({ goToNextPage }) {
+export function Page4() {
   const navigate = useNavigate()
   return (
     <section className='step4'>
@@ -22,7 +22,6 @@ export function Page4({ goToNextPage }) {
         </div>
       </div>
 
-      <button className="add-stay-next-page" onClick={goToNextPage}>Next</button>
 
 
     </section>

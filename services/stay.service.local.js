@@ -142,10 +142,37 @@ function getEmptyStay() {
   }
 }
 
+// function getEmptyStay() {
+//   return {
+//     name: '',
+//     type: '',
+//     host_id:'',
+//     imgUrls: [],
+//     price:'', 
+//     summary:'', 
+//     capacity:'', 
+//     amenities:[],
+//     bathrooms:'',
+//     bedrooms:'',
+//     roomType:'', 
+//     privacy: '',
+//     price: '',
+//     roomCount: '',
+//     beds: '',
+//     bathroomCounts: '',
+//     summary: '',
+//     capacity: '',
+//     amentities: [],
+//     labels: [],
+//     host: {},
+//     loc: {},
+//     reviews: []  
+//   }
+// }
+
 function getAmentities() {
   return AMENTITIES
 }
-
 
 // filtering :
 function getDefaultSearchFilter() {

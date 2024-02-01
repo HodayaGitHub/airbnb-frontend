@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router'
 import { MainHeader } from '../../cmps/MainHeader'
-import { Omg } from '../../services/labels.icons.new.stay'
+import { Omg, House } from '../../services/labels.icons.new.stay'
 
-export function Page3({ goToNextPage }) {
+export function Page3() {
   const navigate = useNavigate()
   
   return (
@@ -17,7 +17,7 @@ export function Page3({ goToNextPage }) {
             <span className='place-title'>An entire place
               <p>Guest have the whole place to themselves</p>
             </span>
-            <Omg />
+            <House />
 
           </div>
 
@@ -43,8 +43,6 @@ export function Page3({ goToNextPage }) {
 
         </div >
       </section>
-      <button className="add-stay-next-page" onClick={goToNextPage}>Next</button>
-
     </>
 
   )
