@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useSearchParams } from "react-router-dom"
+import classnames from 'classnames'
 import classnames from 'classnames'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { userService } from '../services/user.service.js'
@@ -17,6 +19,7 @@ import { AutoCompleteCmp } from '../cmps/search/AutoCompleteCmp.jsx'
 import { Restcountries } from '../cmps/search/Restcountries.jsx'
 import { ShowMoreStays } from '../cmps/ShowMoreStays.jsx'
 // import { ChatApp } from './ChatApp.jsx'
+// import { ChatApp } from './ChatApp.jsx'
 
 export function StayIndex() {
     const stays = useSelector(storeState => storeState.stayModule.stays)
@@ -27,6 +30,13 @@ export function StayIndex() {
     const [params, setParams] = useState(stayService.generateQueryString(filterBy))
 
     const [loadingMore, setLoadingMore] = useState(false)
+    const [isHeaderSticky, setIsHeaderSticky] = useState(false);
+
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    const handleScroll = () => {
+        setScrollPosition(window.scrollY);
+    };
     const [isHeaderSticky, setIsHeaderSticky] = useState(false);
 
     const [scrollPosition, setScrollPosition] = useState(0);
@@ -149,6 +159,9 @@ export function StayIndex() {
                 <div className='stay-index-loader'>
                     <div className='loader'></div>
                 </div>
+                <div className='stay-index-loader'>
+                    <div className='loader'></div>
+                </div>
             ) : (
                 <>
                     <StayList params={params} stays={stays} onRemoveStay={onRemoveStay} />
@@ -157,6 +170,9 @@ export function StayIndex() {
             )}
 
             {/* <ChatApp></ChatApp> */}
+
+            {/* <ChatApp></ChatApp> */}
         </>
+    );
     );
 }
