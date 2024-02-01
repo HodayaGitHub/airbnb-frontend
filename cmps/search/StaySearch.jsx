@@ -16,9 +16,6 @@ export function StaySearch({ filterBy, onSetFilter }) {
     const [modalOpen, setModalOpen] = useState(null)
     const [isPetsModalOpen, setIsPetsModalOpen] = useState(false)
 
-
-
-
     const REGION_MODAL = 'region'
     const GUEST_MODAL = 'guest'
     const CHECK_IN_MODAL = 'checkIn'
@@ -55,7 +52,6 @@ export function StaySearch({ filterBy, onSetFilter }) {
 
     function setActiveClass(selectedModal) {
         return (modalOpen === selectedModal) ? ' active' : ''
-
     }
 
     function onSearch() {
@@ -65,6 +61,33 @@ export function StaySearch({ filterBy, onSetFilter }) {
 
     function handleSearchOptionClick(modalToOpen) {
         setModalOpen(modalToOpen)
+    }
+
+    function formatDate(date) {
+        const options = { month: 'short', day: 'numeric' }
+        return date.toLocaleString('en-US', options)
+    }
+
+    function handleChange() {
+        console.log('Input changed')
+    }
+
+    function serviceAnimalModalOpen() {
+        setIsPetsModalOpen(true)
+    }
+
+    function serviceAnimalModalClose() {
+        setIsPetsModalOpen(false)
+    }
+
+    function getGuestsString() {
+        const totalGuests = stayService.totalGuests(filterByToEdit)
+
+        if (totalGuests > 0) {
+            return `${totalGuests} ${totalGuests === 1 ? 'guest' : 'guests'}`
+        } else {
+            return ''
+        }
     }
 
     // function guestsAmount(guests) {
@@ -78,24 +101,6 @@ export function StaySearch({ filterBy, onSetFilter }) {
     //     }
     //     return ''
     // }
-
-    function formatDate(date) {
-        const options = { month: 'short', day: 'numeric' }
-        return date.toLocaleString('en-US', options)
-    }
-
-    function handleChange() {
-        console.log('Input changed')
-    }
-
-
-    function serviceAnimalModalOpen() {
-        setIsPetsModalOpen(true)
-    }
-    function serviceAnimalModalClose() {
-        setIsPetsModalOpen(false)
-    }
-
 
     return (
         <section className='stay-search'>
@@ -146,7 +151,7 @@ export function StaySearch({ filterBy, onSetFilter }) {
                     <div className='inner-div' onClick={() => handleSearchOptionClick(GUEST_MODAL)}>
                         <span>Who</span>
                         <input type='text' placeholder='Add guests'
-                            value={`${stayService.totalGuests(filterByToEdit) > 0 ? stayService.totalGuests(filterByToEdit) + ' guests' : ''}`}
+                            value={getGuestsString()}
                             readOnly
                         />
                     </div>
@@ -155,8 +160,6 @@ export function StaySearch({ filterBy, onSetFilter }) {
                     </span>
 
                     {isPetsModalOpen && <ServiceAnimalModal serviceAnimalModalClose={serviceAnimalModalClose} />}
-
-
 
                     {modalOpen === GUEST_MODAL && (
                         <div className="guest-modal">

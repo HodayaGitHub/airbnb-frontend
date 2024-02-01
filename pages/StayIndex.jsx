@@ -11,6 +11,7 @@ import { stayService } from '../services/stay.service.local.js'
 
 import { StayList } from '../cmps/StayList.jsx'
 import { StaySearch } from '../cmps/search/StaySearch.jsx'
+import { StayFilter } from '../cmps/filter/StayFilter.jsx'
 import { LabelsFilter } from '../cmps/filter/LabelsFilter.jsx'
 import { AutoCompleteCmp } from '../cmps/search/AutoCompleteCmp.jsx'
 import { Restcountries } from '../cmps/search/Restcountries.jsx'
@@ -87,14 +88,7 @@ export function StayIndex() {
     }
 
     return (
-        <div>
-            {/* <Restcountries></Restcountries>
-            <AutoCompleteCmp filterBy={filterBy}
-                onSetFilter={onSetFilter} /> */}
-
-
-            {/* <div className="filtering-container"> */}
-
+        <>
             <StaySearch
                 filterBy={filterBy}
                 onSetFilter={onSetFilter}
@@ -105,22 +99,16 @@ export function StayIndex() {
                     filterBy={filterBy}
                     onSetFilter={onSetFilter}
                 />
-
-
-                <button className="filter-btn">filter filter</button>
+                <StayFilter />
             </div >
 
-
-
             <button> <Link className='add-btn' to={`/edit`}>Add</Link></button>
-            <main>
-                {isLoading && 'Loading...'}
-                <StayList
-                    stays={stays}
-                    onRemoveStay={onRemoveStay}
-                />
-            </main>
-        </div >
 
+            {isLoading && 'Loading...'}
+            <StayList
+                stays={stays}
+                onRemoveStay={onRemoveStay}
+            />
+       </>
     )
 }

@@ -17,6 +17,10 @@ export const stayService = {
     getDefaultSearchFilter,
     getDefaultGuests,
     getDefaultRegion,
+    generateQueryString,
+    totalGuests,
+    buildQueryParams,
+    getDefaultDates,
 }
 window.cs = stayService
 
@@ -32,6 +36,7 @@ function getById(stayId) {
 async function remove(stayId) {
     return httpService.delete(`stay/${stayId}`)
 }
+
 async function save(stay) {
     var savedStay
     if (stay._id) {
@@ -48,7 +53,6 @@ async function addStayMsg(stayId, txt) {
     return savedMsg
 }
 
-
 function getEmptyStay() {
     return {
         vendor: 'Susita-' + (Date.now() % 1000),
@@ -56,18 +60,18 @@ function getEmptyStay() {
     }
 }
 
-// Filtring:
+// filtering :
 function getDefaultSearchFilter() {
     return {
-        location: '',
+        // location: '',
         stayDates: '',
         checkIn: '',
         checkOut: '',
         guests: getDefaultGuests(),
         region: '',
+        label: '',
     }
 }
-
 
 function getDefaultRegion() {
     return [
@@ -98,13 +102,77 @@ function getDefaultRegion() {
     ]
 }
 
+// function getDefaultGuests() {
+//     return {
+//         adults: 0,
+//         children: 0,
+//         infants: 0,
+//         pets: 0,
+//     }
+// }
+
 function getDefaultGuests() {
     return {
-        adults: 0,
-        children: 0,
-        infants: 0,
-        pets: 0,
+        adults: {
+            count: 0,
+            desc: 'Ages 13 or above',
+        },
+        children: {
+            count: 0,
+            desc: 'Ages 2-12',
+        },
+        infants: {
+            count: 0,
+            desc: 'Under 2',
+        },
+        pets: {
+            count: 0,
+            desc: 'Bringing a service animal?',
+        },
     }
+}
+
+function generateQueryString(filterBy) {
+    const { stayDates, checkIn, checkOut, guests, region, label } = filterBy
+    const queryParams = { stayDates, checkIn, checkOut, guests, region, label }
+    const queryString = new URLSearchParams(queryParams).toString()
+    return queryString
+}
+
+function getFormattedDate(date) {
+    if (date instanceof Date) {
+        return date.toLocaleDateString('en-US', { day: 'numeric', month: 'numeric', year: 'numeric' })
+    }
+    return ''
+}
+
+function buildQueryParams(filterBy) {
+    const { region, checkIn, checkOut, guests } = filterBy
+    const { defaultCheckIn, defaultCheckOut } = getDefaultDates()
+
+    const params = {
+        region: region || `I'm flexible`,
+        checkIn: getFormattedDate(checkIn) || getFormattedDate(defaultCheckIn),
+        checkOut: getFormattedDate(checkOut) || getFormattedDate(defaultCheckOut),
+        guests: totalGuests(filterBy) || 1,
+    }
+    return params
+}
+
+function getDefaultDates() {
+    const today = new Date()
+    const defaultCheckIn = new Date(today.toISOString())
+    const defaultCheckOut = new Date(today)
+    defaultCheckOut.setDate(today.getDate() + 1)
+    return {
+        defaultCheckIn,
+        defaultCheckOut,
+    }
+}
+
+function totalGuests(filterBy) {
+    const { adults, children, infants } = filterBy.guests
+    return adults.count + children.count + infants.count
 }
 
 

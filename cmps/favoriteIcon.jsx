@@ -15,8 +15,8 @@ export function FavoriteIcon() {
     <div className='heart'>
       <Checkbox
         {...label}
-        icon={<Favorite style={{ "color": "rgba(0, 0, 0, 60%)", "stroke": "white", "stroke-width": "2px" }} />}
-        checkedIcon={<Favorite style={{ color: '#ff385c', "stroke": "white", "stroke-width": "2px" }} />}
+        icon={<Favorite style={{ "color": "rgba(0, 0, 0, 60%)", "stroke": "white", "strokeWidth": "2px" }} />}
+        checkedIcon={<Favorite style={{ color: '#ff385c', "stroke": "white", "strokeWidth": "2px" }} />}
         onClick={handleCheckboxClick}
       />
     </div>

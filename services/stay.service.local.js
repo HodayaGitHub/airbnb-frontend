@@ -56,22 +56,27 @@ export const stayService = {
   getAmentities,
   getLabels,
   initializeLocalStorage,
-  getLocalLabels
+  getLocalLabels,
+  generateQueryString,
+  totalGuests,
+  buildQueryParams,
+  getDefaultDates,
 }
 
 window.cs = stayService
 
 async function query(filterBy) {
   var stays = await storageService.query(STORAGE_KEY)
-  if (filterBy?.location && filterBy.location.name !== `I'm flexible`) {
-    stays = stays.filter((stay) => stay.loc.region === filterBy.location)
+  if (filterBy?.region && filterBy.region !== `I'm flexible`) {
+    stays = stays.filter((stay) => stay.loc.country === filterBy.region)
   }
   if (filterBy?.guests) {
-    const totalGuests =
-      filterBy.guests.adults +
-      filterBy.guests.children +
-      filterBy.guests.infants
-    stays = stays.filter((stay) => stay.capacity >= totalGuests)
+
+    stays = stays.filter((stay) => stay.capacity >= totalGuests(filterBy))
+  }
+
+  if (filterBy?.label) {
+    stays = stays.filter((stay) => stay.labels?.includes(filterBy.label))
   }
   return stays
 }
@@ -136,25 +141,28 @@ function getEmptyStay() {
   }
 }
 
-// Filtring:
+function getAmentities() {
+  return AMENTITIES
+}
+
+
+// filtering :
 function getDefaultSearchFilter() {
   return {
-    location: '',
+    // location: '',
     stayDates: '',
     checkIn: '',
     checkOut: '',
     guests: '',
-    region: ''
+    region: '',
+    label: ''
   }
-}
-
-function getAmentities() {
-  return AMENTITIES
 }
 
 function getLocalLabels() {
   return labels
 }
+
 async function getLabels() {
   try {
     const labels = await storageService.query(LABELS_KEY)
@@ -164,6 +172,55 @@ async function getLabels() {
     throw error
   }
 }
+
+
+function getFormattedDate(date) {
+  if (date instanceof Date) {
+    return date.toLocaleDateString('en-US', { day: 'numeric', month: 'numeric', year: 'numeric' })
+  }
+  return ''
+}
+
+function generateQueryString(filterBy) {
+  const { stayDates, checkIn, checkOut, guests, region, label } = filterBy
+  const queryParams = { stayDates, checkIn, checkOut, guests, region, label }
+  const queryString = new URLSearchParams(queryParams).toString()
+  return queryString
+}
+
+
+function buildQueryParams(filterBy) {
+  const { region, checkIn, checkOut, guests, label } = filterBy
+  const { defaultCheckIn, defaultCheckOut } = getDefaultDates()
+  console.log(defaultCheckIn)
+  const params = {
+    region: region || `I'm flexible`,
+    checkIn: getFormattedDate(checkIn) || getFormattedDate(defaultCheckIn),
+    checkOut: getFormattedDate(checkOut) || getFormattedDate(defaultCheckOut),
+    guests: totalGuests(filterBy) || 1,
+    label: label,
+  }
+  return params
+}
+
+function getDefaultDates() {
+  const today = new Date()
+  const defaultCheckIn = new Date(today.toISOString())
+  const defaultCheckOut = new Date(today)
+  defaultCheckOut.setDate(today.getDate() + 1)
+  return {
+    defaultCheckIn,
+    defaultCheckOut,
+  }
+}
+
+function totalGuests(filterBy) {
+  const { adults, children, infants } = filterBy.guests
+  return adults.count + children.count + infants.count
+}
+
+
+
 
 // TEST DATA
 async function initializeLocalStorage() {
