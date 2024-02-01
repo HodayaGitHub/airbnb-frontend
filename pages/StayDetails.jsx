@@ -17,6 +17,11 @@ import { ReservationModal } from '../cmps/reservationModal.jsx'
 import { GoogleMap } from '../cmps/GoogleMap.jsx'
 import { FavoriteIcon } from '../cmps/favoriteIcon.jsx'
 import ShareModal from '../cmps/shareModal.jsx'
+import { useLocation } from 'react-router-dom'
+import queryString from 'query-string'
+import { addOrder, updateOrder } from '../store/actions/order.actions.js'
+import { useSelector } from 'react-redux'
+import { orderService } from '../services/order.service.js'
 
 export function StayDetails() {
   // const [msg, setMsg] = useState(getEmptyMsg())
@@ -25,17 +30,60 @@ export function StayDetails() {
   const [isOver, setIsOver] = useState(false)
   const { stayId } = useParams()
   const navigate = useNavigate()
-
+  var order = useSelector(storeState => storeState.orderModule.order) || JSON.parse(localStorage.getItem('PRE_ORDER'))
+  const location = useLocation()
   useEffect(() => {
     loadStay()
   }, [stayId])
+
+  function createOrder(stay) {
+    const searchParams = new URLSearchParams(location.search);
+    const check_In = decodeURIComponent(searchParams.get('checkIn'));
+    const check_Out = decodeURIComponent(searchParams.get('checkOut'));
+    const guestParam = decodeURIComponent(searchParams.get('guestParam'));
+    var guests = queryString.parse(guestParam);
+    guests.adults = +guests.adults;
+    guests.children = +guests.children;
+    guests.infants = +guests.infants;
+    guests.pets = +guests.pets;
+    if (!guests.adults) guests.adults = 1;
+    let checkIn = new Date(check_In).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    const hostId = stay.host._id
+    let checkOut = new Date(check_Out).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    if (checkIn === 'Invalid Date') {
+      checkIn = orderService.fixTime();
+    }
+    if (checkOut === 'Invalid Date') {
+      checkOut = orderService.fixTime();
+    }
+    let count = guests.adults + guests.children;
+    const nights = stayService.daysBetweenDates(checkIn, checkOut);
+
+    const order = {
+      checkIn, checkOut, hostId, totalNights: nights, guests, stayId, totalGuests: count
+    }
+    console.log(order);
+    addOrder(order);
+  }
+
+  function editOrder(order) {
+    updateOrder(order)
+  }
 
   async function loadStay() {
     try {
       const stay = await stayService.getById(stayId)
       setStay(stay)
+      if (!order) createOrder(stay)
     } catch (err) {
-      // showErrorMsg('Cant load stay')
       navigate('/stay')
     }
   }
@@ -61,16 +109,16 @@ export function StayDetails() {
 
   function calculateAverageRating() {
     if (!stay || !stay.reviews || stay.reviews.length === 0) {
-      return 0 
+      return 0
     }
-    
+
     const totalRating = stay.reviews.reduce((acc, review) => acc + review.rate, 0)
     return totalRating / stay.reviews.length
   }
 
   let averageRating = calculateAverageRating()
 
-  if (!stay) return <div></div>
+  if (!stay || !order) return <div className='loader'></div>
   return (
     <section className='stay-details'>
       <div className='stay-name'>
@@ -105,16 +153,16 @@ export function StayDetails() {
           </>
         )}
         <div className='stay-name-actions'>
-          <div className='action'> 
-          <ShareModal stayImg={stay.imgUrls[0]} stay={stay} averageRating={averageRating}/>
+          <div className='action'>
+            <ShareModal stayImg={stay.imgUrls[0]} stay={stay} averageRating={averageRating} />
           </div>
 
           {/* <div className='action'> 
           <img src={heart} alt="" />
           <p className='text'>save</p>
           </div> */}
-          
-          
+
+
         </div>
       </div>
 
@@ -137,22 +185,20 @@ export function StayDetails() {
       </div>
       <section className='mid-section'>
         <div className='reservation'>
-          <ReservationModal stayId={stayId} />
+          <ReservationModal stayId={stay._id} price={stay.price} order={order} editOrder={editOrder} />
         </div>
         <section className='stay-information'>
           <h1>
             {stay.type === 'House' ? 'Entire ' + stay.type : stay.type} in{' '}
             {stay.loc.city}, {stay.loc.country}
           </h1>
-          {/* HARD CODED FOR NOW */}
           <p className='stay-contents'>
             {stay.capacity} guest
             {stay.capacity !== 1 && <span>s</span>} • {stay.bedrooms} bedroom
-            {stay.bedrooms !== 1 && <span>s</span>} • 
-            3 beds • {stay.bathrooms} bathroom{stay.bathrooms !== 1 && <span>s</span>}
+            {stay.bedrooms !== 1 && <span>s</span>} • {stay.bedrooms !== 0 ? stay.beds : 1} bed{stay.bedrooms > 1 && stay.beds > 1 && <span>s</span>} • {stay.bathrooms} bathroom{stay.bathrooms !== 1 && <span>s</span>}
           </p>
           <p className='stay-rating'>
-          🟊 {averageRating.toFixed(2)} • <span>{stay.reviews.length} reviews</span>
+            🟊 {averageRating.toFixed(1)} • <span>{stay.reviews.length} reviews</span>
           </p>
         </section>
         <section className='hostedBy'>
@@ -163,7 +209,7 @@ export function StayDetails() {
           </div>
           <div className='hostedBy-name'>
             <h2>{stay.host.fullname}</h2>
-            <p>{stay.host.yearsOfHosting} years hosting</p>
+            <p>{stay.hostingYears} years hosting</p>
           </div>
         </section>
         <section className='guest-experiences'>
@@ -214,7 +260,7 @@ export function StayDetails() {
       </section>
       <section className='stay-reviews'>
         <h2>
-        🟊 {averageRating.toFixed(2)} • {stay.reviews.length} review
+          🟊 {averageRating.toFixed(1)} • {stay.reviews.length} review
           {stay.reviews.length !== 1 && <span>s</span>}
         </h2>
         <div className='reviews'>
@@ -238,10 +284,10 @@ export function StayDetails() {
           })}
         </div>
       </section>
-      <section className='map'>
+      {/* <section className='map'>
         <h2>Where you'll be</h2>
         <GoogleMap stayLoc={stay.loc}/>
-      </section>
+      </section> */}
     </section>
   )
 }

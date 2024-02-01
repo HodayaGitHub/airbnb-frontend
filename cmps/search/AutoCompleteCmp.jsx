@@ -5,6 +5,7 @@ import { utilService } from '../../services/util.service'
 export function AutoCompleteCmp({ onSetFilter, filterBy}) {
     const autocompleteRef = useRef(null)
     onSetFilter = useRef(utilService.debounce(onSetFilter))
+    const API_KEY = import.meta.env.GOOGLE_MAP_API || 'jfjfj'
 
     useEffect(() => {
         if (autocompleteRef.current) {

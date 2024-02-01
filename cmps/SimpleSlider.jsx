@@ -48,7 +48,7 @@ export function SimpleSlider({ stay }) {
   const settings = {
     dots: true,
     infinite: false,
-    speed: 500,
+    speed: 300,
     slidesToShow: 1,
     slidesToScroll: 1,
     initialSlide: 0,

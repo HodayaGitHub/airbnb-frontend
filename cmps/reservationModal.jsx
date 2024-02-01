@@ -1,36 +1,40 @@
 import { useEffect, useState } from 'react'
 import { DateSelect } from './search/DateSelect'
-import { useSelector } from 'react-redux'
-import { orderService } from '../services/order.service'
 import { useNavigate } from 'react-router'
+import { stayService } from '../services/stay.service'
 
-export function ReservationModal({ stayId }) {
+export function ReservationModal({ stayId, price, order, editOrder }) {
+
   const [modalOpen, setModalOpen] = useState(null)
-  const [order, setOreder] = useState(orderService.getEmptyOrder())
+  const [orderToEdit, setOrderToEdit] = useState(order)
   const navigate = useNavigate()
-  let count = order.guests.adults.count + order.guests.children.count + order.guests.infants.count + order.guests.pets.count
-  var checkIn = useSelector((storeState) => storeState.stayModule.filterBy.checkIn)
-  var checkOut = useSelector((storeState) => storeState.stayModule.filterBy.checkOut)
-  var guests = useSelector((storeState) => storeState.stayModule.filterBy.guests)
-  order.stayId = stayId
-  useEffect(() => {
-    setOreder((prevOrder) => ({ ...prevOrder, checkOut, checkIn, guests }))
-    if (!count) order.guests.adults = 1
-  }, [])
 
+
+  useEffect(() => {
+    editOrder({ ...orderToEdit })
+  }, [orderToEdit])
   function handleDateSelectChange(field, value) {
-    if (field === 'checkIn') var checkOut = ''
     const formattedDate = value.toLocaleDateString('en-US', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit'
     })
-    setOreder((prevOrder) => ({
+    setOrderToEdit((prevOrder) => ({
       ...prevOrder,
-      checkOut,
       [field]: formattedDate
     }))
-    if (field === 'checkOut') setModalOpen(false)
+
+    if (field === 'checkOut') {
+      const totalNights = stayService.daysBetweenDates(order.checkIn, value)
+      const totalPrice = totalNights * price
+      setOrderToEdit((prevOrder) => ({ ...prevOrder, totalNights, totalPrice }))
+      setModalOpen(false)
+    }
+    // editOrder(orderToEdit)
+  }
+
+  function savePreOrderToLocalStorage(order) {
+    localStorage.setItem('PRE_ORDER', JSON.stringify(order))
   }
 
   return (
@@ -38,7 +42,7 @@ export function ReservationModal({ stayId }) {
       <div className='reservation-header'>
         <div className='price'>
           <p>
-            <span>$1485</span> night{' '}
+            <span>${price}</span>  a night
           </p>
         </div>
       </div>
@@ -47,32 +51,46 @@ export function ReservationModal({ stayId }) {
           <div className='check-in' onClick={() => setModalOpen(true)}>
             <button>
               <span>Check-in</span>
-              <input type='text' value={order.checkIn} readOnly />
+              <input type='text' value={orderToEdit.checkIn} readOnly />
             </button>
           </div>
           <div className='check-out' onClick={() => setModalOpen(true)}>
             <button>
               <span>Check out</span>
-              <input type='text' value={order.checkOut} readOnly />
+              <input type='text' value={orderToEdit.checkOut} readOnly />
             </button>
           </div>
         </div>
         {modalOpen && (
           <DateSelect
             onSetField={(field, value) => handleDateSelectChange(field, value)}
-            checkIn={order.checkIn}
-            checkOut={order.checkOut}
+            checkIn={orderToEdit.checkIn}
+            checkOut={orderToEdit.checkOut}
           />
         )}
         {
           <div className='guest'>
-            {count} guest{count !== 1 && <span>s</span>}
+            {orderToEdit.totalGuests} guest{orderToEdit.totalGuests !== 1 && <span>s</span>}
+            {orderToEdit.guests.infants !== 0 && <> , {orderToEdit.guests.infants} infant{orderToEdit.guests.infants !== 1 && <span>s</span>}</>}
+
           </div>
         }
       </div>
       <div className='reserve-button'>
-        <button onClick={() => navigate(`/book/${stayId}`)}>Reserve</button>
+        <button className="reserve" onClick={() => {
+          savePreOrderToLocalStorage(orderToEdit)
+          navigate(`/book/${stayId}`)
+        }}>
+          Reserve</button>
+
+        <span className='no-charge'>you won't be charged yet</span>
       </div>
+
+      <div className='total-price'>
+        <div className='price-calc'>{orderToEdit.totalNights} night{order.totalNights > 1 && <span>s</span>} x ${price}</div>
+        <div className='total-price'>${orderToEdit.totalPrice}</div>
+      </div>
+
     </section >
   )
 }

@@ -24,12 +24,11 @@ export function StaySearch({ filterBy, onSetFilter }) {
     function updateGuestCount(event, option, amount) {
         event.stopPropagation()
         setFilterByToEdit((prevFilter) => {
-            const currentCount = +prevFilter.guests[option].count
+            const currentCount = +prevFilter.guests[option]
             const newCount = Math.max(0, currentCount + amount)
             const newCounts = {
                 ...prevFilter.guests,
-                [option]: { ...prevFilter.guests[option], count: newCount },
-
+                [option]: newCount
             }
             const updatedFilterBy = { ...prevFilter, guests: newCounts }
             return updatedFilterBy
@@ -90,17 +89,14 @@ export function StaySearch({ filterBy, onSetFilter }) {
         }
     }
 
-    // function guestsAmount(guests) {
-    //     const totalGuests =
-    //         guests.adults.count +
-    //         guests.children.count +
-    //         guests.infants.count
+    const guestsDesc = {
+        adults: 'Ages 13 or above',
+        children: 'Ages 2-12',
+        infants: 'Under 2',
+        pets: 'Bringing a service animal?',
+    }
 
-    //     if (totalGuests > 0) {
-    //         return `${totalGuests} guests`
-    //     }
-    //     return ''
-    // }
+    
 
     return (
         <section className='stay-search'>
@@ -172,17 +168,17 @@ export function StaySearch({ filterBy, onSetFilter }) {
                                                 <span className="guest-title">{guestType}</span>
                                                 <span className={`guest-desc ${index === array.length - 1 ? 'service-animal' : ''}`}
                                                     onClick={index === array.length - 1 ? serviceAnimalModalOpen : null}>
-                                                    {guestInfo.desc}
+                                                    {guestsDesc[guestType]}
                                                 </span>
                                             </div>
 
                                             <div className="guest-counter-btns">
                                                 <button className="guest-counter-btn" onClick={(event) => updateGuestCount(event, guestType, -1)}
-                                                    style={{ cursor: guestInfo.count <= 0 ? 'not-allowed' : 'pointer' }}
-                                                    disabled={guestInfo.count <= 0}>
+                                                    style={{ cursor: guestInfo <= 0 ? 'not-allowed' : 'pointer' }}
+                                                    disabled={guestInfo <= 0}>
                                                     <MinusIcon />
                                                 </button>
-                                                <span className="counter">{guestInfo.count}</span>
+                                                <span className="counter">{guestInfo}</span>
                                                 <button className="guest-counter-btn" onClick={(event) => updateGuestCount(event, guestType, 1)}>
                                                     <PlusIcon />
                                                 </button>

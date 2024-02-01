@@ -1,24 +1,49 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import left_arrow from '../../src/assets/img/svgs/left-arrow.svg'
+import leftArow from '../../src/assets/img/svgs/left-arrow.svg'
 import TextField from '@mui/material/TextField'
 import { credit } from '../../src/data/creditcard'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+// import { stayService } from '../services/stay.service.local'
+import { stayService } from '../services/stay.service'
+import { orderService } from '../services/order.service'
 export function ConfirmPage() {
     const { stayId } = useParams()
     const navigate = useNavigate()
     const [card, setCard] = useState(credit[0])
+    const order = useSelector(storeState => storeState.orderModule.order) || JSON.parse(localStorage.getItem('PRE_ORDER'))
+    const [stay, setStay] = useState(null)
+
+    useEffect(() => {
+        loadStay()
+    }, [stay])
+
+    async function loadStay() {
+        try {
+            const stay = await stayService.getById(stayId)
+            setStay(stay)
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
 
     function handleCreditChange(target) {
         const field = target.id
         const value = target.value
         setCard((prevCard) => ({ ...prevCard, [field]: value }))
-
+    }
+    async function saveOrder(order) {
+        await orderService.save(order)
+        localStorage.removeItem('PRE_ORDER')
+        navigate('/')
     }
 
+    if (!stay || !order) return <div className='loader'></div>
     return (
         <div className='confirm-page'>
             <div className='title'>
-                <button className='return-btn' onClick={() => navigate(`/stay/${stayId}`)}>{'‹'}</button>
+                <button className='return-btn' onClick={() => navigate(`/stay/${stayId}`)}><img src={leftArow} /></button>
                 <h1>Confirm and pay</h1>
             </div>
             <div className='reservation'>
@@ -28,14 +53,16 @@ export function ConfirmPage() {
                         <div className="trip-dates">
                             <h3>Dates</h3>
                             <div className='order-attribute'>
-                                <span>enter dates here</span>
+                                <span>{order.checkIn} - {order.checkOut}</span>
                                 <button className='edit-btn'>Edit</button>
                             </div>
                         </div>
                         <div className="trip-guest">
                             <h3>Guests</h3>
                             <div className='order-attribute'>
-                                <span>enter guest count here</span>
+                                <span>  {order.totalGuests} guest{order.totalGuests !== 1 && <span>s</span>}
+                                    {order.guests.infants !== 0 && <> , {order.guests.infants} infant{order.guests.infants !== 1 && <span>s</span>}</>}
+                                </span>
                                 <button className='edit-btn'>Edit</button>
                             </div>
                         </div>
@@ -57,7 +84,7 @@ export function ConfirmPage() {
 
                     <section className='cancelation'>
                         <h2>Cancellation policy</h2>
-                        <span>This reservation is non-refundable. <a href="#">Learn more</a></span>
+                        <span>This reservation is non-refundable. </span>
                     </section>
                     <section className='Ground rules'>
                         <h2>Required for your trip</h2>
@@ -71,19 +98,23 @@ export function ConfirmPage() {
                         <a href="#">Ground rules for guests</a>, <a href="#">Airbnb's Rebooking and Refund Policy</a>,
                         and that Airbnb can <a href="#">charge my payment method</a> if I’m responsible for damage.</p>
 
-                    <button className='confirm-btn'>Confirm and pay</button>
+                    <button className='confirm-btn' onClick={() => {
+                        saveOrder(order)
+                    }}>Confirm and pay</button>
                 </div>
 
                 <div className='oreder-preview'>
-                    <section className='stay-info'>
-
-                    </section>
+                    {stay && <section className='stay-info'>
+                        <img className='stay-img' src={stay.imgUrls[1]} />
+                        <span className='stay-name'>{stay.name}</span>
+                        <span className='reviews'>{stay.reviews.length} review{stay.reviews.length > 1 && <span>s</span>}</span>
+                    </section>}
                     <div className='price-details'>
                         <h2>Price details</h2>
                         <ul>
-                            <li>₪250 x 5 nights <span>price</span></li>
-                            <li><a href="#">Airbnb service fee</a> <span>₪200</span></li>
-                            <li><h3>total <a href="#">.(ILS).</a></h3> <h3>total price</h3></li>
+                            {stay?.price && <li>${stay.price} x {order.totalNights} nights <span>${stay.price * order.totalNights}</span></li>}
+                            <li><a href="#">Airbnb service fee</a> <span>$200</span></li>
+                            {stay?.price && <li><h3>total <a href="#">.(ILS).</a></h3> <h3>${stay.price * order.totalNights + 200}</h3></li>}
                         </ul>
                     </div>
 

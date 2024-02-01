@@ -11,8 +11,9 @@ import facebook  from '../assets/img/svgs/facebook.svg'
 import twitter  from '../assets/img/svgs/twitter.svg'
 import whatsapp  from '../assets/img/svgs/whatsapp.svg'
 import copyLink  from '../assets/img/svgs/copyLink.svg'
-
-
+import { showErrorMsg, showSuccessMsg, showlinkCopiedSuccessMsg } from '../services/event-bus.service'
+import { UserMsg } from './UserMsg.jsx'
+import { FacebookShareButton, FacebookIcon, TwitterShareButton,TwitterIcon, WhatsappShareButton } from 'react-share';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -30,6 +31,20 @@ export default function ShareModal({stayImg, stay,  averageRating}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleCopyLink = () => {
+    const currentURL = window.location.href;
+
+    navigator.clipboard.writeText(currentURL).then(
+      function () {
+        console.log('URL copied to clipboard');
+        showlinkCopiedSuccessMsg(`✅ Link copied`)
+      },
+      function (err) {
+        console.error('Unable to copy to clipboard', err);
+      }
+    );
+  }
+
 
   return (
     <div className='share-btn'>
@@ -57,34 +72,53 @@ export default function ShareModal({stayImg, stay,  averageRating}) {
                 <div className='descipition'>
                 <p className='stay-contents'>
                 {stay.type === 'House' ? 'Entire ' + stay.type : stay.type} in{' '}
-                {stay.loc.city} • 🟊 {averageRating.toFixed(2)} • {stay.bedrooms} bedroom
-            {stay.bedrooms !== 1 && <span>s</span>} • 
-            3 beds • {stay.bathrooms} bathroom{stay.bathrooms !== 1 && <span>s</span>}
+                {stay.loc.city} • 🟊 {averageRating.toFixed(1)} • {stay.bedrooms} bedroom
+                {stay.bedrooms !== 1 && <span>s</span>} • {stay.bedrooms !== 0 ? stay.beds: 1} bed{stay.bedrooms > 1 && stay.beds > 1 && <span>s</span>} • {stay.bathrooms} bathroom{stay.bathrooms !== 1 && <span>s</span>}
           </p>
                   </div>
               </div>
-            {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}> */}
+
               <section className='share-buttons'>
-              <button className='share-to'>
+              {/* <button className='share-to' onClick={() => handleFacebookShare(stay)}>
               <img src={facebook} alt="" />
                 Facebook
-              </button>
-              <button className='share-to'>
+              </button> */}
+                <FacebookShareButton className="share-to" url={window.location.href} quote={`${stay.title} - ${stay.description}`}>
+                {/* <button className="share-to"> */}
+                  <img src={facebook} alt="" />
+                  Facebook
+                {/* </button> */}
+              </FacebookShareButton>
+
+              {/* <button className='share-to' >
               <img src={twitter} alt="" />
                 Twitter
-              </button>
-              <button className='share-to'>
+              </button> */}
+
+<TwitterShareButton className="share-to" url={window.location.href} title={stay.title} via="yourTwitterHandle">
+                {/* <button className="share-to"> */}
+                  <img src={twitter} alt="" />
+                  Twitter
+                {/* </button> */}
+              </TwitterShareButton>
+              {/* <button className='share-to'>
               <img src={whatsapp} alt="" />
                 WhatsApp
-              </button>
-              <button className='share-to'>
+              </button> */}
+
+<WhatsappShareButton className="share-to" url={window.location.href} title={stay.title}>
+                {/* <button className="share-to"> */}
+                  <img src={whatsapp} alt="" />
+                  WhatsApp
+                {/* </button> */}
+              </WhatsappShareButton>
+
+              <button className='share-to'  onClick={handleCopyLink}>
               <img src={copyLink} alt="" />
                 Copy Link
               </button>
-
               </section>
             
-            {/* </Typography> */}
             <button  className='close-share-modal' onClick={handleClose}>𝝬</button>
           </Box>
         </Fade>
