@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Carousel from 'react-bootstrap/Carousel'
+import { FavoriteIcon } from './favoriteIcon'
 
 export function ControlledCarousel({ stay, isHover }) {
   const [index, setIndex] = useState(0)
@@ -29,6 +30,7 @@ export function ControlledCarousel({ stay, isHover }) {
       touch={true}
       indicators={true}
       controls={isHover}
+      pause={false}
     >
       {stay.imgUrls.map((imgUrl, index) => {
         return (
@@ -37,6 +39,7 @@ export function ControlledCarousel({ stay, isHover }) {
               className='stay-img'
               src={imgUrl}
               alt={`Carousel Image ${index + 1}`}
+             
             ></img>
           </Carousel.Item>
         )
