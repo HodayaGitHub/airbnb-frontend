@@ -40,17 +40,28 @@ export function ConfirmPage() {
     setCard((prevCard) => ({ ...prevCard, [field]: value }))
   }
 
+
   async function saveOrderToDb(order) {
     try {
       const user = await userService.getById(loggedInUser._id)
+      const host = await userService.getById('65a59de928c0c04c96622d7f')
 
       const updatedUser = {
         ...user,
         myOrders: [...(user.myOrders || []), order],
       }
 
-      await orderService.save(order)
-      await userService.update(updatedUser)
+      const updatedHost = {
+        ...host,
+        myGuests: [...(host.myGuests || []), order],
+      }
+
+      await Promise.all([
+        orderService.save(order),
+        userService.update(updatedUser),
+        userService.update(updatedHost),
+      ])
+
       localStorage.removeItem('PRE_ORDER')
       navigate('/')
     } catch (err) {

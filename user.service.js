@@ -85,7 +85,9 @@ function saveLocalUser(user) {
     fullname: user.fullname,
     imgUrl: user.imgUrl,
     favoriteStays: user.favoriteStays,
-    MyOrders: user.myOrders
+    myOrder: user.myOrders,
+    myGuests: user.myGuests,
+
   }
   sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
   return user
@@ -107,7 +109,8 @@ function getEmptyCredentials() {
     email: 'email@email.com',
     imgUrl: '../assets/img/host-img/anonumus-user.png',
     favoriteStays: [],
-    MyOrders: []
+    myOrders: [],
+    myGuests: [],
   }
 }
 
