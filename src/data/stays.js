@@ -11,7 +11,7 @@ export const stays = [
         ],
         price: 80.00,
         summary: "Fantastic duplex apartment...",
-        capacity: 8,
+        capacity: 2,
         amenities: [
             "TV",
             "Wifi",
@@ -32,6 +32,7 @@ export const stays = [
             imgUrl: "https://a0.muscache.com/im/pictures/fab79f25-2e10-4f0f-9711-663cb69dc7d8.jpg?aki_policy=profile_small",
         },
         loc: {
+            region: "Europe",
             country: "Portugal",
             countryCode: "PT",
             city: "Lisbon",
@@ -87,6 +88,7 @@ export const stays = [
             imgUrl: "https://a0.muscache.com/im/pictures/fab79f25-2e10-4f0f-9711-663cb69dc7d8.jpg?aki_policy=profile_small",
         },
         loc: {
+            region: "Europe",
             country: "Portugal",
             countryCode: "PT",
             city: "Lisbon",
@@ -142,12 +144,13 @@ export const stays = [
             imgUrl: "https://a0.muscache.com/im/pictures/fab79f25-2e10-4f0f-9711-663cb69dc7d8.jpg?aki_policy=profile_small",
         },
         loc: {
-            country: "Portugal",
-            countryCode: "PT",
-            city: "Lisbon",
-            address: "17 Kombo st",
-            lat: -8.61308,
-            lng: 41.1413
+            region: "Middle East",
+            country: "Israel",
+            countryCode: "IL",
+            city: "Tel Aviv",
+            address: "17 Hoday st",
+            lat: 32.61308,
+            lng: 34.14131
         },
         reviews: [
             {
@@ -197,6 +200,7 @@ export const stays = [
             imgUrl: "https://a0.muscache.com/im/pictures/fab79f25-2e10-4f0f-9711-663cb69dc7d8.jpg?aki_policy=profile_small",
         },
         loc: {
+            region: "Europe",
             country: "Portugal",
             countryCode: "PT",
             city: "Lisbon",
@@ -252,6 +256,7 @@ export const stays = [
             imgUrl: "https://a0.muscache.com/im/pictures/fab79f25-2e10-4f0f-9711-663cb69dc7d8.jpg?aki_policy=profile_small",
         },
         loc: {
+            region: "Europe",
             country: "Portugal",
             countryCode: "PT",
             city: "Lisbon",
@@ -307,6 +312,7 @@ export const stays = [
             imgUrl: "https://a0.muscache.com/im/pictures/fab79f25-2e10-4f0f-9711-663cb69dc7d8.jpg?aki_policy=profile_small",
         },
         loc: {
+            region: "Europe",
             country: "Portugal",
             countryCode: "PT",
             city: "Lisbon",

@@ -23,11 +23,13 @@
 @import "cmps/AppHeader";
 @import "cmps/AppFooter";
 @import "cmps/StayPreview";
-@import "cmps/StayFilter";
-@import "cmps/LabelsFilter";
-
 @import "cmps/UserMsg";
 @import "cmps/ShoppingCart";
+
+// Filter cmps 
+@import "cmps/StaySearch";
+@import "cmps/LabelsFilter";
+@import "cmps/FilterModal";
 
 
 // REACT BOOTSTRAP

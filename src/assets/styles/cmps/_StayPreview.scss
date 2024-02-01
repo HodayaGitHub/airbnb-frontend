@@ -1,0 +1,78 @@
+.stay-preview {
+    // padding: 0.3em;
+    // display: flex;
+    // flex-direction: column;
+    // background-color: var(--clr1bg);
+    // margin: 0.5em;
+    // gap: 10px;
+    // border-radius: 10px;
+    display: grid;
+grid-template-columns: 280px;
+grid-column-gap: 0px;
+grid-row-gap: 0px;
+grid-template-areas: 
+"img"
+"name"
+"distance"
+"date"
+"price"
+;
+    cursor: pointer;
+    a{
+        text-decoration: none;
+        color: $lightGray-clr;
+    }
+    h4 {
+        font-size: 1rem;
+        font-weight: bold;
+        color: $darkGray-clr;
+        margin: 0;
+    }
+
+    .img-container {
+        // grid-area: img;
+        // width: 100%;
+        // object-fit: cover;
+        // height: 100%;
+        // height: 250px;
+        // display: flex;
+        // justify-content: center;
+
+        .stay-img {
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+        }
+    }
+
+
+    .stay-desc {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+
+        .stay-name{
+            grid-area: name;
+        }
+
+        .stay-price-number{
+            color: $darkGray-clr;
+            font-weight: bold;
+        }
+    
+        .stay-distance{
+            grid-area: distance;
+        }
+        
+        .stay-date{
+            grid-area: date;
+        }
+        .stay-price{
+            grid-area: price;
+            margin-bottom: 15px;
+        }
+    }
+
+
+}

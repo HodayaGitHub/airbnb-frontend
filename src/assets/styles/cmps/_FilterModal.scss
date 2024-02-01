@@ -1,0 +1,23 @@
+.filter-modal {
+    position: absolute;
+    z-index: 1;
+    margin-top: 50px;
+    border-radius: 20px;
+    box-shadow: 0 0 5px hsl(0, 0%, 78%);
+    line-height: 1.43;
+
+    .rdrCalendarWrapper.rdrDateRangeWrapper {
+        width: fit-content;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+
+
+        .rdrMonthAndYearWrapper {
+            // width: fit-content;
+            // background-color: #ff385c;
+        }
+    }
+
+
+}
