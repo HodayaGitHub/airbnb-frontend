@@ -1,14 +1,24 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import left_arrow from '../../src/assets/img/svgs/left-arrow.svg'
-
+import TextField from '@mui/material/TextField';
+import { credit } from '../../src/data/creditcard';
+import { useState } from 'react';
 export function ConfirmPage() {
     const { stayId } = useParams()
     const navigate = useNavigate()
+    const [card, setCard] = useState(credit[0])
+
+    function handleCreditChange(target) {
+        const field = target.id
+        const value = target.value
+        setCard((prevCard) => ({ ...prevCard, [field]: value }))
+
+    }
 
     return (
         <div className='confirm-page'>
             <div className='title'>
-                <button className='return-btn' onClick={() => navigate(`/`)}>{'‹'}</button>
+                <button className='return-btn' onClick={() => navigate(`/stay/${stayId}`)}>{'‹'}</button>
                 <h1>Confirm and pay</h1>
             </div>
             <div className='reservation'>
@@ -32,13 +42,19 @@ export function ConfirmPage() {
                     </section>
 
                     <section className='payment'>
-                        <h2>pay with</h2>
-
+                        <div className='title'>
+                            <h2>pay with</h2>
+                            <img src='../../src\assets\img\svgs\creditcards.PNG' />
+                        </div>
+                        <form className='billing-form' onSubmit={(ev) => { ev.preventDefault() }}>
+                            <TextField className="billing number" id="number" onChange={(ev) => handleCreditChange(ev.target)} label="Credit card" value={card.number || ''} placeholder='0000 0000 0000 0000' variant="standard" inputProps={{ maxLength: 16 }} />
+                            <div>
+                                <TextField className="billing exp-date" id="exp-date" onChange={(ev) => handleCreditChange(ev.target)} label="Expiration date" value={card.expDate || ''} placeholder='MM/YY' variant="standard" inputProps={{ maxLength: 5 }} />
+                                <TextField className="billing cvv" id="cvv" onChange={(ev) => handleCreditChange(ev.target)} label="CVV" placeholder='123' value={card.cvv || ''} maxRows={1} variant="standard" inputProps={{ maxLength: 3 }} />
+                            </div>
+                        </form>
                     </section>
-                    <section className='requirements'>
-                        <h2>Required for your trip</h2>
 
-                    </section>
                     <section className='cancelation'>
                         <h2>Cancellation policy</h2>
                         <span>This reservation is non-refundable. <a href="#">Learn more</a></span>
