@@ -1,0 +1,259 @@
+.stay-details {
+  .stay-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-block-end: 22px;
+
+    .stay-name-actions {
+      font-size: 0.875rem;
+      display: flex;
+    
+      .action {
+        padding: 8px;
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        p{
+          margin: 0 0 0 4px;
+          text-decoration: underline 1px $darkGray-clr;
+        }
+        img{
+          width: 16px;
+        }
+        &:hover{
+          // background-color: $lightGray-bg-clr;
+        }
+      }
+    }
+
+    h1 {
+      font-size: 1.625rem;
+      margin: 0;
+
+      .edit-btn {
+        background-color: $clr6;
+        color: $clr7;
+        font-size: 1rem;
+        border: 1px solid $lightGray-bg-clr1;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-weight: 600;
+        margin-left: 15px;
+
+        &:hover {
+          border-color: $clr7;
+        }
+      }
+    }
+  }
+
+  .imgs-container {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+
+    img {
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+
+    .big-img {
+      grid-row: span 2;
+      grid-column: span 2;
+
+      img {
+        border-radius: 12px 0 0 12px;
+      }
+    }
+
+    .small-img2 {
+      img {
+        border-radius: 0 12px 0 0;
+      }
+    }
+
+    .small-img4 {
+      img {
+        border-radius: 0 0 12px 0;
+      }
+    }
+  }
+
+  .mid-section {
+    display: grid;
+    grid-template-columns: 653px 1fr;
+
+    > * {
+      grid-column: 1;
+    }
+
+    .reservation {
+      margin-left: auto;
+      padding: 32px 0;
+      grid-column: 2;
+      grid-row: span 6;
+    }
+
+    .stay-information {
+      // display: flex;
+      padding: 32px 0;
+
+      h1 {
+        font-size: 1.375rem;
+        margin: 0;
+      }
+
+      .stay-contents {
+        margin: 4px 0 0 0;
+        font-size: 1rem;
+      }
+
+      .stay-rating {
+        margin: 4px 0 0 0;
+        font-size: 1rem;
+        font-weight: bold;
+
+        span {
+          text-decoration: underline 1px solid $black;
+        }
+      }
+    }
+
+    .hostedBy {
+      border-top: 1px solid $lightGray-bg-clr1;
+      border-bottom: 1px solid $lightGray-bg-clr1;
+      display: flex;
+      align-items: center;
+      padding: 24px 0;
+
+      .hostedBy-img {
+        width: 40px;
+        margin-right: 24px;
+
+        img {
+          border-radius: 50%;
+          aspect-ratio: 1/ 1;
+        }
+      }
+
+      .hostedBy-name {
+        h2 {
+          font-weight: bold;
+          font-size: 1rem;
+          margin: 0;
+        }
+
+        p {
+          margin: 0;
+          font-size: 0.875rem;
+        }
+      }
+    }
+
+    .guest-experiences {
+      padding: 32px 0;
+      border-bottom: 1px solid $lightGray-bg-clr1;
+
+      h2 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: bold;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.875rem;
+      }
+
+      > * {
+        margin-bottom: 24px;
+      }
+
+      .box {
+        display: flex;
+        align-items: center;
+
+        .svg-container {
+          width: 30px;
+          margin-right: 24px;
+        }
+      }
+
+      .box3 {
+        margin: 0;
+      }
+    }
+
+    .stay-descripiton {
+      padding: 32px 0;
+      border-bottom: 1px solid $lightGray-bg-clr1;
+    }
+
+    .stay-amenities {
+      padding: 32px 0;
+      border-bottom: 1px solid$lightGray-bg-clr1;
+
+      p {
+        margin: 0;
+        padding: 5px 0;
+      }
+
+      .amenities-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto-fill;
+      }
+    }
+  }
+  .stay-reviews {
+    padding: 48px 0;
+    border-bottom: 1px solid $lightGray-bg-clr1;
+    h2 {
+      font-size: 1.625rem;
+      margin-bottom: 32px;
+    }
+    .reviews {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 40px 1px;
+      .review {
+        padding: 0 8px;
+        margin-right: 95px;
+        .review-by {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          margin-bottom: 13px;
+          p {
+            margin: 0;
+          }
+          h3 {
+            font-size: 1rem;
+            margin: 0;
+            font-weight: 600;
+          }
+        }
+        .review-date {
+          font-size: 0.875rem;
+        }
+        .text {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          font-weight: 400;
+          font-size: 1rem;
+          margin: 0;
+        }
+      }
+    }
+  }
+  .map{
+    h2{
+      padding: 24px 0;
+      margin: 0;
+    }
+  }
+}

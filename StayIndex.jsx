@@ -6,6 +6,7 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { userService } from '../services/user.service.js'
 import { stayService } from '../services/stay.service.js'
 import { loadStays, addStay, updateStay, removeStay, setFilterBy } from '../store/actions/stay.actions.js'
+import { MainHeader } from '../cmps/MainHeader.jsx'
 
 import { StayList } from '../cmps/StayList.jsx'
 import { StaySearch } from '../cmps/search/StaySearch.jsx'
@@ -17,12 +18,12 @@ import { ShowMoreStays } from '../cmps/ShowMoreStays.jsx'
 
 export function StayIndex() {
     const stays = useSelector(storeState => storeState.stayModule.stays)
-    const isLoading = useSelector(storeState => storeState.userModule.isLoading)
+    const isLoading = useSelector(storeState => storeState.systemModule.isLoading)
     const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
-    
+
     const [searchParams, setSearchParams] = useSearchParams()
     const [params, setParams] = useState(stayService.generateQueryString(filterBy))
-    
+
     const [loadingMore, setLoadingMore] = useState(false)
     const [scroll, setScroll] = useState(false)
 
@@ -103,36 +104,45 @@ export function StayIndex() {
     }
 
 
+    // if (!stays) return <div className='loader'></div>
+
     return (
         <>
-            <StaySearch
-                filterBy={filterBy}
-                onSetFilter={onSetFilter}
-            />
 
-            <div className={`filter-labels-container ${scroll ? "sticky full" : ""}`}>
-                <LabelsFilter
+            <div className={`dymanic-header ${scroll ? "sticky full" : ""}`}>
+                {scroll &&
+                    < MainHeader />
+                }
+
+                <StaySearch
                     filterBy={filterBy}
                     onSetFilter={onSetFilter}
                 />
 
-                <StayFilter
-                    filterBy={filterBy}
-                    onSetFilter={onSetFilter}
-                />
+                <div className='filter-labels-container'>
+                    <LabelsFilter
+                        filterBy={filterBy}
+                        onSetFilter={onSetFilter}
+                    />
+                    <StayFilter
+                        filterBy={filterBy}
+                        onSetFilter={onSetFilter}
+                    />
+
+                </div>
 
             </div >
 
-            {/* <button> <Link className='add-btn' to={`/edit`}>Add</Link></button> */}
 
-            {isLoading && 'Loading...'}
-            <StayList
-                params={params}
-                stays={stays}
-                onRemoveStay={onRemoveStay}
-            />
-            {isLoading && <div> loading........</div>}
-            < ShowMoreStays onLoadMore={onLoadMore} />
+            {/* <button> <Link className='add-btn' to={`/edit`}>Add</Link></button> */}
+            {isLoading ? (
+                <div className='stay-index-loader'><div className='loader'></div></div>
+            ) : (
+                <>
+                    <StayList params={params} stays={stays} onRemoveStay={onRemoveStay} />
+                    <ShowMoreStays onLoadMore={onLoadMore} />
+                </>
+            )}
         </>
     )
 }

@@ -4,8 +4,9 @@ import { stayService } from '../../services/stay.service.js'
 import { userService } from '../../services/user.service.js'
 import { store } from '../store.js'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
-import { APPEND_STAYS, ADD_STAY, REMOVE_STAY,SET_STAYS, UNDO_REMOVE_STAY, UPDATE_STAY, SET_FILTER_BY, SET_FILTER_LABEL } from '../reducers/stay.reducer.js'
+import { APPEND_STAYS, ADD_STAY, REMOVE_STAY, SET_STAYS, UNDO_REMOVE_STAY, UPDATE_STAY, SET_FILTER_BY, SET_FILTER_LABEL } from '../reducers/stay.reducer.js'
 import { SET_SCORE } from '../reducers/user.reducer.js'
+import { LOADING_START, LOADING_DONE } from '../reducers/system.reducer.js'
 
 const ITEMS_PER_PAGE = 48
 
@@ -30,23 +31,22 @@ export function getActionUpdateStay(stay) {
 }
 
 export async function loadStays(filterBy, shouldLoadMore) {
-     
     try {
+        store.dispatch({ type: LOADING_START, isLoading: true })
         const page = shouldLoadMore ? store.getState().stayModule.page + 1 : 1
         const response = await stayService.query(filterBy, page, ITEMS_PER_PAGE)
-
         const newStays = Array.isArray(response.stays) ? response.stays : []
-
-        // const stays = await stayService.query(filterBy, page, ITEMS_PER_PAGE)
         store.dispatch({
             type: SET_STAYS,
             stays: shouldLoadMore ? [...store.getState().stayModule.stays, ...newStays] : [...newStays],
             page: page,
-            totalDocumentsCount:  response.totalDocumentsCount,
+            totalDocumentsCount: response.totalDocumentsCount,
         })
     } catch (err) {
         console.log('Cannot load stays', err)
         throw err
+    } finally {
+        store.dispatch({ type: LOADING_DONE, isLoading: false })
     }
 }
 
