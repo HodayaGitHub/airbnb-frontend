@@ -119,7 +119,7 @@ export function onRemoveStayOptimistic(stayId) {
 
     stayService.remove(stayId)
         .then(() => {
-            console.log('Server Reported - Deleted Succesfully');
+            console.log('Server Reported - Deleted Succesfully')
         })
         .catch(err => {
             showErrorMsg('Cannot remove stay')

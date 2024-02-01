@@ -11,6 +11,7 @@ import key from '../assets/img/svgs/key.svg'
 import chat from '../assets/img/svgs/chat.svg'
 import location from '../assets/img/svgs/location.svg'
 import { ReservationModal } from '../cmps/reservationModal.jsx'
+import { GoogleMap } from '../cmps/GoogleMap.jsx'
 
 export function StayDetails() {
   // const [msg, setMsg] = useState(getEmptyMsg())
@@ -36,8 +37,7 @@ export function StayDetails() {
   function handleChange(target) {
     const field = target.name
     let value = target.value
-    setStay(prevStay => ({ ...prevStay, [field]: value }))
-
+    setStay((prevStay) => ({ ...prevStay, [field]: value }))
   }
   function handleSubmit(e) {
     e.preventDefault()
@@ -49,11 +49,21 @@ export function StayDetails() {
     try {
       await updateStay(stay)
       setIsEdit(false)
-    }
-    catch (err) {
+    } catch (err) {
       console.log('Cannot add stay', err)
     }
   }
+
+  function calculateAverageRating() {
+    if (!stay || !stay.reviews || stay.reviews.length === 0) {
+      return 0 
+    }
+    
+    const totalRating = stay.reviews.reduce((acc, review) => acc + review.rate, 0)
+    return totalRating / stay.reviews.length
+  }
+
+  let averageRating = calculateAverageRating()
 
   if (!stay) return <div></div>
   return (
@@ -61,11 +71,34 @@ export function StayDetails() {
       <div className='stay-name'>
         {isEdit && (
           <form onSubmit={handleSubmit}>
-            <input onChange={(e) => handleChange(e.target)} value={stay.name} type="text" name="name" id="name" />
+            <input
+              onChange={(e) => handleChange(e.target)}
+              value={stay.name}
+              type='text'
+              name='name'
+              id='name'
+            />
           </form>
         )}
-        {!isEdit && <><h1 onMouseLeave={() => { setIsOver(false) }} onMouseOver={() => { setIsOver(true) }}>{stay.name}
-          {isOver && <button className="edit-btn" onClick={() => setIsEdit(true)}>🖉</button>}</h1></>}
+        {!isEdit && (
+          <>
+            <h1
+              onMouseLeave={() => {
+                setIsOver(false)
+              }}
+              onMouseOver={() => {
+                setIsOver(true)
+              }}
+            >
+              {stay.name}
+              {isOver && (
+                <button className='edit-btn' onClick={() => setIsEdit(true)}>
+                  🖉
+                </button>
+              )}
+            </h1>
+          </>
+        )}
         <div className='stay-name-actions'>
           <div className='action'>Share</div>
           <div className='action'>Save</div>
@@ -100,21 +133,24 @@ export function StayDetails() {
           </h1>
           {/* HARD CODED FOR NOW */}
           <p className='stay-contents'>
-            5 guests • 3 bedrooms • 3 beds • 2 baths
+            {stay.capacity} guest
+            {stay.capacity !== 1 && <span>s</span>} • {stay.bedrooms} bedroom
+            {stay.bedrooms !== 1 && <span>s</span>} • 
+            3 beds • {stay.bathrooms} bathroom{stay.bathrooms !== 1 && <span>s</span>}
           </p>
           <p className='stay-rating'>
-            ★4.95 • <span>152 reviews</span>
+          🟊 {averageRating.toFixed(2)} • <span>{stay.reviews.length} reviews</span>
           </p>
         </section>
         <section className='hostedBy'>
           {/* <img src={stay.host.imgUrl} alt='' /> */}
           <div className='hostedBy-img'>
             {/* <img src={img} alt='' /> */}
-            <Avatar alt='Remy Sharp' src={img} />
+            <Avatar alt='Remy Sharp' src={stay.host.pictureUrl} />
           </div>
           <div className='hostedBy-name'>
             <h2>{stay.host.fullname}</h2>
-            <p>5 years hosting</p>
+            <p>{stay.host.yearsOfHosting} years hosting</p>
           </div>
         </section>
         <section className='guest-experiences'>
@@ -153,11 +189,7 @@ export function StayDetails() {
           </div>
         </section>
         {/* HARD CODDED */}
-        <section className='stay-descripiton'>
-          The comfortable apartment at the heart of busy Tsim Sha Tsui.2minutes
-          walk to the MTR/Subway station.There are many biggest shopping mall
-          around here:K-11,The One,Harbour city ect.
-        </section>
+        <section className='stay-descripiton'>{stay.summary}</section>
         <section className='stay-amenities'>
           <h4>What this place offers</h4>
           <div className='amenities-container'>
@@ -167,6 +199,36 @@ export function StayDetails() {
           </div>
         </section>
       </section>
-    </section >
+      <section className='stay-reviews'>
+        <h2>
+        🟊 {averageRating.toFixed(2)} • {stay.reviews.length} review
+          {stay.reviews.length !== 1 && <span>s</span>}
+        </h2>
+        <div className='reviews'>
+          {stay.reviews.map((review, index) => {
+            return (
+              <div className='review' key={index}>
+                <div className='review-by'>
+                  <Avatar className='avatar' alt='Remy Sharp' src={review.imgUrl} />
+                  <h3 className='name'>{review.by.fullname}</h3>
+                  <p className='review-date'>
+                    {new Date(review.at).toLocaleString('en', {
+                      month: 'short'
+                    })}{' '}
+                    {''}
+                    {new Date(review.at).getFullYear()}
+                  </p>
+                </div>
+                <p className='text'>{review.txt}</p>
+              </div>
+            )
+          })}
+        </div>
+      </section>
+      <section className='map'>
+        <h2>Where you'll be</h2>
+        <GoogleMap stayLoc={stay.loc}/>
+      </section>
+    </section>
   )
 }
