@@ -4,13 +4,14 @@ import { StayIndex } from './pages/StayIndex.jsx'
 import { ReviewIndex } from './pages/ReviewIndex.jsx'
 import { ChatApp } from './pages/Chat.jsx'
 import { AdminApp } from './pages/AdminIndex.jsx'
+import {  StayDetails} from './pages/StayDetails.jsx'
 
 // Routes accesible from the main navigation (in AppHeader)
 const routes = [
     {
         path: '/',
         component: <HomePage />,
-        label: 'Home 🏠',
+        label: 'airbnb',
     },
     {
         path: 'stay',
@@ -36,7 +37,12 @@ const routes = [
         path: 'admin',
         component: <AdminApp />,
         label: 'Admin Only'
-    }
+    }, 
+    {
+        path: 'details',
+        component: <StayDetails />,
+        label: 'Details'
+    }, 
 ]
 
 export default routes
