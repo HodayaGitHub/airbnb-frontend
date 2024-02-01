@@ -1,17 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Avatar from '@mui/material/Avatar'
-// import { stayService } from '../services/stay.service.js'
-import { stayService } from '../services/stay.service.local.js'
+import { stayService } from '../services/stay.service.js'
+// import { stayService } from '../services/stay.service.local.js'
 import { updateStay } from '../store/actions/stay.actions.js'
+
 // HARD CODED
 import img from '../assets/img/host-img/stay-host-img.jpg'
 import reviewer1 from '../assets/reviewers-imgs/Emma-Johnson-img.jpg'
 import key from '../assets/img/svgs/key.svg'
+import share from '../assets/img/svgs/share.svg'
+import heart from '../assets/img/svgs/heart.svg'
 import chat from '../assets/img/svgs/chat.svg'
 import location from '../assets/img/svgs/location.svg'
 import { ReservationModal } from '../cmps/reservationModal.jsx'
 import { GoogleMap } from '../cmps/GoogleMap.jsx'
+import { FavoriteIcon } from '../cmps/favoriteIcon.jsx'
+import ShareModal from '../cmps/shareModal.jsx'
 
 export function StayDetails() {
   // const [msg, setMsg] = useState(getEmptyMsg())
@@ -100,8 +105,16 @@ export function StayDetails() {
           </>
         )}
         <div className='stay-name-actions'>
-          <div className='action'>Share</div>
-          <div className='action'>Save</div>
+          <div className='action'> 
+          <ShareModal stayImg={stay.imgUrls[0]} stay={stay} averageRating={averageRating}/>
+          </div>
+
+          {/* <div className='action'> 
+          <img src={heart} alt="" />
+          <p className='text'>save</p>
+          </div> */}
+          
+          
         </div>
       </div>
 

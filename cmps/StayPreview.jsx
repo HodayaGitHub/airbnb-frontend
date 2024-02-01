@@ -30,7 +30,7 @@ export function StayPreview({ stay, onRemoveStay }) {
         </div>
         <div className='stay-desc'>
           <span className='stay-name'>
-            {stay.loc.city}, {stay.loc.country}{' '}
+            {stay.loc?.city}, {stay.loc?.country}{' '}
           </span>
           <span className='stay-star'>🟊 4.95</span>
 
@@ -42,7 +42,7 @@ export function StayPreview({ stay, onRemoveStay }) {
 
           <span className='stay-price'>
             <span className='stay-price-number'>
-              ${stay.price.toLocaleString()}
+              ${stay.price?.toLocaleString()}
             </span>{' '}
             night
           </span>

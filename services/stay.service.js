@@ -1,19 +1,15 @@
 
 // import { storageService } from './async-storage.service.js'
+
+import Axios from 'axios'
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
-import { userService } from './user.service.js'
-
-
-const STORAGE_KEY = 'stay'
 
 export const stayService = {
     query,
     getById,
     save,
     remove,
-    getEmptyStay,
-    addStayMsg,
     getDefaultSearchFilter,
     getDefaultGuests,
     getDefaultRegion,
@@ -21,13 +17,38 @@ export const stayService = {
     totalGuests,
     buildQueryParams,
     getDefaultDates,
+    addMsg,
+    removeMsg,
 }
+
+// for cookies
+const axios = Axios.create({
+    withCredentials: true
+})
+
+
 window.cs = stayService
+const BASE_URL = 'stay'
 
 
-async function query(filterBy, selectedLabel) {
-    return httpService.post(`stay/getAll`, { filterBy, selectedLabel })
+// async function query(filterBy) {
+//     return httpService.post(`stay`, filterBy)
+// }
+
+
+function query(filterBy = {}) {
+    return httpService.get(BASE_URL, { filterBy })
 }
+
+
+// async function query(filterBy, selectedLabel) {
+//     return httpService.post(`stay`, { filterBy, selectedLabel })
+// }
+
+// async function query() {
+//     return httpService.get(`stay`)
+// }
+
 
 function getById(stayId) {
     return httpService.get(`stay/${stayId}`)
@@ -37,33 +58,25 @@ async function remove(stayId) {
     return httpService.delete(`stay/${stayId}`)
 }
 
-async function save(stay) {
-    var savedStay
-    if (stay._id) {
-        savedStay = await httpService.put(`stay/${stay._id}`, stay)
-
-    } else {
-        savedStay = await httpService.post('stay', stay)
-    }
-    return savedStay
+function save(toy) {
+    return httpService.put(BASE_URL, toy)
 }
 
-async function addStayMsg(stayId, txt) {
-    const savedMsg = await httpService.post(`stay/${stayId}/msg`, { txt })
+async function addMsg(toyId, txt) {
+    const savedMsg = await httpService.post(`toy/${toyId}/msg`, { txt })
     return savedMsg
 }
 
-function getEmptyStay() {
-    return {
-        vendor: 'Susita-' + (Date.now() % 1000),
-        price: utilService.getRandomIntInclusive(1000, 9000),
-    }
+async function removeMsg(toyId, msgId) {
+    const removedId = await httpService.delete(`toy/${toyId}/msg/${msgId}`)
+    return removedId
 }
+
+
 
 // filtering :
 function getDefaultSearchFilter() {
     return {
-        // location: '',
         stayDates: '',
         checkIn: '',
         checkOut: '',
@@ -147,14 +160,15 @@ function getFormattedDate(date) {
 }
 
 function buildQueryParams(filterBy) {
-    const { region, checkIn, checkOut, guests } = filterBy
+    const { region, checkIn, checkOut, guests, label } = filterBy
     const { defaultCheckIn, defaultCheckOut } = getDefaultDates()
-
+    console.log(defaultCheckIn)
     const params = {
         region: region || `I'm flexible`,
         checkIn: getFormattedDate(checkIn) || getFormattedDate(defaultCheckIn),
         checkOut: getFormattedDate(checkOut) || getFormattedDate(defaultCheckOut),
         guests: totalGuests(filterBy) || 1,
+        label: label,
     }
     return params
 }

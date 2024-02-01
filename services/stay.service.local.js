@@ -149,7 +149,6 @@ function getAmentities() {
 // filtering :
 function getDefaultSearchFilter() {
   return {
-    // location: '',
     stayDates: '',
     checkIn: '',
     checkOut: '',

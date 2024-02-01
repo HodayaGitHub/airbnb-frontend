@@ -86,7 +86,7 @@ export function SimpleSlider({ stay }) {
   return (
     <div className="simple-slider">
       <Slider className="slider" {...settings}>
-        {stay.imgUrls.map((imgUrl, index) => (
+        {stay.imgUrls?.map((imgUrl, index) => (
            
             <img key={index} className="stay-img" src={imgUrl} alt="" />
           

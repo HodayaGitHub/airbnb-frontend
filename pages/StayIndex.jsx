@@ -6,8 +6,8 @@ import { loadStays, addStay, updateStay, removeStay, addToCart, setFilterBy } fr
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { userService } from '../services/user.service.js'
-import { stayService } from '../services/stay.service.local.js'
-// import { stayService } from '../services/stay.service.js'
+// import { stayService } from '../services/stay.service.local.js'
+import { stayService } from '../services/stay.service.js'
 
 import { StayList } from '../cmps/StayList.jsx'
 import { StaySearch } from '../cmps/search/StaySearch.jsx'
