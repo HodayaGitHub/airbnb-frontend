@@ -5,7 +5,7 @@ import { labels } from '../../data/labels-new-stay.js';
 import * as labelsSvg from '../../services/labels.icons.new.stay.jsx';
 import * as React from 'react';
 
-export function Page2({ goToNextPage, updateStay, stay }) {
+export function Page2({ updateStay, stay }) {
   const [labelsToEdit, setLabelsToEdit] = useState(stay.labels)
   const navigate = useNavigate()
 
@@ -46,9 +46,7 @@ export function Page2({ goToNextPage, updateStay, stay }) {
             </div>
           ))}
         </div>
-        <button className='add-stay-next-page' onClick={goToNextPage}>
-          Next
-        </button>
+
       </div>
     </section>
   );

@@ -6,25 +6,11 @@ import { AMENTITIES } from '../../data/amentities.js'
 import { useState } from 'react'
 
 
-export function Page7({ goToNextPage }) {
+export function Page7({ stay}) {
   const navigate = useNavigate()
-
   const [label, setLabel] = useState([])
-  // const labels = stayService.getLocalLabels()
+  const [amentitiesToEdit, setAmentitiesToEdit] = useState(stay.labels)
 
-  function handleLablesChange(ev) {
-    const { checked, name } = ev.target
-    if (checked) {
-      label.push(name)
-    } else {
-      const index = label.indexOf(name)
-      if (index !== -1) {
-        label.splice(index, 1)
-      }
-    }
-    const labels = label
-    setStay((prevStay) => ({ ...prevStay, labels }))
-  }
 
   return (
     <section className='step2'>
@@ -52,7 +38,6 @@ export function Page7({ goToNextPage }) {
         </div>
       </div>
 
-      <button className="add-stay-next-page" onClick={goToNextPage}>Next</button>
     </section>
   )
 }

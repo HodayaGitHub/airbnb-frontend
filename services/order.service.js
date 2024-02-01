@@ -79,6 +79,7 @@ function getEmptyOrder() {
             pets: 0
         },
         stayId: "",
+        stayImg:"",
         status: "pending"
     }
 }

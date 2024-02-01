@@ -1,24 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { MainHeader } from '../../cmps/MainHeader';
 import { MinusIcon, PlusIcon } from '../../services/icons.service';
 
-export function Page5({ goToNextPage }) {
+export function Page5({ stay, updateStay }) {
   const navigate = useNavigate();
-
-  const placeDetails = {
-    Guests: 'Guests',
-    Bedrooms: 'Bedrooms',
-    Beds: 'Beds',
-    Bathroom: 'Bathroom',
-  };
+  const [stayToEdit, setStayEdit] = useState(stay);
 
   const [detailCounts, setDetailCounts] = useState({
-    Guests: 0,
-    Bedrooms: 0,
-    Beds: 0,
-    Bathroom: 0,
+    guests: 0,
+    bedrooms: 0,
+    beds: 0,
+    bathroom: 0,
   });
+
+  useEffect(() => {
+    setStayEdit((prevStay) => {
+      const updatedStay = { ...prevStay, beds: detailCounts.beds };
+
+      // detailCounts.Gues
+      return updatedStay
+    });
+  }, [detailCounts])
+
+  useEffect(() => {
+    updateStay(stayToEdit);
+  }, [stayToEdit]);
 
   function updateDetailCount(option, amount) {
     setDetailCounts((prevCounts) => ({
@@ -26,6 +33,13 @@ export function Page5({ goToNextPage }) {
       [option]: Math.max(0, prevCounts[option] + amount),
     }));
   }
+
+  const placeDetails = {
+    guests: 'Guests',
+    bedrooms: 'Bedrooms',
+    beds: 'Beds',
+    bathroom: 'Bathroom',
+  };
 
   return (
     <section className='step5'>
@@ -68,7 +82,6 @@ export function Page5({ goToNextPage }) {
           ))}
         </div>
       </div>
-      <button className="add-stay-next-page" onClick={goToNextPage}>Next</button>
     </section>
   );
 }

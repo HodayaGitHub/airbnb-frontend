@@ -35,7 +35,8 @@ window.cs = stayService
 const BASE_URL = 'stay'
 
 function query(filterBy = {}, page = 1, itemsPerPage) {
-    return httpService.get(BASE_URL, { filterBy, page, itemsPerPage, })
+    console.log('hi from query')
+    return httpService.get(BASE_URL, { filterBy, page, itemsPerPage})
 }
 
 function getById(stayId) {
@@ -140,7 +141,7 @@ function formatDateFromUnix(unixTimestamp) {
     const options = { day: 'numeric', month: 'short' };
     const formattedDate = new Date(unixTimestamp * 1000).toLocaleDateString('en-US', options);
     return formattedDate;
-  }
+}
 
 function generateQueryString(filterBy) {
     const { stayDates, checkIn, checkOut, guests, region, label } = filterBy
@@ -164,15 +165,20 @@ function buildQueryParams(filterBy) {
 }
 
 function getDefaultDates() {
-    const today = new Date()
-    const defaultCheckIn = Math.floor(Date.now() / 1000)
-    const oneDayInSeconds = 24 * 60 * 60
-    const defaultCheckOut = defaultCheckIn + oneDayInSeconds
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to the beginning of the day
+
+    const defaultCheckIn = Math.floor(today.getTime() / 1000);
+
+    const oneDayInSeconds = 24 * 60 * 60;
+    const defaultCheckOut = defaultCheckIn + oneDayInSeconds;
+
+    console.log(defaultCheckIn, defaultCheckOut);
 
     return {
         defaultCheckIn,
         defaultCheckOut,
-    }
+    };
 }
 
 function totalGuests(filterBy) {
@@ -189,6 +195,6 @@ function getLabels() {
 function calcNights(firstDate, secondDate) {
     const timeDifference = secondDate - firstDate;
     const daysDifference = Math.ceil(timeDifference / (24 * 60 * 60)); // seconds to days
-  
+
     return daysDifference;
-  }
+}
