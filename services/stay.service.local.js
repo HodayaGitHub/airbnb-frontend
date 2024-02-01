@@ -204,8 +204,8 @@ function buildQueryParams(filterBy) {
   const { defaultCheckIn, defaultCheckOut } = getDefaultDates()
   const params = {
     region: region || `I'm flexible`,
-    checkIn: getFormattedDate(checkIn) || getFormattedDate(defaultCheckIn),
-    checkOut: getFormattedDate(checkOut) || getFormattedDate(defaultCheckOut),
+    checkIn: checkIn || defaultCheckIn,
+    checkOut: checkOut || defaultCheckOut,
     guests: totalGuests(filterBy) || 1,
     label: label,
   }
