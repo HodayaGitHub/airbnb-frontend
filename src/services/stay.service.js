@@ -85,30 +85,30 @@ function getDefaultRegion() {
     return [
         {
             name: `I'm flexible`,
-            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/united-states.png'
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/everywhere.png'
         },
         {
             name: 'Brazil',
-            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/middle-east.png'
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/brazil.png'
         },
         {
             name: 'Australia',
-            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/greece.png'
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/Australia.png'
         },
         {
             name: 'United States',
-            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/united-states.png'
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1707212846/airbnb/region/united-states.png'
         },
         {
-            name: 'Portugal',
-            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/italy.png'
+            name: 'Italy',
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1707212846/airbnb/region/italy.png'
         },
         {
-            name: 'Turkey',
-            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/southeast-asia.png'
+            name: 'Spain',
+            imgUrl: 'https://res.cloudinary.com/drlt4yjnj/image/upload/v1704657005/airbnb/region/spain.png'
         },
-    ]
-}
+    ];
+};
 
 function getDefaultGuests() {
     return {

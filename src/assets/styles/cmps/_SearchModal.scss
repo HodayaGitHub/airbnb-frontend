@@ -70,7 +70,8 @@
   background: #ffff;
   padding: 1rem;
   justify-content: center;
-  width: 50%;
+  width: max-content;
+  // width: 50%;
   //   height: 511px;
   height: 450px;
   .rdrCalendarWrapper .rdrDateRangeWrapper {
