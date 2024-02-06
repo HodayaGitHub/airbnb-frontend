@@ -1,8 +1,6 @@
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import { DateRange } from 'react-date-range'
-import { stayService } from '../../services/stay.service'
-
 import { useState } from 'react'
 
 export function DateSelect({
@@ -11,32 +9,34 @@ export function DateSelect({
   checkOut,
   monthsToShow = 2
 }) {
-  checkIn = checkIn || new Date()
-  checkOut = checkOut || new Date()
+
+  const checkInDate = typeof checkIn === 'number' ? new Date(checkIn * 1000) : checkIn || new Date();
+  const checkOutDate = typeof checkOut === 'number' ? new Date(checkOut * 1000) : checkOut || new Date();
+
+  const today = new Date();
 
   const [range, setRange] = useState([
     {
-      startDate: checkIn,
-      endDate: checkOut,
+      startDate: checkInDate,
+      endDate: checkOutDate,
       key: 'selection'
     }
-  ])
+  ]);
 
   function formatDate(date) {
-    const options = { day: 'numeric', month: 'short' }
-    return date.toLocaleDateString('en-US', options)
-  }
+    const options = { day: 'numeric', month: 'short' };
+    return date.toLocaleDateString('en-US', options);
+  };
 
   function handleChange(item) {
-    const selection = item.selection
-    setRange([selection])
+    const selection = item.selection;
+    setRange([selection]);
     if (selection.startDate === selection.endDate) {
-      onSetField('checkIn', selection.startDate)
-      console.log(formatDate(selection.startDate))
+      onSetField('checkIn', selection.startDate);
     } else {
-      onSetField('checkOut', selection.endDate)
-    }
-  }
+      onSetField('checkOut', selection.endDate);
+    };
+  };
 
   return (
     <DateRange
@@ -50,6 +50,7 @@ export function DateSelect({
       rangeColors={['#272727']}
       showDateDisplay={false}
       showMonthAndYearPickers={false}
+      minDate={today}
     />
-  )
-}
+  );
+};
