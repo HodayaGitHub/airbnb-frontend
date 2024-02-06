@@ -36,9 +36,10 @@
   .stay-desc {
     margin-top: 12px;
     display: grid;
-    grid-template-columns: 225px 46px;
+    // grid-template-columns: 225px 46px;
     grid-template-rows: repeat(3, 19px) 25px;
     font-size: 0.938rem;
+    justify-content: space-between;
 
     .stay-name {
       grid-column: 1;

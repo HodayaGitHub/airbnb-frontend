@@ -1,4 +1,6 @@
 .stay-details {
+  overflow: hidden;
+
   .stay-name {
     display: flex;
     align-items: center;
@@ -317,4 +319,15 @@
       margin: 0;
     }
   }
+
+
+  @media (max-width: 1200px) {
+    // Styles for screens up to 1200px wide
+    .mid-section {
+      grid-template-columns: 1fr; // Adjust grid layout for smaller screens
+    }
+
+    // Additional responsive styles as needed...
+  }
 }
+

@@ -19,8 +19,7 @@ export function GoogleMap2() {
     // Need to set the container height explicitly
     <div style={{ height: '60vh', width: '100%', borderRadius: '10px', overflow: 'hidden' }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyAmOFk9Q3eWWCf4xjyjNn2E_EMdJIAx9_8' }}
-        // bootstrapURLKeys={{ key: '' }}
+        bootstrapURLKeys={{ key: '' }}
         center={center}
         defaultZoom={zoom}
         onClick={handleClick}
