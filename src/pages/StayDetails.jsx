@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import Avatar from '@mui/material/Avatar'
+import Avatar, { avatarClasses } from '@mui/material/Avatar'
 import { stayService } from '../services/stay.service.js'
 // import { stayService } from '../services/stay.service.local.js'
 import { updateStay } from '../store/actions/stay.actions.js'
@@ -32,29 +32,67 @@ import * as React from 'react'
 
 export function StayDetails() {
   // const [msg, setMsg] = useState(getEmptyMsg())
-  const [stay, setStay] = useState(null)
-  const [isEdit, setIsEdit] = useState(false)
-  const [isOver, setIsOver] = useState(false)
+  const [stay, setStay] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isHover, setIsHover] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState('');
   const [reviewsToShow, setReviewsToShow] = useState(6);
-  const { stayId } = useParams()
-  const navigate = useNavigate()
-  var order =
-    useSelector((storeState) => storeState.orderModule.order) ||
-    JSON.parse(localStorage.getItem('PRE_ORDER'))
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1000);
+  const { stayId } = useParams();
+  const navigate = useNavigate();
+  const loggedInUser = useSelector((storeState) => storeState.userModule.loggedInUser);
 
-  const loggedInUser = useSelector((storeState) => storeState.userModule.loggedInUser)
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 960);
+    };
 
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
+  var order = useSelector((storeState) => storeState.orderModule.order) || JSON.parse(localStorage.getItem('PRE_ORDER'))
 
   const location = useLocation()
+
+
+  // useEffect(() => {
+  //   const fetchAvatar = async () => {
+  //     const url = await userService.fetchRandomAvatar()
+  //     setAvatarUrl(url)
+  //   }
+
+  //   fetchAvatar()
+  // }, [])
+
+
+
+
   useEffect(() => {
     const fetchAvatar = async () => {
-      const url = await userService.fetchRandomAvatar()
-      setAvatarUrl(url)
-    }
+      try {
+        // Generate a random gender ('male' or 'female')
+        const gender = Math.random() < 0.5 ? 'male' : 'female';
 
-    fetchAvatar()
-  }, [])
+        // Generate a random image ID between 1 and 20
+        const imgId = Math.floor(Math.random() * 20) + 1;
+
+        const url = `https://randomuser.me/api/portraits/${gender}/${imgId}.jpg`;
+        setAvatarUrl(url);
+        console.log('avatarUrl', avatarUrl);
+      } catch (error) {
+        console.error('Error fetching avatar:', error);
+      }
+    };
+
+    fetchAvatar();
+  }, []);
+
+
 
 
   useEffect(() => {
@@ -159,8 +197,9 @@ export function StayDetails() {
 
   if (!stay || !order) return <div className='loader'></div>
   return (
-    <section className='stay-details'>
+    <>
       <MainHeader />
+
       <div className='stay-name'>
         {isEdit && (
           <form onSubmit={handleSubmit}>
@@ -177,14 +216,14 @@ export function StayDetails() {
           <>
             <h1
               onMouseLeave={() => {
-                setIsOver(false)
+                setIsHover(false)
               }}
               onMouseOver={() => {
-                setIsOver(true)
+                setIsHover(true)
               }}
             >
               {stay.name}
-              {isOver && (
+              {isHover && (
                 <button className='edit-btn' onClick={() => setIsEdit(true)}>
                   🖉
                 </button>
@@ -212,112 +251,174 @@ export function StayDetails() {
         <div className='big-img'>
           <img src={stay.imgUrls[0]} alt='stay img' />
         </div>
-        <div className='smallImg small-img1'>
-          <img src={stay.imgUrls[1]} alt='stay img' />
-        </div>
-        <div className='smallImg small-img2'>
-          <img src={stay.imgUrls[2]} alt='stay img' />
-        </div>
-        <div className='smallImg small-img3'>
-          <img src={stay.imgUrls[3]} alt='stay img' />
-        </div>
-        <div className='smallImg small-img4'>
-          <img src={stay.imgUrls[4]} alt='stay img' />
-        </div>
+        {stay.imgUrls.slice(1).map((url, index) => (
+          <div
+            key={`small-img-${index + 1}`}
+            className={`smallImg small-img${index + 1}`}>
+            <img src={url} alt={`stay img ${index + 1}`} />
+          </div>
+        ))}
       </div>
-      <section className='mid-section'>
-        <div className='reservation'>
+
+      {isMobile ? (
+
+        <ReservationModal
+          stayId={stay._id}
+          price={stay.price}
+          order={order}
+          editOrder={editOrder}
+          isMobile={isMobile}
+        />
+      ) : (
+        <section className='mid-section'>
           <ReservationModal
             stayId={stay._id}
             price={stay.price}
             order={order}
             editOrder={editOrder}
+            isMobile={isMobile}
           />
-        </div>
-        <section className='stay-information'>
-          <h1>
-            {stay.type === 'House' ? 'Entire ' + stay.type : stay.type} in{' '}
-            {stay.loc.city}, {stay.loc.country}
-          </h1>
-          <p className='stay-contents'>
-            {stay.capacity} guest
-            {stay.capacity !== 1 && <span>s</span>} • {stay.bedrooms} bedroom
-            {stay.bedrooms !== 1 && <span>s</span>} •{' '}
-            {stay.bedrooms !== 0 ? stay.beds : 1} bed
-            {stay.bedrooms > 1 && stay.beds > 1 && <span>s</span>} •{' '}
-            {stay.bathrooms} bathroom{stay.bathrooms !== 1 && <span>s</span>}
-          </p>
-          <p className='stay-rating'>
-            🟊 {averageRating.toFixed(1)} •{' '}
-            <span>{stay.reviews.length} reviews</span>
-          </p>
-        </section>
-        <section className='hostedBy'>
-          {/* <img src={stay.host.imgUrl} alt='' /> */}
-          <div className='hostedBy-img'>
-            {/* <img src={img} alt='' /> */}
-            <Avatar alt='Remy Sharp' src={stay.host.pictureUrl} />
-          </div>
-          <div className='hostedBy-name'>
-            <h2>{stay.host.fullname}</h2>
-            <p>{stay.hostingYears} years hosting</p>
-          </div>
-        </section>
-        <section className='guest-experiences'>
-          <div className='box box1'>
-            <div className='svg-container'>
-              <img src={key} alt='' />
-            </div>
-            <div className='box-text'>
-              <h2>Great check-in experience</h2>
-              <p>
-                95% of recent guests gave the check-in process a 5-star rating
-              </p>
-            </div>
-          </div>
 
-          <div className='box box2'>
-            <div className='svg-container'>
-              <img src={chat} alt='' />
-            </div>
-            <div className='box-text'>
-              <h2>Great communication</h2>
-              <p>
-                100% of recent guests rated Cristina 5-star in communication.
-              </p>
-            </div>
-          </div>
+          <section className='stay-information'>
+            <h1>
+              {stay.type === 'House' ? 'Entire ' + stay.type : stay.type} in{' '}
+              {stay.loc.city}, {stay.loc.country}
+            </h1>
+            <p className='stay-contents'>
+              {stay.capacity} guest
+              {stay.capacity !== 1 && <span>s</span>} • {stay.bedrooms} bedroom
+              {stay.bedrooms !== 1 && <span>s</span>} •{' '}
+              {stay.bedrooms !== 0 ? stay.beds : 1} bed
+              {stay.bedrooms > 1 && stay.beds > 1 && <span>s</span>} •{' '}
+              {stay.bathrooms} bathroom{stay.bathrooms !== 1 && <span>s</span>}
+            </p>
+            <p className='stay-rating'>
+              🟊 {averageRating.toFixed(1)} •{' '}
+              <span>{stay.reviews.length} reviews</span>
+            </p>
+          </section>
 
-          <div className='box box3'>
-            <div className='svg-container'>
-              <img src={locationImg} alt='' />
+          <section className='hostedBy'>
+            {/* <img src={stay.host.imgUrl} alt='' /> */}
+            <div className='hostedBy-img'>
+              {/* <img src={img} alt='' /> */}
+              <Avatar alt='Remy Sharp' src={stay.host.pictureUrl} />
             </div>
-            <div className='box-text'>
-              <h2>Great location</h2>
-              <p>100% of recent guests gave the location a 5-star rating.</p>
+            <div className='hostedBy-name'>
+              <h2>{stay.host.fullname}</h2>
+              <p>{stay.hostingYears} years hosting</p>
             </div>
-          </div>
-        </section>
-        {/* HARD CODDED */}
-        <section className='stay-descripiton'>{stay.summary}</section>
-        <section className='stay-amenities'>
-          <h4>What this place offers</h4>
-          <div className='amenities-container'>
-            {AMENTITIES.map((amentitie, index) => (
-              <div className="icons-wrap" key={index}>
-                <span className={`label-icon`}>
-                  {labelsSvg[amentitie.svg] ? React.createElement(labelsSvg[amentitie.svg]) : ''}
-                </span>
-                <span className="label-title">
-                  {amentitie.title}
-                </span>
+          </section>
+
+          <section className='guest-experiences'>
+            <div className='box box1'>
+              <div className='svg-container'>
+                <img src={key} alt='' />
               </div>
-            ))}
-          </div>
+              <div className='box-text'>
+                <h2>Great check-in experience</h2>
+                <p>
+                  95% of recent guests gave the check-in process a 5-star rating
+                </p>
+              </div>
+            </div>
 
+            <div className='box box2'>
+              <div className='svg-container'>
+                <img src={chat} alt='' />
+              </div>
+              <div className='box-text'>
+                <h2>Great communication</h2>
+                <p>
+                  100% of recent guests rated Cristina 5-star in communication.
+                </p>
+              </div>
+            </div>
+
+            <div className='box box3'>
+              <div className='svg-container'>
+                <img src={locationImg} alt='' />
+              </div>
+              <div className='box-text'>
+                <h2>Great location</h2>
+                <p>100% of recent guests gave the location a 5-star rating.</p>
+              </div>
+            </div>
+          </section>
+
+          <section className='stay-descripiton'>{stay.summary}</section>
+          <section className='stay-amenities'>
+            <h4>What this place offers</h4>
+            <div className='amenities-container'>
+              {AMENTITIES.map((amentitie, index) => (
+                <div className="icons-wrap" key={index}>
+                  <span className={`label-icon`}>
+                    {labelsSvg[amentitie.svg] ? React.createElement(labelsSvg[amentitie.svg]) : ''}
+                  </span>
+                  <span className="label-title">
+                    {amentitie.title}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+          </section>
         </section>
+      )}
+
+
+      <section className='stay-reviews'>
+        <h2>
+          🟊 {averageRating.toFixed(1)} • {stay.reviews.length} review
+          {stay.reviews.length !== 1 && <span>s</span>}
+        </h2>
+        <div className='reviews'>
+          {stay.reviews.slice(0, reviewsToShow).map((review, index) => {
+            return (
+              <div className='review' key={index}>
+                <div className='review-by'>
+
+                  <Avatar
+                    className='avatar'
+                    alt={review.by.fullname}
+                    src={avatarUrl || review.by.imgUrl}
+                  />
+
+
+                  <h3 className='name'>{review.by.fullname}</h3>
+                  <p className='review-date'>
+                    {new Date(review.at).toLocaleString('en', {
+                      month: 'short'
+                    })}{' '}
+                    {''}
+                    {new Date(review.at).getFullYear()}
+                  </p>
+                </div>
+                <p className='text'>{review.txt}</p>
+              </div>
+            );
+          })}
+          {stay.reviews.length > reviewsToShow && (
+            <button className='showMore-btn' onClick={() => setReviewsToShow(reviewsToShow + 5)}>
+              Show More Reviews
+            </button>
+          )}
+        </div>
       </section>
-      {/* <section className='stay-reviews'>
+
+      <section className='map'>
+        <h2>Where you'll be</h2>
+        <GoogleMap stayLoc={stay.loc} />
+      </section>
+    </>
+
+  )
+}
+
+
+
+
+{/* <section className='stay-reviews'>
         <h2>
           🟊 {averageRating.toFixed(1)} • {stay.reviews.length} review
           {stay.reviews.length !== 1 && <span>s</span>}
@@ -347,47 +448,3 @@ export function StayDetails() {
           })}
         </div>
       </section> */}
-
-      <section className='stay-reviews'>
-        <h2>
-          🟊 {averageRating.toFixed(1)} • {stay.reviews.length} review
-          {stay.reviews.length !== 1 && <span>s</span>}
-        </h2>
-        <div className='reviews'>
-          {stay.reviews.slice(0, reviewsToShow).map((review, index) => {
-            return (
-              <div className='review' key={index}>
-                <div className='review-by'>
-                  <Avatar
-                    className='avatar'
-                    alt='Remy Sharp'
-                    src={review.by.imgUrl}
-                  />
-                  <h3 className='name'>{review.by.fullname}</h3>
-                  <p className='review-date'>
-                    {new Date(review.at).toLocaleString('en', {
-                      month: 'short'
-                    })}{' '}
-                    {''}
-                    {new Date(review.at).getFullYear()}
-                  </p>
-                </div>
-                <p className='text'>{review.txt}</p>
-              </div>
-            );
-          })}
-          {stay.reviews.length > reviewsToShow && (
-            <button className='showMore-btn' onClick={() => setReviewsToShow(reviewsToShow + 5)}>
-              Show More Reviews
-            </button>
-          )}
-        </div>
-      </section>
-
-      <section className='map'>
-        <h2>Where you'll be</h2>
-        <GoogleMap stayLoc={stay.loc} />
-      </section>
-    </section>
-  )
-}

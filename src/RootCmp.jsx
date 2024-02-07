@@ -27,7 +27,7 @@ const getMainLayoutClasses = (pathname) => {
 
 export function RootCmp() {
   const location = useLocation(); // Import useLocation from 'react-router'
-  const showFooter = !location.pathname.includes('/become-a-host')
+  const showFooter = !location.pathname.includes('/become-a-host') && !location.pathname.includes('/stay')
 
   return (
     <main className={getMainLayoutClasses(location.pathname)}>
