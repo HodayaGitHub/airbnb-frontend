@@ -27,7 +27,7 @@
 .stay-detail-layout {
   display: grid;
   // grid-template-columns: 392px 1fr 392px;
-  grid-template-columns: minmax(80px, 1fr) minmax(auto, 1920px) minmax(80px, 1fr);
+  grid-template-columns: minmax(80px, 1fr) minmax(auto, 1200px) minmax(80px, 1fr);
 
   >* {
     grid-column: 2;

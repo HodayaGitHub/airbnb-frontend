@@ -35,12 +35,17 @@ export function StayDetails() {
   const [stay, setStay] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [isHover, setIsHover] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState('');
+  const [avatarUrls, setAvatarUrls] = useState([]);
+  const [hostAvatarUrl, setHostAvatarUrl] = useState('');
   const [reviewsToShow, setReviewsToShow] = useState(6);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1000);
   const { stayId } = useParams();
   const navigate = useNavigate();
   const loggedInUser = useSelector((storeState) => storeState.userModule.loggedInUser);
+  let order = useSelector((storeState) => storeState.orderModule.order) || JSON.parse(localStorage.getItem('PRE_ORDER'))
+  const location = useLocation()
+  const { defaultCheckIn, defaultCheckOut } = stayService.getDefaultDates()
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,52 +59,46 @@ export function StayDetails() {
     };
   }, []);
 
-
-  var order = useSelector((storeState) => storeState.orderModule.order) || JSON.parse(localStorage.getItem('PRE_ORDER'))
-
-  const location = useLocation()
-
-
-  // useEffect(() => {
-  //   const fetchAvatar = async () => {
-  //     const url = await userService.fetchRandomAvatar()
-  //     setAvatarUrl(url)
-  //   }
-
-  //   fetchAvatar()
-  // }, [])
-
-
-
+  useEffect(() => {
+    loadStay();
+  }, [stayId]);
 
   useEffect(() => {
-    const fetchAvatar = async () => {
+    const fetchAvatars = async () => {
       try {
-        // Generate a random gender ('male' or 'female')
-        const gender = Math.random() < 0.5 ? 'male' : 'female';
+        if (!stay || !stay.reviews) {
+          return;
+        }
 
-        // Generate a random image ID between 1 and 20
-        const imgId = Math.floor(Math.random() * 20) + 1;
-
-        const url = `https://randomuser.me/api/portraits/${gender}/${imgId}.jpg`;
-        setAvatarUrl(url);
-        console.log('avatarUrl', avatarUrl);
+        const urls = await Promise.all(
+          stay.reviews.map(async () => {
+            return await stayService.fetchAvatar();
+          })
+        );
+        setAvatarUrls(urls);
       } catch (error) {
-        console.error('Error fetching avatar:', error);
-      }
+        console.error('Error fetching avatars:', error);
+      };
     };
 
-    fetchAvatar();
-  }, []);
+    const fetchHostAvatar = async () => {
+      try {
+        if (!stay || !stay.host) {
+          return;
+        };
 
+        const url = await stayService.fetchAvatar();
+        setHostAvatarUrl(url);
+      } catch (error) {
+        console.error('Error fetching host avatar:', error);
 
+      };
+    };
 
+    fetchAvatars();
+    fetchHostAvatar();
+  }, [stay]);
 
-  useEffect(() => {
-    loadStay()
-  }, [stayId])
-
-  const { defaultCheckIn, defaultCheckOut } = stayService.getDefaultDates()
 
   function createOrder(stay) {
     localStorage.removeItem('PRE_ORDER')
@@ -151,6 +150,52 @@ export function StayDetails() {
   function editOrder(order) {
     updateOrder(order)
   }
+  function createOrder(stay) {
+    localStorage.removeItem('PRE_ORDER')
+    const searchParams = new URLSearchParams(location.search)
+    let check_In = decodeURIComponent(searchParams.get('checkIn'))
+    let check_Out = decodeURIComponent(searchParams.get('checkOut'))
+    const guestParam = decodeURIComponent(searchParams.get('guestParam'))
+
+    var guests = queryString.parse(guestParam)
+    guests.adults = +guests.adults
+    guests.children = +guests.children
+    guests.infants = +guests.infants
+    guests.pets = +guests.pets
+    if (!guests.adults) guests.adults = 1
+    const hostId = stay.host._id
+    const hostName = stay.host.fullname
+    const hostPic = stay.host.pictureUrl
+    const guestImg = loggedInUser.imgUrl
+    if (check_In === 'Invalid Date') {
+      check_In = defaultCheckIn
+    }
+    if (check_Out === 'Invalid Date') {
+      check_Out = defaultCheckOut
+    }
+    let count = guests.adults + guests.children
+    const nights = stayService.calcNights(check_In, check_Out)
+    const totalPrice = stay.price * nights
+    const order = {
+      check_In,
+      check_Out,
+      hostId,
+      hostName,
+      hostPic,
+      totalNights: nights,
+      guests,
+      stayId,
+      stayLoc: stay.loc.country,
+      stayImg: stay.imgUrls[0],
+      totalGuests: count,
+      price: totalPrice,
+      status: 'Pending',
+      imgUrl: "https://res.cloudinary.com/drlt4yjnj/image/upload/v1705352677/qwplqesdakcgpkpjnpf5.jpg",
+      guestImg,
+      name: loggedInUser.fullname
+    }
+    addOrder(order)
+  }
 
   async function loadStay() {
     try {
@@ -161,11 +206,13 @@ export function StayDetails() {
       navigate('/stay')
     }
   }
+
   function handleChange(target) {
     const field = target.name
     let value = target.value
     setStay((prevStay) => ({ ...prevStay, [field]: value }))
   }
+
   function handleSubmit(e) {
     e.preventDefault()
     if (!stay.name) return
@@ -186,14 +233,11 @@ export function StayDetails() {
       return 0
     }
 
-    const totalRating = stay.reviews.reduce(
-      (acc, review) => acc + review.rate,
-      0
-    )
+    const totalRating = stay.reviews.reduce((acc, review) => acc + review.rate, 0)
     return totalRating / stay.reviews.length
   }
 
-  let averageRating = calculateAverageRating()
+  // let averageRating = calculateAverageRating()
 
   if (!stay || !order) return <div className='loader'></div>
   return (
@@ -236,7 +280,7 @@ export function StayDetails() {
             <ShareModal
               stayImg={stay.imgUrls[0]}
               stay={stay}
-              averageRating={averageRating}
+              averageRating={calculateAverageRating()}
             />
           </div>
 
@@ -287,13 +331,13 @@ export function StayDetails() {
             <p className='stay-contents'>
               {stay.capacity} guest
               {stay.capacity !== 1 && <span>s</span>} • {stay.bedrooms} bedroom
-              {stay.bedrooms !== 1 && <span>s</span>} •{' '}
+              {stay.bedrooms !== 1 && <span>s</span>} • {' '}
               {stay.bedrooms !== 0 ? stay.beds : 1} bed
               {stay.bedrooms > 1 && stay.beds > 1 && <span>s</span>} •{' '}
               {stay.bathrooms} bathroom{stay.bathrooms !== 1 && <span>s</span>}
             </p>
             <p className='stay-rating'>
-              🟊 {averageRating.toFixed(1)} •{' '}
+              🟊 {calculateAverageRating().toFixed(1)} •{' '}
               <span>{stay.reviews.length} reviews</span>
             </p>
           </section>
@@ -302,7 +346,7 @@ export function StayDetails() {
             {/* <img src={stay.host.imgUrl} alt='' /> */}
             <div className='hostedBy-img'>
               {/* <img src={img} alt='' /> */}
-              <Avatar alt='Remy Sharp' src={stay.host.pictureUrl} />
+              <Avatar alt='Remy Sharp' src={hostAvatarUrl || stay.host.pictureUrl} />
             </div>
             <div className='hostedBy-name'>
               <h2>{stay.host.fullname}</h2>
@@ -369,19 +413,20 @@ export function StayDetails() {
 
       <section className='stay-reviews'>
         <h2>
-          🟊 {averageRating.toFixed(1)} • {stay.reviews.length} review
+          🟊 {calculateAverageRating().toFixed(1)} • {stay.reviews.length} review
           {stay.reviews.length !== 1 && <span>s</span>}
         </h2>
+
         <div className='reviews'>
           {stay.reviews.slice(0, reviewsToShow).map((review, index) => {
+
             return (
               <div className='review' key={index}>
                 <div className='review-by'>
-
                   <Avatar
                     className='avatar'
                     alt={review.by.fullname}
-                    src={avatarUrl || review.by.imgUrl}
+                    src={avatarUrls[index]}
                   />
 
 
@@ -412,39 +457,5 @@ export function StayDetails() {
       </section>
     </>
 
-  )
-}
-
-
-
-
-{/* <section className='stay-reviews'>
-        <h2>
-          🟊 {averageRating.toFixed(1)} • {stay.reviews.length} review
-          {stay.reviews.length !== 1 && <span>s</span>}
-        </h2>
-        <div className='reviews'>
-          {stay.reviews.map((review, index) => {
-            return (
-              <div className='review' key={index}>
-                <div className='review-by'>
-                  <Avatar
-                    className='avatar'
-                    alt='Remy Sharp'
-                    src={avatarUrl}
-                  />
-                  <h3 className='name'>{review.by.fullname}</h3>
-                  <p className='review-date'>
-                    {new Date(review.at).toLocaleString('en', {
-                      month: 'short'
-                    })}{' '}
-                    {''}
-                    {new Date(review.at).getFullYear()}
-                  </p>
-                </div>
-                <p className='text'>{review.txt}</p>
-              </div>
-            )
-          })}
-        </div>
-      </section> */}
+  );
+};

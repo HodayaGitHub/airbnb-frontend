@@ -1,6 +1,3 @@
-
-// import { storageService } from './async-storage.service.js'
-
 import Axios from 'axios'
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
@@ -23,6 +20,8 @@ export const stayService = {
     getLabels,
     calcNights,
     formatDateFromUnix,
+    fetchAvatar,
+    // loadStay,
 }
 
 // for cookies
@@ -36,7 +35,7 @@ const BASE_URL = 'stay'
 
 function query(filterBy = {}, page = 1, itemsPerPage) {
     console.log('hi from query')
-    return httpService.get(BASE_URL, { filterBy, page, itemsPerPage})
+    return httpService.get(BASE_URL, { filterBy, page, itemsPerPage })
 }
 
 function getById(stayId) {
@@ -62,8 +61,7 @@ async function removeMsg(stayId, msgId) {
 }
 
 
-
-// filtering :
+// filtering services :
 function getDefaultSearchFilter() {
     return {
         stayDates: '',
@@ -130,13 +128,13 @@ function guestParams(guests) {
     return queryString
 }
 
-
 function getFormattedDate(date) {
     if (date instanceof Date) {
         return date.toLocaleDateString('en-US', { day: 'numeric', month: 'numeric', year: 'numeric' })
     }
     return ''
 }
+
 function formatDateFromUnix(unixTimestamp) {
     const options = { day: 'numeric', month: 'short' };
     const formattedDate = new Date(unixTimestamp * 1000).toLocaleDateString('en-US', options);
@@ -187,14 +185,29 @@ function totalGuests(filterBy) {
     return totalGuests
 }
 
-
-
 function getLabels() {
     return labels
 }
+
 function calcNights(firstDate, secondDate) {
     const timeDifference = secondDate - firstDate;
     const daysDifference = Math.ceil(timeDifference / (24 * 60 * 60)); // seconds to days
 
     return daysDifference;
 }
+
+// StayDetails services: 
+
+
+async function fetchAvatar() {
+    try {
+        const gender = Math.random() < 0.5 ? 'men' : 'women';
+        const imgId = Math.floor(Math.random() * 20) + 1;
+        const url = `https://randomuser.me/api/portraits/thumb/${gender}/${imgId}.jpg`;
+        return url;
+    } catch (error) {
+        console.error('Error fetching avatar:', error);
+        throw error;
+    }
+}
+
