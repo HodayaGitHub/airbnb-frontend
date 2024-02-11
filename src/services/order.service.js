@@ -1,6 +1,8 @@
 import { storageService } from "./async-storage.service"
 import Axios from 'axios'
 import { httpService } from './http.service.js'
+import { addOrder, updateOrder } from '../store/actions/order.actions.js';
+import { useLocation } from 'react-router-dom';
 
 const STORAGE_KEY = 'order'
 
@@ -13,6 +15,9 @@ export const orderService = {
     daysCount,
     fixTime,
     convertDateStringToUnix,
+    parseGuestParams,
+    getDatesfromParams,
+    createOrder,
 }
 
 // for cookies
@@ -48,20 +53,7 @@ async function remove(orderId) {
 //     return savedOrder
 // }
 
-function getDefaultDates() {
-    const today = new Date()
-    const defaultCheckIn = Math.floor(Date.now() / 1000)
-    const oneDayInSeconds = 24 * 60 * 60
-    const defaultCheckOut = defaultCheckIn + oneDayInSeconds
-
-    return {
-        defaultCheckIn,
-        defaultCheckOut,
-    }
-}
-
 function getEmptyOrder() {
-    const { defaultCheckIn, defaultCheckOut } = getDefaultDates()
 
     return {
         hostId: "",
@@ -79,7 +71,7 @@ function getEmptyOrder() {
             pets: 0
         },
         stayId: "",
-        stayImg:"",
+        stayImg: "",
         status: "pending"
     }
 }
@@ -123,4 +115,63 @@ function convertDateStringToUnix(dateString) {
     const unixTimestamp = Math.floor(dateObject.getTime() / 1000);
 
     return unixTimestamp;
+}
+
+
+function getDatesfromParams() {
+    const { defaultCheckIn, defaultCheckOut } = stayService.getDefaultDates();
+    const searchParams = new URLSearchParams(location.search);
+    let checkIn = decodeURIComponent(searchParams.get('checkIn'));
+    let checkOut = decodeURIComponent(searchParams.get('checkOut'));
+
+    if (checkIn === 'Invalid Date' || !checkIn) {
+        checkIn = defaultCheckIn;
+    }
+
+    if (checkOut === 'Invalid Date' || !checkOut) {
+        checkOut = defaultCheckOut;
+    }
+
+    return { checkIn, checkOut };
+}
+
+
+function parseGuestParams(guestParam) {
+    const guests = queryString.parse(guestParam);
+    guests.adults = +guests.adults || 1;
+    guests.children = +guests.children || 0;
+    guests.infants = +guests.infants || 0;
+    guests.pets = +guests.pets || 0;
+    return guests;
+}
+
+
+function createOrder(stay) {
+    const location = useLocation();
+    localStorage.removeItem('PRE_ORDER');
+    const searchParams = new URLSearchParams(location.search);
+    const guestParam = decodeURIComponent(searchParams.get('guestParam'));
+    const guests = orderService.parseGuestParams(guestParam);
+    const { defaultCheckIn, defaultCheckOut } = orderService.getDefaultDates();
+
+    const order = {
+        checkIn: defaultCheckIn,
+        checkOut: defaultCheckOut,
+        hostId: stay.host._id,
+        hostName: stay.host.fullname,
+        hostPic: stay.host.pictureUrl,
+        totalNights: stayService.calcNights(checkIn, checkOut),
+        guests,
+        stayId,
+        stayLoc: stay.loc.country,
+        stayImg: stay.imgUrls[0],
+        totalGuests: guests.adults + guests.children,
+        price: stay.price * nights,
+        status: 'Pending',
+        imgUrl: "https://res.cloudinary.com/drlt4yjnj/image/upload/v1705352677/qwplqesdakcgpkpjnpf5.jpg",
+        guestImg: loggedInUser.imgUrl,
+        name: loggedInUser.fullname,
+    };
+
+    addOrder(order);
 }

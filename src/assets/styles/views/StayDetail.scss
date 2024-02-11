@@ -91,6 +91,7 @@
   .mid-section {
     display: grid;
     grid-template-columns: 2fr 1fr;
+    column-gap: 60px;
 
     >* {
       grid-column: 1;

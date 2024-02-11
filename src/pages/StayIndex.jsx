@@ -13,10 +13,8 @@ import { StayList } from '../cmps/StayList.jsx'
 import { StaySearch } from '../cmps/search/StaySearch.jsx'
 import { StayFilter } from '../cmps/filter/StayFilter.jsx'
 import { LabelsFilter } from '../cmps/filter/LabelsFilter.jsx'
-import { AutoCompleteCmp } from '../cmps/search/AutoCompleteCmp.jsx'
-import { Restcountries } from '../cmps/search/Restcountries.jsx'
 import { ShowMoreStays } from '../cmps/ShowMoreStays.jsx'
-// import { ChatApp } from './ChatApp.jsx'
+
 
 export function StayIndex() {
     const stays = useSelector(storeState => storeState.stayModule.stays)

@@ -166,12 +166,15 @@ function getDefaultDates() {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Set time to the beginning of the day
 
-    const defaultCheckIn = Math.floor(today.getTime() / 1000);
+    const defaultCheckIn = Math.floor(today.getTime());
 
     const oneDayInSeconds = 24 * 60 * 60;
     const defaultCheckOut = defaultCheckIn + oneDayInSeconds;
 
-    console.log(defaultCheckIn, defaultCheckOut);
+    // console.log(defaultCheckIn, defaultCheckOut);
+
+    console.log('defaultCheckIn', defaultCheckIn);
+    console.log('defaultCheckOut', defaultCheckOut);
 
     return {
         defaultCheckIn,

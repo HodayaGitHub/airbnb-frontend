@@ -1,34 +1,24 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import Avatar, { avatarClasses } from '@mui/material/Avatar'
-import { stayService } from '../services/stay.service.js'
-// import { stayService } from '../services/stay.service.local.js'
-import { updateStay } from '../store/actions/stay.actions.js'
+import * as React from 'react';
+import * as labelsSvg from '../services/labels.icons.service.jsx';
 
-// HARD CODED
-import img from '../assets/img/host-img/stay-host-img.jpg'
-import reviewer1 from '../assets/reviewers-imgs/Emma-Johnson-img.jpg'
-import key from '../assets/img/svgs/key.svg'
-import share from '../assets/img/svgs/share.svg'
-import heart from '../assets/img/svgs/heart.svg'
-import chat from '../assets/img/svgs/chat.svg'
-import locationImg from '../assets/img/svgs/location.svg'
-import { ReservationModal } from '../cmps/reservationModal.jsx'
-import { GoogleMap } from '../cmps/GoogleMap.jsx'
-import { FavoriteIcon } from '../cmps/favoriteIcon.jsx'
-import ShareModal from '../cmps/shareModal.jsx'
-import { useLocation } from 'react-router-dom'
-import queryString from 'query-string'
-import { addOrder, updateOrder } from '../store/actions/order.actions.js'
-import { useSelector } from 'react-redux'
-import { orderService } from '../services/order.service.js'
-import { MainHeader } from '../cmps/MainHeader.jsx'
-import { User } from 'react-feather'
-import { userService } from '../services/user.service.js'
-import { AMENTITIES } from '../data/stay.details.amentities.js'
-import * as labelsSvg from '../services/labels.icons.service.jsx'
-import * as React from 'react'
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { stayService } from '../services/stay.service.js';
+import { updateStay } from '../store/actions/stay.actions.js';
+import { ReservationModal } from '../cmps/reservationModal.jsx';
+import { GoogleMap } from '../cmps/GoogleMap.jsx';
+import { addOrder, updateOrder } from '../store/actions/order.actions.js';
+import { useSelector } from 'react-redux';
+import { MainHeader } from '../cmps/MainHeader.jsx';
+import { AMENTITIES } from '../data/stay.details.amentities.js';
+import { orderService } from '../services/order.service.js';
 
+import ShareModal from '../cmps/shareModal.jsx';
+import queryString from 'query-string';
+import Avatar from '@mui/material/Avatar';
+import key from '../assets/img/svgs/key.svg';
+import chat from '../assets/img/svgs/chat.svg';
+import locationImg from '../assets/img/svgs/location.svg';
 
 export function StayDetails() {
   // const [msg, setMsg] = useState(getEmptyMsg())
@@ -42,9 +32,7 @@ export function StayDetails() {
   const { stayId } = useParams();
   const navigate = useNavigate();
   const loggedInUser = useSelector((storeState) => storeState.userModule.loggedInUser);
-  let order = useSelector((storeState) => storeState.orderModule.order) || JSON.parse(localStorage.getItem('PRE_ORDER'))
-  const location = useLocation()
-  const { defaultCheckIn, defaultCheckOut } = stayService.getDefaultDates()
+  let order = useSelector((storeState) => storeState.orderModule.order) || JSON.parse(localStorage.getItem('PRE_ORDER'));
 
 
   useEffect(() => {
@@ -99,111 +87,19 @@ export function StayDetails() {
     fetchHostAvatar();
   }, [stay]);
 
-
-  function createOrder(stay) {
-    localStorage.removeItem('PRE_ORDER')
-    const searchParams = new URLSearchParams(location.search)
-    let check_In = decodeURIComponent(searchParams.get('checkIn'))
-    let check_Out = decodeURIComponent(searchParams.get('checkOut'))
-    const guestParam = decodeURIComponent(searchParams.get('guestParam'))
-
-    var guests = queryString.parse(guestParam)
-    guests.adults = +guests.adults
-    guests.children = +guests.children
-    guests.infants = +guests.infants
-    guests.pets = +guests.pets
-    if (!guests.adults) guests.adults = 1
-    const hostId = stay.host._id
-    const hostName = stay.host.fullname
-    const hostPic = stay.host.pictureUrl
-    const guestImg = loggedInUser.imgUrl
-    if (check_In === 'Invalid Date') {
-      check_In = defaultCheckIn
-    }
-    if (check_Out === 'Invalid Date') {
-      check_Out = defaultCheckOut
-    }
-    let count = guests.adults + guests.children
-    const nights = stayService.calcNights(check_In, check_Out)
-    const totalPrice = stay.price * nights
-    const order = {
-      check_In,
-      check_Out,
-      hostId,
-      hostName,
-      hostPic,
-      totalNights: nights,
-      guests,
-      stayId,
-      stayLoc: stay.loc.country,
-      stayImg: stay.imgUrls[0],
-      totalGuests: count,
-      price: totalPrice,
-      status: 'Pending',
-      imgUrl: "https://res.cloudinary.com/drlt4yjnj/image/upload/v1705352677/qwplqesdakcgpkpjnpf5.jpg",
-      guestImg,
-      name: loggedInUser.fullname
-    }
-    addOrder(order)
-  }
-
   function editOrder(order) {
     updateOrder(order)
-  }
-  function createOrder(stay) {
-    localStorage.removeItem('PRE_ORDER')
-    const searchParams = new URLSearchParams(location.search)
-    let check_In = decodeURIComponent(searchParams.get('checkIn'))
-    let check_Out = decodeURIComponent(searchParams.get('checkOut'))
-    const guestParam = decodeURIComponent(searchParams.get('guestParam'))
-
-    var guests = queryString.parse(guestParam)
-    guests.adults = +guests.adults
-    guests.children = +guests.children
-    guests.infants = +guests.infants
-    guests.pets = +guests.pets
-    if (!guests.adults) guests.adults = 1
-    const hostId = stay.host._id
-    const hostName = stay.host.fullname
-    const hostPic = stay.host.pictureUrl
-    const guestImg = loggedInUser.imgUrl
-    if (check_In === 'Invalid Date') {
-      check_In = defaultCheckIn
-    }
-    if (check_Out === 'Invalid Date') {
-      check_Out = defaultCheckOut
-    }
-    let count = guests.adults + guests.children
-    const nights = stayService.calcNights(check_In, check_Out)
-    const totalPrice = stay.price * nights
-    const order = {
-      check_In,
-      check_Out,
-      hostId,
-      hostName,
-      hostPic,
-      totalNights: nights,
-      guests,
-      stayId,
-      stayLoc: stay.loc.country,
-      stayImg: stay.imgUrls[0],
-      totalGuests: count,
-      price: totalPrice,
-      status: 'Pending',
-      imgUrl: "https://res.cloudinary.com/drlt4yjnj/image/upload/v1705352677/qwplqesdakcgpkpjnpf5.jpg",
-      guestImg,
-      name: loggedInUser.fullname
-    }
-    addOrder(order)
   }
 
   async function loadStay() {
     try {
       const stay = await stayService.getById(stayId)
       setStay(stay)
-      if (!order) createOrder(stay)
+      // if (!order) orderService.createOrder(stay)
+      if (!order) console.log('order does not exist')
     } catch (err) {
-      navigate('/stay')
+      // navigate('/stay')
+      console.log('Error while trying to load the stay')
     }
   }
 
@@ -237,7 +133,6 @@ export function StayDetails() {
     return totalRating / stay.reviews.length
   }
 
-  // let averageRating = calculateAverageRating()
 
   if (!stay || !order) return <div className='loader'></div>
   return (
@@ -343,9 +238,7 @@ export function StayDetails() {
           </section>
 
           <section className='hostedBy'>
-            {/* <img src={stay.host.imgUrl} alt='' /> */}
             <div className='hostedBy-img'>
-              {/* <img src={img} alt='' /> */}
               <Avatar alt='Remy Sharp' src={hostAvatarUrl || stay.host.pictureUrl} />
             </div>
             <div className='hostedBy-name'>
@@ -432,10 +325,7 @@ export function StayDetails() {
 
                   <h3 className='name'>{review.by.fullname}</h3>
                   <p className='review-date'>
-                    {new Date(review.at).toLocaleString('en', {
-                      month: 'short'
-                    })}{' '}
-                    {''}
+                    {new Date(review.at).toLocaleString('en', { month: 'short' })}{' '}{''}
                     {new Date(review.at).getFullYear()}
                   </p>
                 </div>
