@@ -10,18 +10,14 @@ import defaultLogo from '../assets/img/svgs/defaultLogo.svg'
 import Avatar from '@mui/material/Avatar'
 
 export function MainHeader({ headerClassNames }) {
-  const modalRef = useRef(null)
+  const modalRef = useRef(null);
+  const navigate = useNavigate()
   const user = useSelector((storeState) => storeState.userModule.loggedInUser)
   const [open, setOpen] = useState(false);
-
   const [isModalOpen, setIsModalOpen] = useState(false)
-
-  // const [signInModalOpen, setSignInModalOpen] = useState(false);
-  // const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
 
 
-  const navigate = useNavigate()
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -36,8 +32,12 @@ export function MainHeader({ headerClassNames }) {
     }
   }, [isModalOpen])
 
-  function openUserModal() {
+  function toggleUserModal(event) {
+    event.stopPropagation()
     setIsModalOpen(!isModalOpen)
+    if (!isModalOpen) {
+      setModalType(null)
+    }
   }
 
   async function onLogout() {
@@ -79,7 +79,7 @@ export function MainHeader({ headerClassNames }) {
         <span className="logo-name">Journey</span>
       </div>
 
-      <div className='login' onClick={openUserModal} ref={modalRef}>
+      <div className='login' onClick={(event) => toggleUserModal(event)} ref={modalRef}>
         <img className='hamburger' src={hamburger} />
         {!user ? (
           <img className='logo' src={defaultLogo} alt='user-pic' />

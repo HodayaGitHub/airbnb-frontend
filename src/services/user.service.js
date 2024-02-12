@@ -60,18 +60,13 @@ async function update(user) {
 }
 
 async function login(userCred) {
-  // const users = await storageService.query('user')
-  // const user = users.find(user => user.username === userCred.username)
   const user = await httpService.post('auth/login', userCred)
   if (user) return saveLocalUser(user)
 }
 
 async function signup(userCred) {
   if (!userCred.imgUrl)
-    userCred.imgUrl =
-      'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
-  // userCred.score = 10000
-  // const user = await storageService.post('user', userCred)
+    userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
   const user = await httpService.post('auth/signup', userCred)
   return saveLocalUser(user)
 }

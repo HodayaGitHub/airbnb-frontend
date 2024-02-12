@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { uploadService } from '../services/upload.service.js'
-import {showimgUploadSuccessMsg} from '../services/event-bus.service'
+import { showimgUploadSuccessMsg } from '../services/event-bus.service'
+import { ButtonHover } from './buttonHover';
 
-export function SignUpModal({ setCredentials, handleCredentialsChange, handleDemoLogIn, credentials, uploadImg, onSubmit }) {
+export function SignUpForm({ closeModal, setCredentials, handleCredentialsChange, handleDemoLogIn, credentials, uploadImg, onSubmit }) {
   const [open, setOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const handleClose = () => setOpen(false);
+  const { username, password, fullname } = credentials;
 
   async function uploadImg(ev) {
     setIsUploading(true);
@@ -15,8 +17,6 @@ export function SignUpModal({ setCredentials, handleCredentialsChange, handleDem
     showimgUploadSuccessMsg(`✅ Img uploaded successfully`);
   }
 
-
-  const { username, password, fullname } = credentials;
 
   return (
     <div className="login-modal">
@@ -39,7 +39,6 @@ export function SignUpModal({ setCredentials, handleCredentialsChange, handleDem
         <label htmlFor='username'>
           <span className='star'>*</span>Username
         </label>
-
         <input
           type='text'
           name='username'
@@ -60,32 +59,31 @@ export function SignUpModal({ setCredentials, handleCredentialsChange, handleDem
           id='password'
           required
         />
+        <section className='upload-imgs'>
+          <label htmlFor='imgUpload' className='custom-btn'>
+            {' '}
+            Upload a profile img
+          </label>
+          <input
+            type='file'
+            onChange={uploadImg}
+            accept='img/*'
+            id='imgUpload'
+            className='imgUpload'
+          />
+          {isUploading && (
+            <p className='uploading-msg'>Uploading please wait...</p>
+          )}
+        </section>
         <div className='login-button'>
-          {/* <ImgUploader onUploaded={onUploaded} /> */}
-          <section className='upload-imgs'>
-            <label htmlFor='imgUpload' className='custom-btn'>
-              {' '}
-              Upload a profile img
-            </label>
-            <input
-              type='file'
-              onChange={uploadImg}
-              accept='img/*'
-              id='imgUpload'
-              className='imgUpload'
-            />
-            {isUploading && (
-              <p className='uploading-msg'>Uploading please wait...</p>
-            )}
-          </section>
 
-          <button>Sign up</button>
+          <ButtonHover buttonContent="Sign up" onSubmit={onSubmit} />
         </div>
       </form>
       <div className='demo-button'>
         <button onClick={handleDemoLogIn}>Demo Log in</button>
       </div>
-      <button className='close-login-modal' onClick={handleClose}>𝝬</button>
+      <button className='close-login-modal' onClick={closeModal}>𝝬</button>
     </div>
   );
-}
+};

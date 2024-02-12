@@ -15,6 +15,7 @@ export function MainHeaderOnScroll({ onSetFilter, filterBy, headerClassNames }) 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const modalRef = useRef(null)
     const user = useSelector((storeState) => storeState.userModule.loggedInUser)
+    const [modalType, setModalType] = useState(null);
 
     const navigate = useNavigate()
 
@@ -54,6 +55,11 @@ export function MainHeaderOnScroll({ onSetFilter, filterBy, headerClassNames }) 
 
     function goToWishlist() {
         navigate(`/Wishlist/${user._id}`)
+    }
+
+    function handleOpen(event, loginOrSignup) {
+        event.stopPropagation();
+        setModalType(loginOrSignup);
     }
 
     return (

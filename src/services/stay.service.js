@@ -33,8 +33,8 @@ const axios = Axios.create({
 window.cs = stayService
 const BASE_URL = 'stay'
 
-function query(filterBy = {}, page = 1, itemsPerPage) {
-    return httpService.get(BASE_URL, { filterBy, page, itemsPerPage })
+function query(filterBy = {}, page = 1) {
+    return httpService.get(BASE_URL, { filterBy, page })
 }
 
 function getById(stayId) {

@@ -1,13 +1,22 @@
-import { useState } from 'react'
-import { signup, login } from '../store/actions/user.actions'
-import { userService } from '../services/user.service.js'
-import { SignUpModal } from './SignUpModal.jsx';
-import { SignInModal } from './SignInModal.jsx';
+import { useState } from 'react';
+import { signup, login } from '../store/actions/user.actions';
+import { userService } from '../services/user.service.js';
+import { SignUpForm } from './SignUpForm.jsx';
+import { SignInForm } from './SignInForm.jsx';
 import { DynamicModal } from './DynamicModal';
 
 export function LoginSignupModal({ loginOrSignup }) {
   const [credentials, setCredentials] = useState(userService.getEmptyCredentials());
+  const [isModalOpen, setModalOpen] = useState(true);
 
+  // function closeModal() {
+  //   setModalOpen((prevIsModalOpen) => !prevIsModalOpen);
+  // }
+
+  function closeModal() {
+    setModalOpen(false);
+    console.log('modal closed')
+  }
 
   async function onSubmit(ev) {
     ev.preventDefault();
@@ -40,23 +49,27 @@ export function LoginSignupModal({ loginOrSignup }) {
 
 
   return (
-    <DynamicModal open={true}>
+    <DynamicModal open={isModalOpen} onClose={closeModal}>
       {loginOrSignup === 'signup' ? (
 
-        <SignUpModal
+        <SignUpForm
           setCredentials={setCredentials}
           handleDemoLogIn={handleDemoLogIn}
           handleCredentialsChange={handleCredentialsChange}
           credentials={credentials}
-          onSubmit={onSubmit} />
+          onSubmit={onSubmit}
+          closeModal={closeModal}
+        />
       ) : (
-        <SignInModal
+        <SignInForm
           setCredentials={setCredentials}
           handleDemoLogIn={handleDemoLogIn}
           handleCredentialsChange={handleCredentialsChange}
           credentials={credentials}
-          onSubmit={onSubmit} />
+          onSubmit={onSubmit}
+          closeModal={closeModal}
+        />
       )}
     </DynamicModal>
   );
-}
+};

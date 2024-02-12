@@ -8,7 +8,7 @@ import { SET_STAY_ADDED , APPEND_STAYS, ADD_STAY, REMOVE_STAY, SET_STAYS, UNDO_R
 import { SET_SCORE } from '../reducers/user.reducer.js'
 import { LOADING_START, LOADING_DONE } from '../reducers/system.reducer.js'
 
-const ITEMS_PER_PAGE = 24
+// const ITEMS_PER_PAGE = 24
 
 // Action Creators:
 export function getActionRemoveStay(stayId) {
@@ -34,8 +34,7 @@ export async function loadStays(filterBy, shouldLoadMore) {
     try {
         store.dispatch({ type: LOADING_START, isLoading: true })
         const page = shouldLoadMore ? store.getState().stayModule.page + 1 : 1
-        const response = await stayService.query(filterBy, page, ITEMS_PER_PAGE)
-        console.log(response.stays)
+        const response = await stayService.query(filterBy, page)
         const newStays = Array.isArray(response.stays) ? response.stays : []
         store.dispatch({
             type: SET_STAYS,
