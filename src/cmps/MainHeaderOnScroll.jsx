@@ -1,16 +1,15 @@
-import { Link, NavLink } from 'react-router-dom'
-import { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router'
-import classnames from 'classnames'
-import appLogo from '../assets/img/new-logo-svg.svg'
-import hamburger from '../assets/img/svgs/hamburger.svg'
-import defaultLogo from '../assets/img/svgs/defaultLogo.svg'
-import {LoginModal} from './LoginModal.jsx'
-import {SignUpModal} from './SignUpModal.jsx'
-import { logout } from '../store/actions/user.actions.js'
-import { useSelector } from 'react-redux'
-import Avatar from '@mui/material/Avatar'
-import { StaySearchOnScroll } from './search/StaySearchOnScroll.jsx'
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router';
+import { logout } from '../store/actions/user.actions.js';
+import { useSelector } from 'react-redux';
+import { StaySearchOnScroll } from './search/StaySearchOnScroll.jsx';
+import { LoginSignupModal } from './LoginSignupModal.jsx'
+import { DynamicModal } from './DynamicModal';
+
+import Avatar from '@mui/material/Avatar';
+import appLogo from '../assets/img/new-logo-svg.svg';
+import hamburger from '../assets/img/svgs/hamburger.svg';
+import defaultLogo from '../assets/img/svgs/defaultLogo.svg';
 
 export function MainHeaderOnScroll({ onSetFilter, filterBy, headerClassNames }) {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -89,11 +88,29 @@ export function MainHeaderOnScroll({ onSetFilter, filterBy, headerClassNames }) 
                     <div className='user-modal'>
                         {!user && (
                             <div className='notLogin-user-modal'>
-                                <LoginModal />
-                                <SignUpModal />
+
+                                <div className='login-form' onClick={(event) => handleOpen(event, 'signup')}>
+                                    <button>Sign Up</button>
+                                    {modalType === 'signup' && (
+                                        <DynamicModal open={true}>
+                                            <LoginSignupModal loginOrSignup='signup' />
+                                        </DynamicModal>
+                                    )}
+
+                                </div>
+
+                                <div className='login-form' onClick={(event) => handleOpen(event, 'login')}>
+                                    <button>Sign In</button>
+                                    {modalType === 'login' && (
+                                        <DynamicModal open={true}>
+                                            <LoginSignupModal loginOrSignup='login' />
+                                        </DynamicModal>
+                                    )}
+
+                                </div>
+
                             </div>
                         )}
-
                         {user && (
                             <div className='login-user-modal'>
                                 <button onClick={goToWishlist}>Wishlist</button>

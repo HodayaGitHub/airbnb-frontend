@@ -21,79 +21,31 @@ import { userService } from '../services/user.service.js'
 
 
 
-export function SignUpModal({  }) {
+export function SignUpModal({ setCredentials, handleCredentialsChange, handleDemoLogIn, credentials, uploadImg, onSubmit }) {
   const [open, setOpen] = useState(false);
-  const [credentials, setCredentials] = useState(userService.getEmptyCredentials());
   const [isUploading, setIsUploading] = useState(false);
-
-  const handleOpen = (event) => {
-    event.stopPropagation();
-    setOpen(true);
-  };
-
-  const stopProp = (event) => {
-    event.stopPropagation();
-  };
-
   const handleClose = () => setOpen(false);
-
-  async function onSubmit(ev) {
-    ev.preventDefault();
-    try {
-      const user = await signup(credentials);
-      await login(credentials);
-      setOpen(false);
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-
-  function handleCredentialsChange(ev) {
-    const field = ev.target.name
-    const value = ev.target.value
-    setCredentials((credentials) => ({ ...credentials, [field]: value }))
-  }
-
-  async function handleDemoLogIn() {
-    const demoCredentials = {
-      fullname: 'joy',
-      username: 'joy2210',
-      password: '123',
-      email: 'defEmail@',
-      imgUrl: '../assets/img/host-img/anonumus-user.png',
-      myOrder: [],
-      myGuests: [],
-    };
-    try {
-      const user = await login(demoCredentials);
-      setOpen(false);
-      window.location.reload();
-      console.log('user:', user);
-    } catch (err) {
-      console.log('err:', err);
-    }
-  }
 
   async function uploadImg(ev) {
     setIsUploading(true);
     const { secure_url } = await uploadService.uploadImg(ev);
-    console.log('secure_url:', secure_url);
     setCredentials({ ...credentials, imgUrl: secure_url });
     setIsUploading(false);
     showimgUploadSuccessMsg(`✅ Img uploaded successfully`);
   }
 
-  const { username, password, fullname, imgUrl } = credentials;
+
+  const { username, password, fullname } = credentials;
 
   return (
-    <div>
+    <div className="login-modal">
       <h2>Sign up</h2>
       <form className='inputs' onSubmit={onSubmit}>
+
         <label htmlFor='fullname'>
           <span className='star'>*</span>Fullname
         </label>
+
         <input
           type='text'
           name='fullname'
@@ -102,9 +54,11 @@ export function SignUpModal({  }) {
           id='fullname'
           required
         />
+
         <label htmlFor='username'>
           <span className='star'>*</span>Username
         </label>
+
         <input
           type='text'
           name='username'
@@ -150,9 +104,7 @@ export function SignUpModal({  }) {
       <div className='demo-button'>
         <button onClick={handleDemoLogIn}>Demo Log in</button>
       </div>
-      {/* <button className='close-login-modal' onClick={handleClose}>
-        𝝬
-      </button> */}
+      <button className='close-login-modal' onClick={handleClose}>𝝬</button>
     </div>
   );
 }

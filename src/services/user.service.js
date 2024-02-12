@@ -19,6 +19,7 @@ export const userService = {
   getEmptyCredentials,
   save,
   fetchRandomAvatar,
+  demoCredentials,
 }
 
 window.userService = userService
@@ -124,7 +125,7 @@ function getEmptyCredentials() {
   }
 }
 
-async function fetchRandomAvatar () {
+async function fetchRandomAvatar() {
   try {
     // Generate a random gender ('male' or 'female')
     const gender = Math.random() < 0.5 ? 'male' : 'female';
@@ -143,6 +144,18 @@ async function fetchRandomAvatar () {
   }
 };
 
+
+function demoCredentials() {
+  return {
+    fullname: 'joy',
+    username: 'joy2210',
+    password: '123',
+    email: 'defEmail@',
+    imgUrl: '../assets/img/host-img/anonumus-user.png',
+    myOrder: [],
+    myGuests: [],
+  }
+}
 
 // ;(async ()=>{
 //     await userService.signup({fullname: 'Puki Norma', username: 'puki', password:'123',email: 10000, isAdmin: false})

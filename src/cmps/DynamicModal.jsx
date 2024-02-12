@@ -1,8 +1,8 @@
-import React from 'react';
+import { useState } from 'react'
 import { Backdrop, Box, Modal, Fade } from '@mui/material';
 
 export function DynamicModal({ open, onClose, children }) {
-    const [close, setClose] = React.useState(false);
+    const [close, setClose] = useState(false);
     const handleClose = () => setClose(true);
 
     return (

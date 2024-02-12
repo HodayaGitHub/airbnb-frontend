@@ -1,11 +1,10 @@
-
-
-.login-modal{
-  h2{
+.login-modal {
+  h2 {
     margin: 20px 0;
     text-align: center;
   }
-  .close-login-modal{
+
+  .close-login-modal {
     background-color: rgb(255, 255, 255);
     color: #000;
     position: absolute;
@@ -15,71 +14,71 @@
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    &:hover{
+
+    &:hover {
       background-color: rgb(233, 233, 233);
     }
   }
-  // .upload-preview{
-
-  //   label{
-  //     display: none;
-  //   }
-  //   input{
-  //     background-color: aliceblue;
-
-  //   }
-  // }
 
   .upload-imgs {
     text-align: center;
-    .uploading-msg {
-        
-    }
-    .custom-btn {
-        display: inline-block;
-        padding: 8px 16px;
-        font-size: 16px;
-        cursor: pointer;
-        background-color: #4CAF50;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        grid-area: input;
-    }
-    .custom-btn:hover {
-        background-color: #98ee9b;
-        color: #b6b6b6;
-    }
-    .imgUpload {
-        display: none;
-    }
-    .imgUpload+label::after {
-        content: none;
-    }
-    .uploading-msg {
-        grid-area: span;
-    }
-}
 
-  .inputs{
+    .uploading-msg {}
+
+    .custom-btn {
+      display: inline-block;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      grid-area: input;
+    }
+
+    .custom-btn:hover {
+      background-color: #98ee9b;
+      color: #b6b6b6;
+    }
+
+    .imgUpload {
+      display: none;
+    }
+
+    .imgUpload+label::after {
+      content: none;
+    }
+
+    .uploading-msg {
+      grid-area: span;
+    }
+  }
+
+  .inputs {
     display: flex;
     flex-direction: column;
-    input{
+
+    input {
       padding: 5px 2px;
       margin: 15px 0;
       width: 100%;
+
       &:focus {
-        outline-color:  rgb(0, 153, 255);
-       
+        outline-color: rgb(0, 153, 255);
+
       }
     }
-    .star{
+
+    .star {
       color: $red;
     }
 
   }
+
   .login-button {
     width: 100%;
+
     button {
       width: 100%;
       line-height: 1.5rem;
@@ -92,13 +91,16 @@
       transition: all 0.5s;
       margin-top: 15px;
       color: #fff;
-      &:hover{
+
+      &:hover {
         background-color: #bb3049;
       }
     }
   }
+
   .demo-button {
     width: 100%;
+
     button {
       width: 100%;
       line-height: 1.5rem;
@@ -111,10 +113,11 @@
       transition: all 0.5s;
       margin-top: 15px;
       color: #fff;
-      &:hover{
+
+      &:hover {
         background-color: $demo-login-btn-hover-bg-clr;
       }
     }
   }
-  
+
 }
