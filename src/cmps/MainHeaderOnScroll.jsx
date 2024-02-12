@@ -92,9 +92,7 @@ export function MainHeaderOnScroll({ onSetFilter, filterBy, headerClassNames }) 
                                 <div className='login-form' onClick={(event) => handleOpen(event, 'signup')}>
                                     <button>Sign Up</button>
                                     {modalType === 'signup' && (
-                                        <DynamicModal open={true}>
-                                            <LoginSignupModal loginOrSignup='signup' />
-                                        </DynamicModal>
+                                        <LoginSignupModal loginOrSignup='signup' />
                                     )}
 
                                 </div>
@@ -102,9 +100,7 @@ export function MainHeaderOnScroll({ onSetFilter, filterBy, headerClassNames }) 
                                 <div className='login-form' onClick={(event) => handleOpen(event, 'login')}>
                                     <button>Sign In</button>
                                     {modalType === 'login' && (
-                                        <DynamicModal open={true}>
-                                            <LoginSignupModal loginOrSignup='login' />
-                                        </DynamicModal>
+                                        <LoginSignupModal loginOrSignup='login' />
                                     )}
 
                                 </div>

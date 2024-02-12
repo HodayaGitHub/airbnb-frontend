@@ -1,14 +1,5 @@
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { event } from 'jquery';
 import { useState } from 'react'
-//LOGIN
-import { login } from '../store/actions/user.actions';
-import { userService } from '../services/user.service.js'
+
 
 export function SignInModal({ handleDemoLogIn, onSubmit, handleCredentialsChange, credentials}) {
   const [open, setOpen] = useState(false);

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router'
 import { logout } from '../store/actions/user.actions.js'
 import { useSelector } from 'react-redux'
 import { LoginSignupModal } from './LoginSignupModal.jsx'
-import { DynamicModal } from './DynamicModal';
 
 import appLogo from '../assets/img/new-logo-svg.svg'
 import hamburger from '../assets/img/svgs/hamburger.svg'
@@ -60,7 +59,7 @@ export function MainHeader({ headerClassNames }) {
   function goToWishlist() {
     navigate(`/Wishlist/${user._id}`)
   }
-  
+
   function handleOpen(event, loginOrSignup) {
     event.stopPropagation();
     setModalType(loginOrSignup);
@@ -96,9 +95,7 @@ export function MainHeader({ headerClassNames }) {
                 <div className='login-form' onClick={(event) => handleOpen(event, 'signup')}>
                   <button>Sign Up</button>
                   {modalType === 'signup' && (
-                    <DynamicModal open={true}>
-                      <LoginSignupModal loginOrSignup='signup' />
-                    </DynamicModal>
+                    <LoginSignupModal loginOrSignup='signup' />
                   )}
 
                 </div>
@@ -106,9 +103,7 @@ export function MainHeader({ headerClassNames }) {
                 <div className='login-form' onClick={(event) => handleOpen(event, 'login')}>
                   <button>Sign In</button>
                   {modalType === 'login' && (
-                    <DynamicModal open={true}>
-                      <LoginSignupModal loginOrSignup='login' />
-                    </DynamicModal>
+                    <LoginSignupModal loginOrSignup='login' />
                   )}
 
                 </div>

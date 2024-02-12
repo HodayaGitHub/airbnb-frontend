@@ -1,11 +1,9 @@
-import * as React from 'react'
 import { useState } from 'react'
-//SIGNUP
 import { signup, login } from '../store/actions/user.actions'
 import { userService } from '../services/user.service.js'
 import { SignUpModal } from './SignUpModal.jsx';
 import { SignInModal } from './SignInModal.jsx';
-
+import { DynamicModal } from './DynamicModal';
 
 export function LoginSignupModal({ loginOrSignup }) {
   const [credentials, setCredentials] = useState(userService.getEmptyCredentials());
@@ -25,9 +23,9 @@ export function LoginSignupModal({ loginOrSignup }) {
   }
 
   function handleCredentialsChange(ev) {
-    const field = ev.target.name
-    const value = ev.target.value
-    setCredentials((credentials) => ({ ...credentials, [field]: value }))
+    const field = ev.target.name;
+    const value = ev.target.value;
+    setCredentials((credentials) => ({ ...credentials, [field]: value }));
   }
 
 
@@ -42,20 +40,23 @@ export function LoginSignupModal({ loginOrSignup }) {
 
 
   return (
-    loginOrSignup === 'signup' ? (
-      <SignUpModal
-        setCredentials={setCredentials}
-        handleDemoLogIn={handleDemoLogIn}
-        handleCredentialsChange={handleCredentialsChange}
-        credentials={credentials}
-        onSubmit={onSubmit} />
-    ) : (
-      <SignInModal
-        setCredentials={setCredentials}
-        handleDemoLogIn={handleDemoLogIn}
-        handleCredentialsChange={handleCredentialsChange}
-        credentials={credentials}
-        onSubmit={onSubmit} />
-    )
+    <DynamicModal open={true}>
+      {loginOrSignup === 'signup' ? (
+
+        <SignUpModal
+          setCredentials={setCredentials}
+          handleDemoLogIn={handleDemoLogIn}
+          handleCredentialsChange={handleCredentialsChange}
+          credentials={credentials}
+          onSubmit={onSubmit} />
+      ) : (
+        <SignInModal
+          setCredentials={setCredentials}
+          handleDemoLogIn={handleDemoLogIn}
+          handleCredentialsChange={handleCredentialsChange}
+          credentials={credentials}
+          onSubmit={onSubmit} />
+      )}
+    </DynamicModal>
   );
 }

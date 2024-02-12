@@ -1,25 +1,6 @@
-import { DynamicModal } from './DynamicModal';
-import * as React from 'react'
-import Backdrop from '@mui/material/Backdrop'
-import Box from '@mui/material/Box'
-import Modal from '@mui/material/Modal'
-import Fade from '@mui/material/Fade'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import { event } from 'jquery'
 import { useState } from 'react'
-//SIGNUP
-import { signup, login } from '../store/actions/user.actions'
-import { ImgUploader } from './ImgUploader'
 import { uploadService } from '../services/upload.service.js'
-import {
-  showErrorMsg,
-  showSuccessMsg,
-  showimgUploadSuccessMsg
-} from '../services/event-bus.service'
-import { userService } from '../services/user.service.js'
-
-
+import {showimgUploadSuccessMsg} from '../services/event-bus.service'
 
 export function SignUpModal({ setCredentials, handleCredentialsChange, handleDemoLogIn, credentials, uploadImg, onSubmit }) {
   const [open, setOpen] = useState(false);
