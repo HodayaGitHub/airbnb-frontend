@@ -12,30 +12,15 @@ import { useState } from 'react'
 import { signup, login } from '../store/actions/user.actions'
 import { ImgUploader } from './ImgUploader'
 import { uploadService } from '../services/upload.service.js'
-import {
-  showErrorMsg,
-  showSuccessMsg,
-  showimgUploadSuccessMsg
-} from '../services/event-bus.service'
+import { showimgUploadSuccessMsg } from '../services/event-bus.service'
 import { userService } from '../services/user.service.js'
 
 
-
-export function SignUpModal({  }) {
+export function LoginSignupModal({ loginOrSignup }) {
   const [open, setOpen] = useState(false);
   const [credentials, setCredentials] = useState(userService.getEmptyCredentials());
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleOpen = (event) => {
-    event.stopPropagation();
-    setOpen(true);
-  };
-
-  const stopProp = (event) => {
-    event.stopPropagation();
-  };
-
-  const handleClose = () => setOpen(false);
 
   async function onSubmit(ev) {
     ev.preventDefault();

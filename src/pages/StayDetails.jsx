@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as labelsSvg from '../services/labels.icons.service.jsx';
 
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { stayService } from '../services/stay.service.js';
 import { updateStay } from '../store/actions/stay.actions.js';
 import { ReservationModal } from '../cmps/reservationModal.jsx';
@@ -32,7 +32,8 @@ export function StayDetails() {
   const { stayId } = useParams();
   const navigate = useNavigate();
   const loggedInUser = useSelector((storeState) => storeState.userModule.loggedInUser);
-  let order = useSelector((storeState) => storeState.orderModule.order) || JSON.parse(localStorage.getItem('PRE_ORDER'));
+  var order = useSelector((storeState) => storeState.orderModule.order) || JSON.parse(localStorage.getItem('PRE_ORDER'));
+  const location = useLocation();
 
 
   useEffect(() => {
@@ -95,14 +96,17 @@ export function StayDetails() {
     try {
       const stay = await stayService.getById(stayId)
       setStay(stay)
-      // if (!order) orderService.createOrder(stay)
-      if (!order) console.log('order does not exist')
+      if (!order) {
+        orderService.createOrder(stay, location, loggedInUser);
+        console.log()
+      }
     } catch (err) {
       // navigate('/stay')
       console.log('Error while trying to load the stay')
     }
   }
 
+  
   function handleChange(target) {
     const field = target.name
     let value = target.value
@@ -202,20 +206,24 @@ export function StayDetails() {
       {isMobile ? (
 
         <ReservationModal
-          stayId={stay._id}
+          stay={stay}
+          stayId={stayId}
           price={stay.price}
           order={order}
           editOrder={editOrder}
           isMobile={isMobile}
+          loggedInUser={loggedInUser}
         />
       ) : (
         <section className='mid-section'>
           <ReservationModal
-            stayId={stay._id}
+            stay={stay}
+            stayId={stayId}
             price={stay.price}
             order={order}
             editOrder={editOrder}
             isMobile={isMobile}
+            loggedInUser={loggedInUser}
           />
 
           <section className='stay-information'>

@@ -168,7 +168,7 @@ export function StayEdit() {
                 <section className="upload-imgs">
                     <label htmlFor="imgUpload" className='custom-btn'> upload imgs</label>
                     <input type="file" onChange={uploadImg} accept="img/*" id="imgUpload" className='imgUpload' />
-                    {isUploading && <span className='uploading-msg'>uploading please wait...</span>}
+                    {isUploading && <span className='uploading-msg'>Uploading please wait...</span>}
                 </section>
 
 

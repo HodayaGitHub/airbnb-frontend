@@ -23,9 +23,10 @@ const style = {
   p: 4,
 };
 
-export default function LoginModal() {
+export function LoginModal() {
   const [open, setOpen] = useState(false);
-  const [credentials, setCredentials] = useState(userService.getEmptyCredentials())
+  const [credentials, setCredentials] = useState(userService.getEmptyCredentials());
+  const { username, password } = credentials
 
   const handleOpen = (event) => {
     event.stopPropagation();
@@ -44,12 +45,10 @@ export default function LoginModal() {
   }
 
   async function onSubmit(ev) {
-    ev.preventDefault()
-    console.log('hello')
+    ev.preventDefault();
     try {
-      const user = await login(credentials)
-      console.log('user:', user)
-      setOpen(false)
+      const user = await login(credentials);
+      setOpen(false);
       window.location.reload();
     } catch (err) {
     }
@@ -78,7 +77,6 @@ export default function LoginModal() {
     }
   }
 
-  const { username, password } = credentials
 
   return (
     <div onClick={(event) => handleOpen(event)} className='login-form'>
@@ -98,7 +96,7 @@ export default function LoginModal() {
       >
         <Fade in={open}>
           <Box sx={style} className='login-modal' onClick={(event) => stopProp(event)}>
-            <        h2>Log in</h2>
+            <h2>Log in</h2>
             <form className='inputs' onSubmit={onSubmit}>
 
               <label htmlFor="username"><span className='star'>*</span>Username</label>

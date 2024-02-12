@@ -213,15 +213,6 @@ export function ConfirmPage() {
               responsible for damage.
             </p>
 
-            {/* <button
-              className='confirm-btn'
-              onClick={() => {
-                saveOrderToDb(order)
-              }}
-            >
-              Confirm and pay
-            </button> */}
-
             <div
               className='confirm-btn'
               onClick={() => {
@@ -236,8 +227,8 @@ export function ConfirmPage() {
             {stay && (
               <section className='stay-info'>
                 <img className='stay-img' src={stay.imgUrls[1]} />
-                <span  style={{ color: 'black', paddingLeft:"10px", fontWeight: "600", lineHeight: "1.5" }} className='stay-name'>{stay.name}</span>
-                <span  style={{ color: 'black', fontWeight: "600", lineHeight: "1.5" }} className='reviews'>
+                <span style={{ color: 'black', paddingLeft: "10px", fontWeight: "600", lineHeight: "1.5" }} className='stay-name'>{stay.name}</span>
+                <span style={{ color: 'black', fontWeight: "600", lineHeight: "1.5" }} className='reviews'>
                   {/* {stay.reviews.length} review */}
                   {stay.reviews.length > 1 && <span>s</span>}
                 </span>

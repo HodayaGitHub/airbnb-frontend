@@ -1,12 +1,7 @@
-import { Link, NavLink } from 'react-router-dom'
+import newlogo from '../assets/img/new-logo-svg.svg'
 import { useSelector } from 'react-redux'
-import routes from '../routes'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { login, logout, signup } from '../store/actions/user.actions.js'
-
-import { LoginSignup } from './LoginSignup.jsx'
-// import appLogo from '../assets/img/airbnb.svg'
-import newlogo from '../assets/img/new-logo-svg.svg'
 
 export function AppHeader() {
   const user = useSelector((storeState) => storeState.userModule.user)

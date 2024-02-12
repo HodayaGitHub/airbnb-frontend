@@ -12,7 +12,6 @@ export function orderReducer(state = initialState, action) {
     var newState = state
     var order
 
-
     switch (action.type) {
         case SET_ORDER:
             order = action.order

@@ -6,7 +6,7 @@ import Modal from '@mui/material/Modal'
 
 
 export function ServiceAnimalModal({ serviceAnimalModalClose }) {
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = useState(true)
   // const handleOpen = () => setOpen(true)
   const handleClose = () => {
     setOpen(false)

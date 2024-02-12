@@ -1,15 +1,20 @@
-import { useEffect, useState } from 'react'
-import { DateSelect } from './search/DateSelect'
-import { useNavigate } from 'react-router'
-import { stayService } from '../services/stay.service'
-import { orderService } from '../services/order.service'
-import { ButtonHover } from './buttonHover'
+import { useEffect, useState } from 'react';
+import { DateSelect } from './search/DateSelect';
+import { useNavigate } from 'react-router';
+import { stayService } from '../services/stay.service';
+import { orderService } from '../services/order.service';
+import { ButtonHover } from './buttonHover';
+import { LoginSignupModal } from './LoginSignupModal';
+import { useLocation } from 'react-router-dom';
 
-export function ReservationModal({ stayId, price, order, editOrder, isMobile }) {
+export function ReservationModal({ stayId, stay, price, order, editOrder, isMobile, loggedInUser }) {
 
-  const [modalOpen, setModalOpen] = useState(false)
-  const [orderToEdit, setOrderToEdit] = useState(order)
-  const navigate = useNavigate()
+  const [modalOpen, setModalOpen] = useState(false);
+  const [orderToEdit, setOrderToEdit] = useState(order);
+  const [isLoginOpen, setisLoginOpen] = useState(false)
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     console.log('orderToEdit', orderToEdit)
@@ -50,8 +55,12 @@ export function ReservationModal({ stayId, price, order, editOrder, isMobile }) 
         {isMobile ? (
           <>
             <div className='reserve-button' onClick={() => {
-              savePreOrderToLocalStorage(orderToEdit)
-              navigate(`/book/${stayId}`)
+              !loggedInUser
+                ? <LoginSignupModal />
+                : (
+                  savePreOrderToLocalStorage(orderToEdit),
+                  navigate(`/book/${stayId}`)
+                )
             }}>
               <ButtonHover buttonContent="Reserve" />
             </div>
@@ -65,7 +74,7 @@ export function ReservationModal({ stayId, price, order, editOrder, isMobile }) 
                     <span>Check in</span>
                     <input
                       type='text'
-                      value={stayService.formatDateFromUnix(order.check_In) || stayService.formatDateFromUnix(orderToEdit.checkIn)}
+                      value={stayService.formatDateFromUnix(order.checkIn) || stayService.formatDateFromUnix(orderToEdit.checkIn)}
                       readOnly
                     />
                   </button>
@@ -75,7 +84,7 @@ export function ReservationModal({ stayId, price, order, editOrder, isMobile }) 
                   <button>
                     <span>Check out</span>
                     <input type='text'
-                      value={stayService.formatDateFromUnix(order.check_Out) || stayService.formatDateFromUnix(orderToEdit.checkOut)}
+                      value={stayService.formatDateFromUnix(order.checkOut) || stayService.formatDateFromUnix(orderToEdit.checkOut)}
                       readOnly
                     />
                   </button>
@@ -97,13 +106,19 @@ export function ReservationModal({ stayId, price, order, editOrder, isMobile }) 
               }
             </div >
 
-            <div className='reserve-button' onClick={() => {
-              savePreOrderToLocalStorage(orderToEdit)
-              navigate(`/book/${stayId}`)
-            }}>
+            <div className='reserve-button' onClick={() => (
+              !loggedInUser
+                ? <LoginSignupModal />
+                : (
+                  savePreOrderToLocalStorage(orderToEdit),
+                  navigate(`/book/${stayId}`)
+                )
+            )}>
               <ButtonHover buttonContent="Reserve" />
               <span className='no-charge'>you won't be charged yet</span>
             </div>
+
+
 
             <div className='total-price-container'>
               <div className='price-calc'>

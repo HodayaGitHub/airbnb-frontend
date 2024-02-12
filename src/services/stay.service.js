@@ -34,7 +34,6 @@ window.cs = stayService
 const BASE_URL = 'stay'
 
 function query(filterBy = {}, page = 1, itemsPerPage) {
-    console.log('hi from query')
     return httpService.get(BASE_URL, { filterBy, page, itemsPerPage })
 }
 
@@ -192,15 +191,15 @@ function getLabels() {
     return labels
 }
 
+// StayDetails services: 
+
+
 function calcNights(firstDate, secondDate) {
     const timeDifference = secondDate - firstDate;
     const daysDifference = Math.ceil(timeDifference / (24 * 60 * 60)); // seconds to days
 
     return daysDifference;
 }
-
-// StayDetails services: 
-
 
 async function fetchAvatar() {
     try {

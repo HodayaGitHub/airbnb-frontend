@@ -3,6 +3,8 @@ import Axios from 'axios'
 import { httpService } from './http.service.js'
 import { addOrder, updateOrder } from '../store/actions/order.actions.js';
 import { useLocation } from 'react-router-dom';
+import { stayService } from "./stay.service.js";
+import queryString from 'query-string';
 
 const STORAGE_KEY = 'order'
 
@@ -62,8 +64,8 @@ function getEmptyOrder() {
             fullname: ""
         },
         totalPrice: 0,
-        checkIn: defaultCheckIn,
-        checkOut: defaultCheckOut,
+        checkIn: '',
+        checkOut: '',
         guests: {
             adults: 1,
             children: 0,
@@ -145,32 +147,30 @@ function parseGuestParams(guestParam) {
     return guests;
 }
 
-
-function createOrder(stay) {
-    const location = useLocation();
+function createOrder(stay, location, loggedInUser) {
     localStorage.removeItem('PRE_ORDER');
     const searchParams = new URLSearchParams(location.search);
     const guestParam = decodeURIComponent(searchParams.get('guestParam'));
     const guests = orderService.parseGuestParams(guestParam);
-    const { defaultCheckIn, defaultCheckOut } = orderService.getDefaultDates();
+    const { checkIn, checkOut } = orderService.getDatesfromParams();
 
     const order = {
-        checkIn: defaultCheckIn,
-        checkOut: defaultCheckOut,
+        checkIn,
+        checkOut,
         hostId: stay.host._id,
         hostName: stay.host.fullname,
         hostPic: stay.host.pictureUrl,
         totalNights: stayService.calcNights(checkIn, checkOut),
         guests,
-        stayId,
+        stayId: stay.id,
         stayLoc: stay.loc.country,
         stayImg: stay.imgUrls[0],
         totalGuests: guests.adults + guests.children,
-        price: stay.price * nights,
+        price: stay.price * 5,
         status: 'Pending',
-        imgUrl: "https://res.cloudinary.com/drlt4yjnj/image/upload/v1705352677/qwplqesdakcgpkpjnpf5.jpg",
-        guestImg: loggedInUser.imgUrl,
-        name: loggedInUser.fullname,
+        // imgUrl: "https://res.cloudinary.com/drlt4yjnj/image/upload/v1705352677/qwplqesdakcgpkpjnpf5.jpg",
+        guestImg: loggedInUser ? loggedInUser.imgUrl : '',
+        name: loggedInUser ? loggedInUser.fullname : '',
     };
 
     addOrder(order);

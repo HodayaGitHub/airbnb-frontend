@@ -1,20 +1,25 @@
-import { Link, NavLink } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router'
-import classnames from 'classnames'
+import { LoginModal } from './LoginModal.jsx'
+import { logout } from '../store/actions/user.actions.js'
+import { useSelector } from 'react-redux'
 import appLogo from '../assets/img/new-logo-svg.svg'
 import hamburger from '../assets/img/svgs/hamburger.svg'
 import defaultLogo from '../assets/img/svgs/defaultLogo.svg'
-import LoginModal from './LoginModal.jsx'
-import SignUpModal from './SignUpModal.jsx'
-import { logout } from '../store/actions/user.actions.js'
-import { useSelector } from 'react-redux'
+import { SignUpModal } from './SignUpModal.jsx'
 import Avatar from '@mui/material/Avatar'
+import { DynamicModal } from './DynamicModal';
 
 export function MainHeader({ headerClassNames }) {
-  const [isModalOpen, setIsModalOpen] = useState(false)
   const modalRef = useRef(null)
   const user = useSelector((storeState) => storeState.userModule.loggedInUser)
+  const [open, setOpen] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const [signInModalOpen, setSignInModalOpen] = useState(false);
+  const [signUpModalOpen, setSignUpModalOpen] = useState(false);
+
 
   const navigate = useNavigate()
 
@@ -24,7 +29,6 @@ export function MainHeader({ headerClassNames }) {
         setIsModalOpen(false)
       }
     }
-
     document.addEventListener('click', handleClickOutside)
 
     return () => {
@@ -56,6 +60,12 @@ export function MainHeader({ headerClassNames }) {
     navigate(`/Wishlist/${user._id}`)
   }
 
+  function handleOpen(event) {
+    event.stopPropagation();
+    setSignUpModalOpen(true);
+  };
+
+
   return (
     <header className={`app-header ${headerClassNames}`}>
       <div
@@ -81,10 +91,19 @@ export function MainHeader({ headerClassNames }) {
           <div className='user-modal'>
             {!user && (
               <div className='notLogin-user-modal'>
-                <LoginModal />
-                <SignUpModal />
+                <div className='login-form' onClick={(event) => handleOpen(event)}>
+                  <button>Sign Up</button>
+                  {signUpModalOpen && (
+                    <DynamicModal open={signUpModalOpen}>
+                      <SignUpModal />
+                    </DynamicModal>
+                  )}
+                </div>
               </div>
             )}
+
+
+
 
             {user && (
               <div className='login-user-modal'>
@@ -94,7 +113,7 @@ export function MainHeader({ headerClassNames }) {
                 <button onClick={() => navigate('/become-a-host')}>
                   Become a host
                 </button>
-                 {/* <button onClick={() => navigate('/become-a-host/stay-edit')}>
+                {/* <button onClick={() => navigate('/become-a-host/stay-edit')}>
       Become a host
     </button> */}
                 <button onClick={onLogout}>Logout</button>
