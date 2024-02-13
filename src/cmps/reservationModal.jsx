@@ -25,6 +25,7 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
   }, [orderToEdit])
 
 
+
   function handleDateSelectChange(field, value) {
     const valueToUnix = Math.floor(value.getTime() / 1000)
     setOrderToEdit((prevOrder) => ({ ...prevOrder, [field]: valueToUnix }))
@@ -53,7 +54,6 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
   return (
 
     <section className='reservation'>
-
       <div className='reservation-modal'>
         <div className='reservation-header'>
           <div className='price'>

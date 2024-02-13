@@ -21,6 +21,7 @@ export const stayService = {
     calcNights,
     formatDateFromUnix,
     fetchAvatar,
+    calculateAverageRating,
     // loadStay,
 }
 
@@ -213,3 +214,12 @@ async function fetchAvatar() {
     }
 }
 
+
+function calculateAverageRating(stay) {
+    if (!stay || !stay.reviews || stay.reviews.length === 0) {
+        return 0
+    }
+
+    const totalRating = stay.reviews.reduce((acc, review) => acc + review.rate, 0)
+    return totalRating / stay.reviews.length
+}

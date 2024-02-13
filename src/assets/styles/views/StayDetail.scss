@@ -403,7 +403,7 @@
         .review-by {
           display: flex;
           align-items: center;
-          margin-bottom: 13px;       
+          margin-bottom: 13px;
           justify-content: space-between;
 
           p {
@@ -417,7 +417,7 @@
           }
 
           .star-rating {
-            .star:not(.filled){
+            .star:not(.filled) {
               color: #dcc8c8;
             }
           }
@@ -482,6 +482,7 @@
       padding: 0px;
       width: 100%;
       background-color: #ffff;
+      box-shadow: 5px 5px 11px rgba(0, 0, 0, 0.5);
 
       .reservation-modal {
         display: grid;

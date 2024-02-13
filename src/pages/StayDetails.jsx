@@ -13,6 +13,7 @@ import { MainHeader } from '../cmps/MainHeader.jsx';
 import { AMENTITIES } from '../data/stay.details.amentities.js';
 import { orderService } from '../services/order.service.js';
 import { StarRating } from '../cmps/stayDetails/StarRating.jsx'
+import { StayDescription } from '../cmps/stayDetails/StayDescription.jsx'
 
 import ShareModal from '../cmps/shareModal.jsx';
 import queryString from 'query-string';
@@ -30,6 +31,7 @@ export function StayDetails() {
   const [hostAvatarUrl, setHostAvatarUrl] = useState('');
   const [reviewsToShow, setReviewsToShow] = useState(6);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1000);
+
   const { stayId } = useParams();
   const navigate = useNavigate();
   const loggedInUser = useSelector((storeState) => storeState.userModule.loggedInUser);
@@ -38,20 +40,10 @@ export function StayDetails() {
 
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 960);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
     loadStay();
   }, [stayId]);
+
+
 
   useEffect(() => {
     const fetchAvatars = async () => {
@@ -88,6 +80,19 @@ export function StayDetails() {
     fetchAvatars();
     fetchHostAvatar();
   }, [stay]);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 960);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   function editOrder(order) {
     updateOrder(order)
@@ -128,16 +133,6 @@ export function StayDetails() {
       console.log('Cannot add stay', err)
     }
   }
-
-  function calculateAverageRating() {
-    if (!stay || !stay.reviews || stay.reviews.length === 0) {
-      return 0
-    }
-
-    const totalRating = stay.reviews.reduce((acc, review) => acc + review.rate, 0)
-    return totalRating / stay.reviews.length
-  }
-
 
   if (!stay || !order) return <div className='loader'></div>
   return (
@@ -180,7 +175,7 @@ export function StayDetails() {
             <ShareModal
               stayImg={stay.imgUrls[0]}
               stay={stay}
-              averageRating={calculateAverageRating()}
+              averageRating={stayService.calculateAverageRating(stay)}
             />
           </div>
 
@@ -204,118 +199,39 @@ export function StayDetails() {
         ))}
       </div>
 
-      {isMobile ? (
-
-        <ReservationModal
-          stay={stay}
-          stayId={stayId}
-          price={stay.price}
-          order={order}
-          editOrder={editOrder}
-          isMobile={isMobile}
-          loggedInUser={loggedInUser}
-        />
-      ) : (
-        <section className='mid-section'>
+      {!isMobile ? (
+        <section className='mid-section' >
           <ReservationModal
             stay={stay}
             stayId={stayId}
             price={stay.price}
             order={order}
             editOrder={editOrder}
-            isMobile={isMobile}
             loggedInUser={loggedInUser}
+            isMobile={isMobile}
           />
-
-          <section className='stay-information'>
-            <h1>
-              {stay.type === 'House' ? 'Entire ' + stay.type : stay.type} in{' '}
-              {stay.loc.city}, {stay.loc.country}
-            </h1>
-            <p className='stay-contents'>
-              {stay.capacity} guest
-              {stay.capacity !== 1 && <span>s</span>} • {stay.bedrooms} bedroom
-              {stay.bedrooms !== 1 && <span>s</span>} • {' '}
-              {stay.bedrooms !== 0 ? stay.beds : 1} bed
-              {stay.bedrooms > 1 && stay.beds > 1 && <span>s</span>} •{' '}
-              {stay.bathrooms} bathroom{stay.bathrooms !== 1 && <span>s</span>}
-            </p>
-            <p className='stay-rating'>
-              🟊 {calculateAverageRating().toFixed(1)} •{' '}
-              <span>{stay.reviews.length} reviews</span>
-            </p>
-          </section>
-
-          <section className='hostedBy'>
-            <div className='hostedBy-img'>
-              <Avatar alt='Remy Sharp' src={hostAvatarUrl || stay.host.pictureUrl} />
-            </div>
-            <div className='hostedBy-name'>
-              <h2>{stay.host.fullname}</h2>
-              <p>{stay.hostingYears} years hosting</p>
-            </div>
-          </section>
-
-          <section className='guest-experiences'>
-            <div className='box box1'>
-              <div className='svg-container'>
-                <img src={key} alt='' />
-              </div>
-              <div className='box-text'>
-                <h2>Great check-in experience</h2>
-                <p>
-                  95% of recent guests gave the check-in process a 5-star rating
-                </p>
-              </div>
-            </div>
-
-            <div className='box box2'>
-              <div className='svg-container'>
-                <img src={chat} alt='' />
-              </div>
-              <div className='box-text'>
-                <h2>Great communication</h2>
-                <p>
-                  100% of recent guests rated Cristina 5-star in communication.
-                </p>
-              </div>
-            </div>
-
-            <div className='box box3'>
-              <div className='svg-container'>
-                <img src={locationImg} alt='' />
-              </div>
-              <div className='box-text'>
-                <h2>Great location</h2>
-                <p>100% of recent guests gave the location a 5-star rating.</p>
-              </div>
-            </div>
-          </section>
-
-          <section className='stay-descripiton'>{stay.summary}</section>
-          <section className='stay-amenities'>
-            <h4>What this place offers</h4>
-            <div className='amenities-container'>
-              {AMENTITIES.map((amentitie, index) => (
-                <div className="icons-wrap" key={index}>
-                  <span className={`label-icon`}>
-                    {labelsSvg[amentitie.svg] ? React.createElement(labelsSvg[amentitie.svg]) : ''}
-                  </span>
-                  <span className="label-title">
-                    {amentitie.title}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-          </section>
+          <StayDescription stay={stay} />
         </section>
+      ) : (
+        <>
+          <ReservationModal
+            stay={stay}
+            stayId={stayId}
+            price={stay.price}
+            order={order}
+            editOrder={editOrder}
+            loggedInUser={loggedInUser}
+            isMobile={isMobile}
+          />
+          <section className='mid-section' >
+            <StayDescription stay={stay} />
+          </section>
+        </>
       )}
-
 
       <section className='stay-reviews'>
         <h2>
-          🟊 {calculateAverageRating().toFixed(1)} • {stay.reviews.length} review
+          🟊 {stayService.calculateAverageRating(stay).toFixed(1)} • {stay.reviews.length} review
           {stay.reviews.length !== 1 && <span>s</span>}
         </h2>
 
