@@ -403,8 +403,8 @@
         .review-by {
           display: flex;
           align-items: center;
-          gap: 14px;
-          margin-bottom: 13px;
+          margin-bottom: 13px;       
+          justify-content: space-between;
 
           p {
             margin: 0;
@@ -414,6 +414,12 @@
             font-size: 1rem;
             margin: 0;
             font-weight: 600;
+          }
+
+          .star-rating {
+            .star:not(.filled){
+              color: #dcc8c8;
+            }
           }
         }
 

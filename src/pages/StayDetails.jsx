@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { MainHeader } from '../cmps/MainHeader.jsx';
 import { AMENTITIES } from '../data/stay.details.amentities.js';
 import { orderService } from '../services/order.service.js';
+import { StarRating } from '../cmps/stayDetails/StarRating.jsx'
 
 import ShareModal from '../cmps/shareModal.jsx';
 import queryString from 'query-string';
@@ -106,7 +107,7 @@ export function StayDetails() {
     }
   }
 
-  
+
   function handleChange(target) {
     const field = target.name
     let value = target.value
@@ -324,18 +325,22 @@ export function StayDetails() {
             return (
               <div className='review' key={index}>
                 <div className='review-by'>
-                  <Avatar
-                    className='avatar'
-                    alt={review.by.fullname}
-                    src={avatarUrls[index]}
-                  />
+                  <span>
+                    <Avatar
+                      className='avatar'
+                      alt={review.by.fullname}
+                      src={avatarUrls[index]}
+                    />
+                    <h3 className='name'>{review.by.fullname}</h3>
+                  </span>
 
-
-                  <h3 className='name'>{review.by.fullname}</h3>
-                  <p className='review-date'>
-                    {new Date(review.at).toLocaleString('en', { month: 'short' })}{' '}{''}
-                    {new Date(review.at).getFullYear()}
-                  </p>
+                  <span>
+                    <StarRating rate={review.rate} />
+                    <p className='review-date'>
+                      {new Date(review.at).toLocaleString('en', { month: 'short' })}{' '}{''}
+                      {new Date(review.at).getFullYear()}
+                    </p>
+                  </span>
                 </div>
                 <p className='text'>{review.txt}</p>
               </div>
