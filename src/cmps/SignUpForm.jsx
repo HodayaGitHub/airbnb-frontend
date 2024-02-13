@@ -4,9 +4,7 @@ import { showimgUploadSuccessMsg } from '../services/event-bus.service'
 import { ButtonHover } from './buttonHover';
 
 export function SignUpForm({ closeModal, setCredentials, handleCredentialsChange, handleDemoLogIn, credentials, uploadImg, onSubmit }) {
-  const [open, setOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const handleClose = () => setOpen(false);
   const { username, password, fullname } = credentials;
 
   async function uploadImg(ev) {

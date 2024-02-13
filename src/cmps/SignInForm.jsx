@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ButtonHover } from './buttonHover';
 
-export function SignInForm({ handleDemoLogIn, onSubmit, handleCredentialsChange, credentials}) {
+export function SignInForm({ handleDemoLogIn, onSubmit, handleCredentialsChange, credentials, closeModal }) {
   const [open, setOpen] = useState(true);
   const { username, password } = credentials;
 
@@ -32,13 +32,13 @@ export function SignInForm({ handleDemoLogIn, onSubmit, handleCredentialsChange,
         />
 
         <div className='login-button'>
-            <ButtonHover buttonContent="Sign in" onSubmit={onSubmit}/>
+          <ButtonHover buttonContent="Sign in" onSubmit={onSubmit} />
         </div>
       </form>
       <div className='demo-button'>
         <button onClick={handleDemoLogIn}>Demo Log in</button>
       </div>
-      <button className='close-login-modal'>𝝬</button>
+      <button className='close-login-modal' onClick={closeModal}>𝝬</button>
 
     </div>
   );

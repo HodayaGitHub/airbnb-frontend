@@ -11,10 +11,9 @@ import Avatar from '@mui/material/Avatar'
 
 export function MainHeader({ headerClassNames }) {
   const modalRef = useRef(null);
-  const navigate = useNavigate()
   const user = useSelector((storeState) => storeState.userModule.loggedInUser)
-  const [open, setOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const navigate = useNavigate()
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
 
 
@@ -22,7 +21,7 @@ export function MainHeader({ headerClassNames }) {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setIsModalOpen(false)
+        setIsUserModalOpen(false)
       }
     }
     document.addEventListener('click', handleClickOutside)
@@ -30,40 +29,40 @@ export function MainHeader({ headerClassNames }) {
     return () => {
       document.removeEventListener('click', handleClickOutside)
     }
-  }, [isModalOpen])
+  }, [isUserModalOpen])
 
   function toggleUserModal(event) {
     event.stopPropagation()
-    setIsModalOpen(!isModalOpen)
-    if (!isModalOpen) {
+    setIsUserModalOpen(!isUserModalOpen)
+    if (!isUserModalOpen) {
       setModalType(null)
     }
   }
 
   async function onLogout() {
     try {
-      await logout()
-      setIsModalOpen(false)
-      navigate('/')
-      window.location.reload()
+      await logout();
+      setIsUserModalOpen(false);
+      navigate('/');
+      window.location.reload();
     } catch (err) {
-      console.log('err:', err)
-      showErrorMsg('Cannot logout')
-    }
-  }
+      console.log('err:', err);
+      showErrorMsg('Cannot logout');
+    };
+  };
 
   function goDashBoard() {
-    navigate('/DashBoard')
-  }
+    navigate('/DashBoard');
+  };
 
   function goToWishlist() {
-    navigate(`/Wishlist/${user._id}`)
-  }
+    navigate(`/Wishlist/${user._id}`);
+  };
 
   function handleOpen(event, loginOrSignup) {
     event.stopPropagation();
     setModalType(loginOrSignup);
-  }
+  };
 
 
   return (
@@ -87,7 +86,7 @@ export function MainHeader({ headerClassNames }) {
           <Avatar className='user-img' alt='' src={user.imgUrl} />
         )}
 
-        {isModalOpen && (
+        {isUserModalOpen && (
           <div className='user-modal'>
             {!user && (
               <div className='notLogin-user-modal'>

@@ -5,17 +5,12 @@ import { SignUpForm } from './SignUpForm.jsx';
 import { SignInForm } from './SignInForm.jsx';
 import { DynamicModal } from './DynamicModal';
 
-export function LoginSignupModal({ loginOrSignup }) {
+export function LoginSignupModal({ loginOrSignup, state }) {
   const [credentials, setCredentials] = useState(userService.getEmptyCredentials());
-  const [isModalOpen, setModalOpen] = useState(true);
-
-  // function closeModal() {
-  //   setModalOpen((prevIsModalOpen) => !prevIsModalOpen);
-  // }
+  const [isModalOpen, setModalOpen] = useState(state ? state : true);
 
   function closeModal() {
     setModalOpen(false);
-    console.log('modal closed')
   }
 
   async function onSubmit(ev) {
@@ -40,7 +35,7 @@ export function LoginSignupModal({ loginOrSignup }) {
 
   async function handleDemoLogIn() {
     try {
-      await login(userService.demoCredentials);
+      await login(userService.demoCredentials());
       window.location.reload();
     } catch (err) {
       console.log('err:', err);

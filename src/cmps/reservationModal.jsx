@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { DateSelect } from './search/DateSelect';
 import { useNavigate } from 'react-router';
 import { stayService } from '../services/stay.service';
@@ -7,14 +8,16 @@ import { ButtonHover } from './buttonHover';
 import { LoginSignupModal } from './LoginSignupModal';
 import { useLocation } from 'react-router-dom';
 
-export function ReservationModal({ stayId, stay, price, order, editOrder, isMobile, loggedInUser }) {
+export function ReservationModal({ stayId, stay, price, order, editOrder, isMobile }) {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [orderToEdit, setOrderToEdit] = useState(order);
   const [isLoginOpen, setisLoginOpen] = useState(false)
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
+  const loggedInUser = useSelector((storeState) => storeState.userModule.loggedInUser);
 
   useEffect(() => {
     console.log('orderToEdit', orderToEdit)
@@ -35,7 +38,16 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
   }
 
   function savePreOrderToLocalStorage(order) {
-    localStorage.setItem('PRE_ORDER', JSON.stringify(order))
+    localStorage.setItem('PRE_ORDER', JSON.stringify(order));
+  };
+
+  function handleReserveClick() {
+    if (!loggedInUser) {
+      setIsLoginModalOpen(!isLoginModalOpen);
+    } else {
+      savePreOrderToLocalStorage(orderToEdit);
+      navigate(`/book/${stayId}`);
+    }
   }
 
   return (
@@ -54,16 +66,13 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
 
         {isMobile ? (
           <>
-            <div className='reserve-button' onClick={() => {
-              !loggedInUser
-                ? <LoginSignupModal />
-                : (
-                  savePreOrderToLocalStorage(orderToEdit),
-                  navigate(`/book/${stayId}`)
-                )
-            }}>
+            <div className='reserve-button' onClick={handleReserveClick}>
               <ButtonHover buttonContent="Reserve" />
+              {isLoginModalOpen && (
+                <LoginSignupModal loginOrSignup='signup' state={isLoginModalOpen} />
+              )}
             </div>
+
           </>
         ) : (
           <>
@@ -100,29 +109,25 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
               }
               {
                 <div className='guest'>
-                  {orderToEdit.totalGuests} guest{orderToEdit.totalGuests !== 1 && <span>s</span>}
+                  {orderToEdit.totalGuests} Guest{orderToEdit.totalGuests !== 1 && <span>s</span>}
                   {orderToEdit.guests.infants !== 0 && <> , {orderToEdit.guests.infants} infant{orderToEdit.guests.infants !== 1 && <span>s</span>}</>}
                 </div>
               }
             </div >
 
-            <div className='reserve-button' onClick={() => (
-              !loggedInUser
-                ? <LoginSignupModal />
-                : (
-                  savePreOrderToLocalStorage(orderToEdit),
-                  navigate(`/book/${stayId}`)
-                )
-            )}>
+            <div className='reserve-button' onClick={handleReserveClick}>
               <ButtonHover buttonContent="Reserve" />
-              <span className='no-charge'>you won't be charged yet</span>
+              {isLoginModalOpen && (
+                <LoginSignupModal loginOrSignup='signup' state={isLoginModalOpen} />
+              )}
             </div>
+            <span className='no-charge'>You won't be charged yet</span>
 
 
 
             <div className='total-price-container'>
               <div className='price-calc'>
-                {orderToEdit.totalNights} night{orderToEdit.totalNights !== 1 && 's'} x ${price}
+                {orderToEdit.totalNights} Night{orderToEdit.totalNights !== 1 && 's'} x ${price}
               </div>
               <div className='total-price'>Total ${orderToEdit.totalNights * price}</div>
             </div>

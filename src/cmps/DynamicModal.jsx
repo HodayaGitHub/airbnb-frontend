@@ -2,9 +2,7 @@ import { useState } from 'react'
 import { Backdrop, Box, Modal, Fade } from '@mui/material';
 
 export function DynamicModal({ open, onClose, children }) {
-    console.log(open)
-
-
+    
     return (
         <Modal
             aria-labelledby='transition-modal-title'
