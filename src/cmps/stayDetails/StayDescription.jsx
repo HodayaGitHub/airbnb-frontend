@@ -10,46 +10,7 @@ import chat from '../../assets/img/svgs/chat.svg';
 import locationImg from '../../assets/img/svgs/location.svg';
 import { AMENTITIES } from '../../data/stay.details.amentities.js';
 
-export function StayDescription({ stay }) {
-    const [hostAvatarUrl, setHostAvatarUrl] = useState('');
-    const [avatarUrls, setAvatarUrls] = useState([]);
-
-    useEffect(() => {
-        const fetchAvatars = async () => {
-            try {
-                if (!stay || !stay.reviews) {
-                    return;
-                }
-
-                const urls = await Promise.all(
-                    stay.reviews.map(async () => {
-                        return await stayService.fetchAvatar();
-                    })
-                );
-                setAvatarUrls(urls);
-            } catch (error) {
-                console.error('Error fetching avatars:', error);
-            };
-        };
-
-        const fetchHostAvatar = async () => {
-            try {
-                if (!stay || !stay.host) {
-                    return;
-                };
-
-                const url = await stayService.fetchAvatar();
-                setHostAvatarUrl(url);
-            } catch (error) {
-                console.error('Error fetching host avatar:', error);
-
-            };
-        };
-
-        fetchAvatars();
-        fetchHostAvatar();
-    }, [stay]);
-
+export function StayDescription({ stay, hostAvatarUrl}) {
 
     return (
         <>

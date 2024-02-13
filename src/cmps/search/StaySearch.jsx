@@ -22,6 +22,14 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
     const CHECK_OUT_MODAL = 'checkOut'
 
 
+    const guestsDesc = {
+        adults: 'Ages 13 or above',
+        children: 'Ages 2-12',
+        infants: 'Under 2',
+        pets: 'Bringing a service animal?',
+    }
+
+    
     useEffect(() => {
         function handleOutsideClick(event) {
             if (
@@ -40,7 +48,6 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
             document.body.removeEventListener('click', handleOutsideClick);
         };
     }, []);
-
 
     function updateGuestCount(event, option, amount) {
         event.stopPropagation()
@@ -63,7 +70,6 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, region: region }))
     }
 
-
     function handleChange(item) {
         const selection = item.selection;
         setRange([selection]);
@@ -77,7 +83,6 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
             onSetField('checkOut', checkOutTimestamp);
         }
     }
-
 
     function setActiveClass(selectedModal) {
         return (modalOpen === selectedModal) ? ' active' : ''
@@ -117,13 +122,6 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
         } else {
             return ''
         }
-    }
-
-    const guestsDesc = {
-        adults: 'Ages 13 or above',
-        children: 'Ages 2-12',
-        infants: 'Under 2',
-        pets: 'Bringing a service animal?',
     }
 
     function handleChange() {

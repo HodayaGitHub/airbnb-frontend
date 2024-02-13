@@ -80,7 +80,7 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
               <div className='reservation-date'>
                 <div className='check-in' onClick={() => setModalOpen(true)}>
                   <button>
-                    <span>Check in</span>
+                    <span>Check-in</span>
                     <input
                       type='text'
                       value={stayService.formatDateFromUnix(order.checkIn) || stayService.formatDateFromUnix(orderToEdit.checkIn)}
@@ -91,7 +91,7 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
 
                 <div className='check-out' onClick={() => setModalOpen(true)}>
                   <button>
-                    <span>Check out</span>
+                    <span>Checkout</span>
                     <input type='text'
                       value={stayService.formatDateFromUnix(order.checkOut) || stayService.formatDateFromUnix(orderToEdit.checkOut)}
                       readOnly

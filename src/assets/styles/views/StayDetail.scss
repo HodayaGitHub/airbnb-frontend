@@ -1,11 +1,33 @@
 .stay-detail-layout {
   overflow: hidden;
 
+  .app-header {
+    position: relative;
+    padding: 20px 0;
+
+    &:after {
+      content: "";
+      position: absolute;
+      display: block;
+      bottom: 0;
+      height: 1px;
+      width: 98dvw;
+      background: #DDDDDD;
+      left: 50%;
+      transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+    }
+  }
+
+
   .stay-name {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-block-end: 22px;
+    position: relative;
+    padding: 20px 0;
+
 
     .stay-name-actions {
       font-size: 0.875rem;
@@ -197,16 +219,21 @@
 
           .reservation-date {
             display: flex;
+            justify-content: left;
 
             .check-in {
+              text-align: left;
+
               button {
                 border-radius: 10px 0 0 0;
+                text-align: left;
               }
             }
 
             .check-out {
               button {
                 border-radius: 0 10px 0 0;
+                text-align: left;
               }
             }
 
@@ -219,6 +246,7 @@
                 text-transform: uppercase;
                 font-size: 0.625rem;
                 font-weight: bold;
+
               }
             }
 

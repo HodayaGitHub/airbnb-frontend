@@ -56,12 +56,12 @@ export function MainHeaderOnScroll({ onSetFilter, filterBy, headerClassNames }) 
     function goToWishlist() {
         navigate(`/Wishlist/${user._id}`)
     }
-
+    
     function handleOpen(event, loginOrSignup) {
         event.stopPropagation();
         setModalType(loginOrSignup);
-    }
-
+      }
+    
     return (
         <header className={`app-header main-header-on-scroll ${headerClassNames}`}>
 

@@ -12,8 +12,8 @@ import { useSelector } from 'react-redux';
 import { MainHeader } from '../cmps/MainHeader.jsx';
 import { AMENTITIES } from '../data/stay.details.amentities.js';
 import { orderService } from '../services/order.service.js';
-import { StarRating } from '../cmps/stayDetails/StarRating.jsx'
 import { StayDescription } from '../cmps/stayDetails/StayDescription.jsx'
+import { StayReviews } from '../cmps/stayDetails/StayReviews.jsx'
 
 import ShareModal from '../cmps/shareModal.jsx';
 import queryString from 'query-string';
@@ -43,8 +43,6 @@ export function StayDetails() {
     loadStay();
   }, [stayId]);
 
-
-
   useEffect(() => {
     const fetchAvatars = async () => {
       try {
@@ -73,7 +71,6 @@ export function StayDetails() {
         setHostAvatarUrl(url);
       } catch (error) {
         console.error('Error fetching host avatar:', error);
-
       };
     };
 
@@ -104,14 +101,12 @@ export function StayDetails() {
       setStay(stay)
       if (!order) {
         orderService.createOrder(stay, location, loggedInUser);
-        console.log()
       }
     } catch (err) {
       // navigate('/stay')
       console.log('Error while trying to load the stay')
     }
   }
-
 
   function handleChange(target) {
     const field = target.name
@@ -210,7 +205,7 @@ export function StayDetails() {
             loggedInUser={loggedInUser}
             isMobile={isMobile}
           />
-          <StayDescription stay={stay} />
+          <StayDescription stay={stay} hostAvatarUrl={hostAvatarUrl} />
         </section>
       ) : (
         <>
@@ -224,51 +219,14 @@ export function StayDetails() {
             isMobile={isMobile}
           />
           <section className='mid-section' >
-            <StayDescription stay={stay} />
+            <StayDescription hostAvatarUrl={hostAvatarUrl} stay={stay} />
           </section>
         </>
       )}
 
-      <section className='stay-reviews'>
-        <h2>
-          🟊 {stayService.calculateAverageRating(stay).toFixed(1)} • {stay.reviews.length} review
-          {stay.reviews.length !== 1 && <span>s</span>}
-        </h2>
-
-        <div className='reviews'>
-          {stay.reviews.slice(0, reviewsToShow).map((review, index) => {
-
-            return (
-              <div className='review' key={index}>
-                <div className='review-by'>
-                  <span>
-                    <Avatar
-                      className='avatar'
-                      alt={review.by.fullname}
-                      src={avatarUrls[index]}
-                    />
-                    <h3 className='name'>{review.by.fullname}</h3>
-                  </span>
-
-                  <span>
-                    <StarRating rate={review.rate} />
-                    <p className='review-date'>
-                      {new Date(review.at).toLocaleString('en', { month: 'short' })}{' '}{''}
-                      {new Date(review.at).getFullYear()}
-                    </p>
-                  </span>
-                </div>
-                <p className='text'>{review.txt}</p>
-              </div>
-            );
-          })}
-          {stay.reviews.length > reviewsToShow && (
-            <button className='showMore-btn' onClick={() => setReviewsToShow(reviewsToShow + 5)}>
-              Show More Reviews
-            </button>
-          )}
-        </div>
-      </section>
+      <StayReviews
+        stay={stay}
+        avatarUrls={avatarUrls} />
 
       <section className='map'>
         <h2>Where you'll be</h2>

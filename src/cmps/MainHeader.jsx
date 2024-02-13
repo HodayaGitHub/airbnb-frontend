@@ -92,7 +92,7 @@ export function MainHeader({ headerClassNames }) {
               <div className='notLogin-user-modal'>
 
                 <div className='login-form' onClick={(event) => handleOpen(event, 'signup')}>
-                  <button>Sign Up</button>
+                  <button>Sign up</button>
                   {modalType === 'signup' && (
                     <LoginSignupModal loginOrSignup='signup' />
                   )}
@@ -100,7 +100,7 @@ export function MainHeader({ headerClassNames }) {
                 </div>
 
                 <div className='login-form' onClick={(event) => handleOpen(event, 'login')}>
-                  <button>Sign In</button>
+                  <button>Sign in</button>
                   {modalType === 'login' && (
                     <LoginSignupModal loginOrSignup='login' />
                   )}

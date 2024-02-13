@@ -93,7 +93,7 @@ export function StayFilter({ filterBy, onSetFilter }) {
         <div className="stay-filter-container">
             <div className="filter-btn" onClick={handleOpen}>
                 <FilterIcon />
-                <span> Filter </span>
+                <span> Filters </span>
             </div>
 
             <Modal
