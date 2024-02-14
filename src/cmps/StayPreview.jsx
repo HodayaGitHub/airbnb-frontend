@@ -45,10 +45,10 @@ export function StayPreview({ stay, onRemoveStay, params }) {
           </span>
           <span className='stay-star'>🟊 {averageRating.toFixed(1)}</span>
 
-          <span className='stay-distance'>  {stay.kmAway ? `${stay.kmAway} Kilometres away` : '25 Kilometres away'}</span>
+          <span className='stay-hostname'>  Hosted by {stay.host.fullname}</span>
 
 
-          <span className='stay-date'>
+          <span className='stay-beds'>
             {stay.beds || 2} bed{stay.beds !== 1 ? <span>s</span> : ''}{' '}
           </span>
 

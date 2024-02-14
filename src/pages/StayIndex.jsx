@@ -152,10 +152,10 @@ export function StayIndex() {
             ) : (
                 <>
                     <StayList params={params} stays={stays} onRemoveStay={onRemoveStay} />
+                    <ShowMoreStays onLoadMore={onLoadMore} />
                 </>
             )}
 
-            <ShowMoreStays onLoadMore={onLoadMore} />
 
 
         </>

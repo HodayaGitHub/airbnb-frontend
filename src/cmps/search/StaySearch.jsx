@@ -29,7 +29,7 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
         pets: 'Bringing a service animal?',
     }
 
-    
+
     useEffect(() => {
         function handleOutsideClick(event) {
             if (
@@ -229,8 +229,7 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
                     )}
 
                 </div>
-
-
+                
             </div>
 
             <>

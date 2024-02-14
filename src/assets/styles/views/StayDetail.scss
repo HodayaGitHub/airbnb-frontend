@@ -3,7 +3,6 @@
 
   .app-header {
     position: relative;
-    padding: 20px 0;
 
     &:after {
       content: "";
@@ -26,7 +25,6 @@
     justify-content: space-between;
     margin-block-end: 22px;
     position: relative;
-    padding: 20px 0;
 
 
     .stay-name-actions {
@@ -114,16 +112,20 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     column-gap: 60px;
+    border-bottom: 1px solid $lightGray-bg-clr1;
+    height: 100%;
+
 
     >* {
       grid-column: 1;
     }
 
-    .reservation {
+    .reservation-container {
       margin-left: auto;
       padding: 32px 0;
       grid-column: 2;
       grid-row: span 6;
+      background-color: gray;
 
       .reservation-modal {
         padding: 24px;
@@ -135,7 +137,7 @@
         width: 100%;
         flex-direction: column;
         gap: 15px;
-
+        text-align: center;
         box-shadow: #0000001f 0 6px 16px;
 
         .reserve-button {
@@ -157,26 +159,9 @@
             margin-bottom: 0.5rem;
           }
 
-          .no-charge {
-            color: gray;
-          }
+
 
         }
-
-        // .total-price {
-        //   padding-top: 1rem;
-        //   display: grid;
-        //   grid-template-columns: max-content 1fr 1fr;
-        //   align-items: end;
-        //   font-weight: 600;
-
-        //   .total-price {
-        //     grid-column: 3;
-        //     justify-self: end;
-        //   }
-
-        // }
-
 
         .total-price-container {
           padding-top: 1rem;
@@ -199,6 +184,7 @@
 
         .reservation-header {
           margin-bottom: 24px;
+          text-align: left;
 
           .price {
             p {
@@ -262,9 +248,14 @@
 
           .guest {
             padding: 26px 36px 10px 12px;
+            text-align: left;
           }
         }
 
+        .no-charge {
+          color: gray;
+          text-align: center;
+        }
 
       }
     }
@@ -362,12 +353,13 @@
 
     .stay-descripiton {
       padding: 32px 0;
+      text-align: justify;
       border-bottom: 1px solid $lightGray-bg-clr1;
     }
 
     .stay-amenities {
       padding: 32px 0;
-      border-bottom: 1px solid$lightGray-bg-clr1;
+
 
       p {
         margin: 0;
@@ -453,6 +445,7 @@
 
         .review-date {
           font-size: 0.875rem;
+          text-align: right;
         }
 
         .text {
@@ -503,7 +496,7 @@
       grid-template-columns: 1fr;
     }
 
-    .reservation {
+    .reservation-container {
       position: fixed;
       bottom: 0;
       z-index: 5;
@@ -517,12 +510,9 @@
         grid-auto-flow: column;
         padding: 10px 25px;
 
-        // justify-content: space-between;
-
         .reserve-button {
           width: 80%;
           justify-self: end;
-          // margin-right: 30px;
 
           .btn-container-with-style {}
         }

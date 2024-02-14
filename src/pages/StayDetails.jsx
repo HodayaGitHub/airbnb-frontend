@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as labelsSvg from '../services/labels.icons.service.jsx';
+import ShareModal from '../cmps/shareModal.jsx';
 
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
@@ -9,18 +9,11 @@ import { ReservationModal } from '../cmps/reservationModal.jsx';
 import { GoogleMap } from '../cmps/GoogleMap.jsx';
 import { addOrder, updateOrder } from '../store/actions/order.actions.js';
 import { useSelector } from 'react-redux';
-import { MainHeader } from '../cmps/MainHeader.jsx';
-import { AMENTITIES } from '../data/stay.details.amentities.js';
 import { orderService } from '../services/order.service.js';
-import { StayDescription } from '../cmps/stayDetails/StayDescription.jsx'
-import { StayReviews } from '../cmps/stayDetails/StayReviews.jsx'
+import { StayDescription } from '../cmps/stayDetails/StayDescription.jsx';
+import { StayReviews } from '../cmps/stayDetails/StayReviews.jsx';
+import { MainHeaderOnScroll } from '../cmps/MainHeaderOnScroll.jsx';
 
-import ShareModal from '../cmps/shareModal.jsx';
-import queryString from 'query-string';
-import Avatar from '@mui/material/Avatar';
-import key from '../assets/img/svgs/key.svg';
-import chat from '../assets/img/svgs/chat.svg';
-import locationImg from '../assets/img/svgs/location.svg';
 
 export function StayDetails() {
   // const [msg, setMsg] = useState(getEmptyMsg())
@@ -132,7 +125,8 @@ export function StayDetails() {
   if (!stay || !order) return <div className='loader'></div>
   return (
     <>
-      <MainHeader />
+      <MainHeaderOnScroll />
+
 
       <div className='stay-name'>
         {isEdit && (

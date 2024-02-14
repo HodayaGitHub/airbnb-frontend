@@ -81,10 +81,11 @@
     display: flex;
     position: relative;
     padding: 10px 20px;
-    border-radius: 16px;
+    border-radius: 35px;
     border: 1px solid $border-gray;
     transition: box-shadow 0.3s;
     cursor: pointer;
+
 
     .user-img {
       img {

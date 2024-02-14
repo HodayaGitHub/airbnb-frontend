@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { DateSelect } from './search/DateSelect';
 import { useNavigate } from 'react-router';
 import { stayService } from '../services/stay.service';
-import { orderService } from '../services/order.service';
 import { ButtonHover } from './buttonHover';
 import { LoginSignupModal } from './LoginSignupModal';
 import { useLocation } from 'react-router-dom';
@@ -12,7 +11,6 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
 
   const [modalOpen, setModalOpen] = useState(false);
   const [orderToEdit, setOrderToEdit] = useState(order);
-  const [isLoginOpen, setisLoginOpen] = useState(false)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -52,8 +50,7 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
   }
 
   return (
-
-    <section className='reservation'>
+    <section className='reservation-container'>
       <div className='reservation-modal'>
         <div className='reservation-header'>
           <div className='price'>
@@ -109,7 +106,7 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
               }
               {
                 <div className='guest'>
-                  {orderToEdit.totalGuests} Guest{orderToEdit.totalGuests !== 1 && <span>s</span>}
+                  {orderToEdit.totalGuests} guest{orderToEdit.totalGuests !== 1 && <span>s</span>}
                   {orderToEdit.guests.infants !== 0 && <> , {orderToEdit.guests.infants} infant{orderToEdit.guests.infants !== 1 && <span>s</span>}</>}
                 </div>
               }
@@ -127,7 +124,7 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
 
             <div className='total-price-container'>
               <div className='price-calc'>
-                {orderToEdit.totalNights} Night{orderToEdit.totalNights !== 1 && 's'} x ${price}
+                {orderToEdit.totalNights} night{orderToEdit.totalNights !== 1 && 's'} x ${price}
               </div>
               <div className='total-price'>Total ${orderToEdit.totalNights * price}</div>
             </div>

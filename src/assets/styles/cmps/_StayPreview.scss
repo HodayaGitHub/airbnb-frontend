@@ -56,14 +56,16 @@
       font-size: 1.05rem;
     }
 
-    .stay-distance {
+    .stay-hostname {
       grid-column: 1;
       grid-row: 2;
+      color: #717171;
     }
 
-    .stay-date {
+    .stay-beds {
       grid-column: 1;
       grid-row: 3;
+      color: #717171;
     }
 
     .stay-price {

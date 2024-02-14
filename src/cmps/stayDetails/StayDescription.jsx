@@ -1,13 +1,13 @@
 
 import * as labelsSvg from '../../services/labels.icons.service.jsx';
 import * as React from 'react';
-import { stayService } from '../../services/stay.service.js';
 
 import Avatar from '@mui/material/Avatar';
-import { useEffect, useState } from 'react';
 import key from '../../assets/img/svgs/key.svg';
 import chat from '../../assets/img/svgs/chat.svg';
 import locationImg from '../../assets/img/svgs/location.svg';
+
+import { stayService } from '../../services/stay.service.js';
 import { AMENTITIES } from '../../data/stay.details.amentities.js';
 
 export function StayDescription({ stay, hostAvatarUrl}) {
