@@ -11,8 +11,8 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
   const result = calculateHistogram(staysPrice, 50);
 
   useEffect(() => {
-    document.getElementById('minPrice').value = priceRange.min;
-    document.getElementById('maxPrice').value = priceRange.max;
+    document.getElementById('minPrice').value = priceRange.minPrice;
+    document.getElementById('maxPrice').value = priceRange.maxPrice;
 
   }, [priceRange]);
 
@@ -79,7 +79,7 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
             name="minPrice"
             type="number"
             id="minPrice"
-            value={priceRange.min}
+            value={priceRange.minPrice}
             onChange={(ev) => handleInputChange(ev.target)}
           />
         </div>
@@ -89,25 +89,25 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
             name="maxPrice"
             type="number"
             id="maxPrice"
-            value={priceRange.max}
+            value={priceRange.maxPrice}
             onChange={(ev) => handleInputChange(ev.target)}
           />
         </div>
       </div>
 
       <Slider
-        histogramData={result}
+        histogramData={[30, 100, 500, 600, 450, 350, 120, 100, 700, 1200]}
         defaultValue={[0, priceRange.max]}
         ariaLabel={["Minimum price", "Maximum price"]}
-        label="Price"
+        // label="Price"
         minValue={30}
         maxValue={3000}
         step={step}
-        valueDescription={priceRange.min !== undefined && priceRange.max !== undefined
-          ? `$${priceRange.min}–$${priceRange.max}`
-          : '$0–$600'}
+        // valueDescription={priceRange.minPrice !== undefined && priceRange.maxPrice !== undefined
+        //   ? `$${priceRange.minPrice}–$${priceRange.maxPrice}`
+        //   : '$0–$600'}
         onChange={(sliderValue) => {
-          if (typeof sliderValue === "object") setPriceRange({ min: sliderValue[0], max: sliderValue[1] });
+          if (typeof sliderValue === "object") setPriceRange({ minPrice: sliderValue[0], maxPrice: sliderValue[1] });
         }}
       />
     </>
