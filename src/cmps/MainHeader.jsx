@@ -100,7 +100,7 @@ export function MainHeader({ headerClassNames }) {
                 </div>
 
                 <div className='login-form' onClick={(event) => handleOpen(event, 'login')}>
-                  <button>Sign in</button>
+                  <button>Login</button>
                   {modalType === 'login' && (
                     <LoginSignupModal loginOrSignup='login' />
                   )}

@@ -8,7 +8,7 @@ export function SignInForm({ handleDemoLogIn, onSubmit, handleCredentialsChange,
 
   return (
     <div className='login-modal'>
-      <h2>Sign in</h2>
+      <h2>Login</h2>
       <form className='inputs' onSubmit={onSubmit}>
 
         <label htmlFor="username"><span className='star'>*</span>Username</label>
