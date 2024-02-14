@@ -12,7 +12,7 @@ export function StayReviews({ stay, avatarUrls }) {
 
         <section className='stay-reviews'>
             <h2>
-                🟊 {stayService.calculateAverageRating(stay).toFixed(1)} • {stay.reviews.length}
+                🟊 {stayService.calculateAverageRating(stay).toFixed(1)} • {stay.reviews.length} {' '} 
                 review
                 {stay.reviews.length !== 1 && <span>s</span>}
             </h2>

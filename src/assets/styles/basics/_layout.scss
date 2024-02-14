@@ -26,7 +26,6 @@
 
 .stay-detail-layout {
   display: grid;
-  // grid-template-columns: 392px 1fr 392px;
   grid-template-columns: minmax(80px, 1fr) minmax(auto, 1100px) minmax(80px, 1fr);
 
   >* {
@@ -41,8 +40,7 @@
 .confirm-layout {
   display: grid;
   // grid-template-columns: 20px 1fr 20px;
-  grid-template-columns: minmax(362px, 1fr) minmax(auto, 1920px) minmax(362px,
-      1fr);
+  grid-template-columns: minmax(100px, 1fr) minmax(auto, 1920px) minmax(100px, 1fr);
   grid-template-rows: auto, 1fr, auto;
   min-height: 100dvh;
 
@@ -59,30 +57,14 @@
       grid-column: 1 / -1;
     }
   }
-}
 
-.confirm-layout {
-  display: grid;
-  // grid-template-columns: 20px 1fr 20px;
-  grid-template-columns: minmax(362px, 1fr) minmax(auto, 1920px) minmax(362px,
-      1fr);
-  grid-template-rows: auto, 1fr, auto;
-  min-height: 100dvh;
-
-  >* {
-    grid-column: 2;
-
-    &.full {
-      grid-column: 1 /-1;
-    }
+  @include for-mid-layout {
+    grid-template-columns: minmax(80px, 1fr) minmax(auto, 1920px) minmax(80px, 1fr);
   }
 
-  * {
-    &.full {
-      grid-column: 1 / -1;
-    }
-  }
+
 }
+
 
 .dashboard-layout {
   display: grid;
@@ -134,28 +116,3 @@
         1fr);
   }
 }
-
-// @include for-narrow-layout {
-//     grid-template-columns:
-//     minmax(20px, 1fr)
-//     minmax(auto, $mobile-breakpoint)
-//     minmax(20px, 1fr);
-// }
-
-// @include for-normal-layout {
-//     grid-template-columns:
-//         minmax(20px, 1fr)
-//         minmax(auto, $narrow-breakpoint)
-//         minmax(20px, 1fr);
-//     // display: grid;
-//     // grid-template-columns: 1.6rem 1fr $narrow-breakpoint 1.6rem;
-// }
-
-//   @include for-wide-layout {
-//     grid-template-columns:
-//       minmax(20px, 1fr)
-//       minmax(auto, $normal-breakpoint)
-//       minmax(20px, 1fr);
-//     // display: grid;
-//     // grid-template-columns: 1.6rem 1fr $normal-breakpoint 1.6rem;
-//   }
