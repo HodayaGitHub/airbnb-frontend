@@ -22,6 +22,8 @@ export const stayService = {
     formatDateFromUnix,
     fetchAvatar,
     calculateAverageRating,
+    getStaysPrices,
+    loadStaysPrices,
     // loadStay,
 }
 
@@ -36,6 +38,11 @@ const BASE_URL = 'stay'
 
 function query(filterBy = {}, page = 1) {
     return httpService.get(BASE_URL, { filterBy, page })
+}
+
+function getStaysPrices(){
+    return httpService.get(`stay/prices`)
+
 }
 
 function getById(stayId) {
@@ -223,3 +230,14 @@ function calculateAverageRating(stay) {
     const totalRating = stay.reviews.reduce((acc, review) => acc + review.rate, 0)
     return totalRating / stay.reviews.length
 }
+
+async function loadStaysPrices() {
+    try {
+      const staysPrice = await stayService.getStaysPrices()
+      console.log(staysPrice)
+    } catch (err) {
+      console.log('Cannot load prices', err)
+      throw err
+
+    }
+  }

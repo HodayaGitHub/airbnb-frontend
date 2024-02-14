@@ -73,17 +73,98 @@
     display: flex;
     flex-direction: column;
     width: 40dvw;
+    // height: 96dvh;
 
-    .place-type-btn {
-        color: black;
-        margin: 15px;
+
+}
+
+
+.filter-options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    
+
+    .headline-container {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        border-bottom: $border-filter-modal;
+        padding-bottom: 10px;
+
+        .close-btn {
+            color: black;
+            font-size: 1rem;
+            cursor: pointer;
+            text-align: center;
+            width: 30px;
+            height: 30px;
+            padding:3px;
+
+            &:hover {
+                border-radius: 50%;
+                background-color: rgba(0, 0, 0, 0.125);
+            }
+        }
+
+        .filter-title {
+            text-align: center;
+            flex-grow: 2;
+            font-size: 1.3rem;
+        }
     }
 
-    button {
-        background-color: none;
-        color: black;
-    }
 
+    .type-of-place-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        border-bottom: $border-filter-modal;
+        cursor: pointer;
+
+
+        .place-type-btns-container {
+            display: flex;
+            gap: 0;
+            justify-content: center;
+            width: 95%;
+            align-self: center;
+            margin-bottom: 20px;
+
+            .place-type-btn {
+                width: 100%;
+                height: 100%;
+
+                background: #ffff;
+                color: black;
+                text-align: center;
+                padding: 20px 30px;
+                font-weight: 700;
+                border: $border-filter-modal;
+
+                &:first-child {
+                    border-top-left-radius: 12px;
+                    border-bottom-left-radius: 12px;
+                }
+
+                &:nth-child(2) {
+                    border-right: none;
+                    border-left: none;
+                }
+
+                &:last-child {
+                    border-top-right-radius: 12px;
+                    border-bottom-right-radius: 12px;
+                }
+
+                &.selected {
+                    box-shadow: #000000 3px 3px 6px 0px inset, rgb(255 255 255 / 45%) -3px -3px 6px 1px inset;
+                    background: linear-gradient(79deg, #000000, #333333);
+                    color: #ffff;
+                }
+            }
+        }
+    }
 
     .place-range-container {
         display: flex;
@@ -92,16 +173,6 @@
     }
 
 
-    .btn-container {
-        display: flex;
-        gap: 15px;
-
-        button {
-            background-color: #ffff;
-            border-radius: 12px;
-            color: black;
-        }
-    }
 
 
     .rooms-beds-container {
@@ -137,13 +208,11 @@
     }
 
     .top-tier {
-
         border: 1px solid;
         width: 300px;
         padding: 20px;
 
         .top-tier-details {
-
             &.active {
                 background-color: gray;
             }
@@ -160,4 +229,5 @@
         }
 
     }
+
 }

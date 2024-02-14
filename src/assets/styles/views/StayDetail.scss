@@ -1,5 +1,4 @@
 .stay-detail-layout {
-  overflow: hidden;
 
   .app-header {
     position: relative;
@@ -125,7 +124,6 @@
       margin-left: auto;
       grid-column: 2;
       grid-row: span 6;
-      // background-color: gray;
 
       .reservation-modal {
         padding: 24px;
