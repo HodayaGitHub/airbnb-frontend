@@ -3,17 +3,17 @@ import { stayService } from '../../services/stay.service';
 import Slider from "@kiwicom/orbit-components/lib/Slider";
 
 export function PriceRange({ filterBy, stays, handlePriceChange }) {
-  // const staysPricesss = stays.map((stay) => stay.price);
-  const [priceRange, setPriceRange] = useState({ ...filterBy.price });
+  const initialPriceRange = { ...filterBy.price };
+  const [priceRange, setPriceRange] = useState(initialPriceRange);
   const [staysPrice, setStaysPrice] = useState([]);
-
+  const availableStays = [5, 29, 28, 7, 13, 7, 16, 12, 8, 39, 13, 7, 20, 38, 15, 18, 28, 14, 23, 24, 10];
   const step = 50;
-  const result = calculateHistogram(staysPrice, 50);
+  const [selectedStays, totalStays] = calculateCountOf(availableStays, [priceRange.minPrice / step, priceRange.maxPrice / step], 0);
+
 
   useEffect(() => {
     document.getElementById('minPrice').value = priceRange.minPrice;
     document.getElementById('maxPrice').value = priceRange.maxPrice;
-
   }, [priceRange]);
 
   useEffect(() => {
@@ -27,7 +27,6 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
     };
 
     fetchStaysPrices();
-    console.log(result)
   }, []);
 
   function handleInputChange(target) {
@@ -37,42 +36,20 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
     handlePriceChange(field, value);
   }
 
-
-  function calculateHistogram(data, jumpSize) {
-    const histogramData = {};
-
-    data.forEach((value) => {
-      const rangeStart = Math.floor(value / jumpSize) * jumpSize;
-      const rangeEnd = rangeStart + jumpSize;
-
-      const rangeKey = `${rangeStart}-${rangeEnd}`;
-
-      if (histogramData[rangeKey] === undefined) {
-        histogramData[rangeKey] = 1;
-      } else {
-        histogramData[rangeKey]++;
-      }
-    });
-
-    const histogramArray = Object.entries(histogramData).map(([range, count]) => ({
-      range: range,
-      count: count,
-    }));
-
-    histogramArray.sort((a, b) => {
-      const rangeA = a.range.split('-')[0];
-      const rangeB = b.range.split('-')[0];
-      return parseInt(rangeA) - parseInt(rangeB);
-    });
-
-    return histogramArray;
+  function handleSliderChange(newValues) {
+    const [minPrice, maxPrice] = newValues;
+    setPriceRange({ minPrice, maxPrice });
+    document.getElementById('minPrice').value = minPrice;
+    document.getElementById('maxPrice').value = maxPrice;
+    handlePriceChange('minPrice', minPrice);
+    handlePriceChange('maxPrice', maxPrice);
   }
 
 
-
   return (
-    <>
-      <div>
+    <div className="place-range-container">
+      <h3> Price range</h3>
+      <div className='min-max-price-container'>
         <div>
           <label htmlFor="minPrice">Min Price:</label>
           <input
@@ -96,20 +73,24 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
       </div>
 
       <Slider
-        histogramData={[30, 100, 500, 600, 450, 350, 120, 100, 700, 1200]}
-        defaultValue={[0, priceRange.max]}
-        ariaLabel={["Minimum price", "Maximum price"]}
-        // label="Price"
-        minValue={30}
-        maxValue={3000}
-        step={step}
-        // valueDescription={priceRange.minPrice !== undefined && priceRange.maxPrice !== undefined
-        //   ? `$${priceRange.minPrice}–$${priceRange.maxPrice}`
-        //   : '$0–$600'}
-        onChange={(sliderValue) => {
-          if (typeof sliderValue === "object") setPriceRange({ minPrice: sliderValue[0], maxPrice: sliderValue[1] });
-        }}
+        // label={`Price Range (${selectedStays} of ${totalStays} stays)`}
+        // label={`$${priceRange.minPrice}–$${priceRange.maxPrice}`}
+        defaultValue={[priceRange.minPrice, priceRange.maxPrice]}
+        minValue={0}
+        maxValue={3500}
+        step={50}
+        onChange={handleSliderChange}
+        style={{ dispaly: 'flex', width: '80%', maxWidth: '100%', margin: '0 auto' }}
+        className="custom-slider"
+        histogramData={availableStays}
+      // ariaLabel={["Minimum price", "Maximum price"]}
+      // valueDescription={`$${priceRange.minPrice}–$${priceRange.maxPrice}`}
       />
-    </>
+    </div>
   );
-};
+}
+
+function calculateCountOf(data, range, step) {
+  // Implement your logic to calculate the count of selected data points here
+  return [0, 0];
+}

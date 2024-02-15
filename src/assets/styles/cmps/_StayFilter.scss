@@ -30,8 +30,12 @@
         }
 
     }
-}
 
+    .custom-slider {
+        background-color: pink;
+        border: 3px solid;
+    }
+}
 
 
 
@@ -40,22 +44,55 @@
     background-color: pink;
 }
 
-// .Slider__StyledSlider-sc-a8zzil-0.YZQqD {
+.Slider__StyledSlider-sc-a8zzil-0.YZQqD {
 
-//     .Slider__StyledSliderContent-sc-a8zzil-1 {
-//         &.cTuNki {
-//           @media screen and (min-width: 500px) {
-//             background: rgb(201, 215, 219) !important; 
-//             visibility: visible !important;// Background color for smaller screens
-//             opacity: 1 !important;
-//             margin-top: 50px;
-//             padding: 0;
-//           }
-//         }
-//       }
+    .Slider__StyledSliderContent-sc-a8zzil-1 {
+        &.cTuNki {
+            @media screen and (min-width: 500px) {
+                visibility: visible !important; // Background color for smaller screens
+                opacity: 1 !important;
+                margin-top: 50px;
+                padding: 0;
+                width: 100%;
+                left: 0;
 
-// }
+                .Histogram__StyledHistogram-sc-1r9ktah-0.dcfpZM {
+                    height: 100px;
+                    margin-top: 30px;
 
+                    .Histogram__StyledHistogramColumn-sc-1r9ktah-2.bZSmKE {
+                        background: linear-gradient(79deg, #000000, #333333);
+                    }
+                }
+
+            }
+
+
+        }
+    }
+
+}
+
+.Slider__StyledSliderInput-sc-a8zzil-2.dneluM {
+    max-width: 100%;
+    position: relative;
+    top: 50px;
+
+
+    .Handle__StyledHandle-sc-4dmloy-0.hgdUaB {
+        left: calc(100% - 12px);
+    }
+
+    .Bar__StyledBar-sc-1dsvlo8-0.jTolbU {
+        max-width: 100%;
+
+        .Bar__StyledBarPart-sc-1dsvlo8-1.cIuUtK {
+            max-width: 100% !important;
+            background: linear-gradient(79deg, #000000, #333333);
+
+        }
+    }
+}
 
 // .Slider__StyledSlider-sc-a8zzil-0.esIdlO {
 //     .Slider__StyledSliderContent-sc-a8zzil-1 {
@@ -83,7 +120,6 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    
 
     .headline-container {
         display: flex;
@@ -99,7 +135,7 @@
             text-align: center;
             width: 30px;
             height: 30px;
-            padding:3px;
+            padding: 3px;
 
             &:hover {
                 border-radius: 50%;
@@ -170,6 +206,12 @@
         display: flex;
         gap: 20px;
         flex-direction: column;
+        border: 3px solid;
+        padding-bottom: 70px;
+
+        .min-max-price-container {
+            margin-bottom: 100px;
+        }
     }
 
 

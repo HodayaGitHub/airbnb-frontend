@@ -140,10 +140,7 @@ export function StayFilter({ filterBy, onSetFilter }) {
                             </div>
                         </div>
 
-                        <div className="place-range-container">
-                            <h3> Price range</h3>
-                            <PriceRange handlePriceChange={handlePriceChange} filterBy={filterBy} stays={stays} />
-                        </div>
+                        <PriceRange handlePriceChange={handlePriceChange} filterBy={filterBy} stays={stays} />
 
                         <section className="rooms-beds-container">
                             <span><h3>Rooms and beds</h3></span>

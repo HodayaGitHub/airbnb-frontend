@@ -78,7 +78,7 @@ function getDefaultSearchFilter() {
         region: '',
         label: '',
         roomType: '',
-        price: { minPrice: -Infinity, maxPrice: Infinity },
+        price: { minPrice: 0, maxPrice: 3500 },
         bedrooms: null,
         beds: null,
         bathrooms: null,
