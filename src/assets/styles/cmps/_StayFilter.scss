@@ -59,37 +59,37 @@
         border-radius: 10px;
     }
 
-    .Slider__StyledSlider-sc-a8zzil-0.YZQqD {
+    [class^="Slider__StyledSlider-sc"] {
         margin-top: 50px;
 
-        .Slider__StyledSliderContent-sc-a8zzil-1 {
-            &.cTuNki {
-                @media screen and (min-width: 500px) {
-                    visibility: visible !important; // Background color for smaller screens
-                    opacity: 1 !important;
-                    margin-top: 50px;
-                    padding: 0;
-                    width: 100%;
-                    left: 0;
+        [class^="Slider__StyledSliderContent"] {
 
-                    .Histogram__StyledHistogram-sc-1r9ktah-0.dcfpZM {
-                        height: 100px;
-                        margin-top: 30px;
+            @media screen and (min-width: 500px) {
+                visibility: visible !important; // Background color for smaller screens
+                opacity: 1 !important;
+                margin-top: 50px;
+                padding: 0;
+                width: 100%;
+                left: 0;
 
-                        .Histogram__StyledHistogramColumn-sc-1r9ktah-2 {
+                [class^="Histogram__StyledHistogram"] {
+                    height: 100px;
+                    margin-top: 30px;
 
-                            &.bZSmKE {
-                                background: linear-gradient(79deg, #000000, #333333);
-                            }
+                    [class^="Histogram__StyledHistogramColumn-sc"] {
 
-                            &.iuFRtD {
-                                background-color: rgb(152 162 170 / 45%);
-                            }
+                        &.bZSmKE {
+                            background: linear-gradient(79deg, #000000, #333333);
+                        }
+
+                        &.iuFRtD {
+                            background-color: rgb(152 162 170 / 45%);
                         }
                     }
-
                 }
+
             }
+
 
             &.gNQdLy {
                 @media screen and (min-width: 500px) {
@@ -105,12 +105,13 @@
     }
 }
 
-.Slider__StyledSliderInput-sc-a8zzil-2.dneluM {
+
+[class^="Slider__StyledSliderInput"] {
     max-width: 100%;
     position: relative;
     top: 50px;
 
-    .Handle__StyledHandle-sc-4dmloy-0.hgdUaB {
+    [class^="Handle__StyledHandle"] {
         left: calc(100% - 12px);
 
         &::after {
@@ -118,10 +119,10 @@
         }
     }
 
-    .Bar__StyledBar-sc-1dsvlo8-0.jTolbU {
+    [class^="Bar__StyledBar"] {
         max-width: 100%;
 
-        .Bar__StyledBarPart-sc-1dsvlo8-1.cIuUtK {
+        [class^="Bar__StyledBarPart"] {
             max-width: 100% !important;
             background: linear-gradient(79deg, #000000, #333333);
 

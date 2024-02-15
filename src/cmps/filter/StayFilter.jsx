@@ -149,8 +149,8 @@ export function StayFilter({ filterBy, onSetFilter }) {
                             />
 
                             <RoomsBeds
-                                category={BATHROOMS}
-                                selectedRoomFilters={selectedRoomFilters[BATHROOMS]}
+                                category={BEDROOMS}
+                                selectedRoomFilters={selectedRoomFilters[BEDROOMS]}
                                 handleRoomFilterClick={handleRoomFilterClick}
                             />
                         </div>
