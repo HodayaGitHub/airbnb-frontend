@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { stayService } from '../../services/stay.service';
 import Slider from "@kiwicom/orbit-components/lib/Slider";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
 export function PriceRange({ filterBy, stays, handlePriceChange }) {
   const initialPriceRange = { ...filterBy.price };
   const [priceRange, setPriceRange] = useState(initialPriceRange);
   const [staysPrice, setStaysPrice] = useState([]);
-  const availableStays = [5, 29, 28, 7, 13, 7, 16, 12, 8, 39, 13, 7, 20, 38, 15, 18, 28, 14, 23, 24, 10];
-  const step = 50;
-  const [selectedStays, totalStays] = calculateCountOf(availableStays, [priceRange.minPrice / step, priceRange.maxPrice / step], 0);
+  const availableStays = [5, 29, 28, 7, 13, 7, 16, 12, 8, 39, 13, 7, 20, 38, 15, 18, 28, 14, 23, 24, 10, 24, 50, 20];
+  const step = 150;
+  const numberOfSteps = Math.round((3500 - 0) / step);
 
+  const [selectedStays, totalStays] = calculateCountOf(availableStays, [priceRange.minPrice / step, priceRange.maxPrice / step], 0);
 
   useEffect(() => {
     document.getElementById('minPrice').value = priceRange.minPrice;
@@ -31,7 +34,12 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
 
   function handleInputChange(target) {
     const field = target.name;
-    const value = +target.value;
+    let value = +target.value;
+
+    if (value < 0) {
+      value = 0;
+    }
+
     setPriceRange((prevRange) => ({ ...prevRange, [field]: value }));
     handlePriceChange(field, value);
   }
@@ -47,46 +55,62 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
 
 
   return (
-    <div className="place-range-container">
-      <h3> Price range</h3>
-      <div className='min-max-price-container'>
-        <div>
-          <label htmlFor="minPrice">Min Price:</label>
-          <input
-            name="minPrice"
-            type="number"
-            id="minPrice"
-            value={priceRange.minPrice}
-            onChange={(ev) => handleInputChange(ev.target)}
-          />
-        </div>
-        <div>
-          <label htmlFor="maxPrice">Max Price:</label>
-          <input
-            name="maxPrice"
-            type="number"
-            id="maxPrice"
-            value={priceRange.maxPrice}
-            onChange={(ev) => handleInputChange(ev.target)}
-          />
-        </div>
-      </div>
+    <div className='place-range-container'>
+      <h4 className='price-range-title'> Price range</h4>
+
 
       <Slider
         // label={`Price Range (${selectedStays} of ${totalStays} stays)`}
-        // label={`$${priceRange.minPrice}–$${priceRange.maxPrice}`}
+        histogramData={availableStays}
         defaultValue={[priceRange.minPrice, priceRange.maxPrice]}
         minValue={0}
-        maxValue={3500}
-        step={50}
+        maxValue={3500 - (3500 % step)}
+        step={150}
         onChange={handleSliderChange}
         style={{ dispaly: 'flex', width: '80%', maxWidth: '100%', margin: '0 auto' }}
         className="custom-slider"
-        histogramData={availableStays}
       // ariaLabel={["Minimum price", "Maximum price"]}
       // valueDescription={`$${priceRange.minPrice}–$${priceRange.maxPrice}`}
       />
-    </div>
+
+      <div className='min-max-price-container'>
+        <Box
+          component="form"
+          sx={{
+            "& .MuiTextField-root": { m: 1, width: "100%" }, width: '100%', display: 'flex', justifyContent: "space-around"
+          }}
+          noValidate
+          autoComplete="off"
+        >
+
+          <TextField
+            id="minPrice"
+            name="minPrice"
+            label="Minimum"
+            type="number"
+            value={priceRange.minPrice}
+            onChange={(ev) => handleInputChange(ev.target)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+
+          <TextField
+            name="maxPrice"
+            id="maxPrice"
+            label="Maximum"
+            type="number"
+            value={priceRange.maxPrice}
+            onChange={(ev) => handleInputChange(ev.target)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+
+        </Box>
+      </div>
+
+    </div >
   );
 }
 
