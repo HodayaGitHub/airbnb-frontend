@@ -1,54 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { stayService } from '../../services/stay.service';
+import Slider from "@kiwicom/orbit-components/lib/Slider";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import getTokens from "@kiwicom/orbit-components/lib/getTokens";
+import OrbitProvider from "@kiwicom/orbit-components/lib/OrbitProvider";
+import { defaultTheme } from "@kiwicom/orbit-design-tokens";
+import styled, { ThemeProvider } from 'styled-components';
 
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
 
-
-
-
-export function PriceRange({ filterBy, stays, handlePriceChange }) {
+export function PriceRange2({ filterBy, stays, handlePriceChange }) {
   const initialPriceRange = { ...filterBy.price };
   const [priceRange, setPriceRange] = useState(initialPriceRange);
   const [staysPrice, setStaysPrice] = useState([]);
-  const [currentSliderValues, setCurrentSliderValues] = useState([priceRange.minPrice, priceRange.maxPrice]);
-  const [histogramData, setHistogramData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const availableStays = [5, 29, 28, 7, 13, 7, 16, 12, 8, 39, 13, 7, 20, 38, 15, 18, 28, 14, 23, 24, 10, 24, 50, 20];
+  const step = 150;
+  const numberOfSteps = Math.round((3500 - 0) / step);
 
-  const step = 100;
+  const [selectedStays, totalStays] = calculateCountOf(availableStays, [priceRange.minPrice / step, priceRange.maxPrice / step], 0);
 
+  useEffect(() => {
+    document.getElementById('minPrice').value = priceRange.minPrice;
+    document.getElementById('maxPrice').value = priceRange.maxPrice;
+  }, [priceRange]);
 
   useEffect(() => {
     const fetchStaysPrices = async () => {
       try {
         const prices = await stayService.getStaysPrices();
         setStaysPrice(prices);
-        setLoading(false); 
-        console.log('Stays data:', staysPrice);
       } catch (error) {
-        setLoading(false); 
         console.error('Error fetching stays prices:', error);
       }
     };
 
     fetchStaysPrices();
   }, []);
-
-  useEffect(() => {
-    if (!loading) {
-      console.log('Stays data:', staysPrice);
-      const updatedHistogram = stayService.countItemsInRanges(staysPrice, step);
-      setHistogramData(updatedHistogram);
-      console.log('updatedHistogram', updatedHistogram);
-    }
-  }, [priceRange, stays, staysPrice, loading]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
 
   function handleInputChange(target) {
     const field = target.name;
@@ -63,49 +50,56 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
   }
 
   function handleSliderChange(newValues) {
-    setCurrentSliderValues(newValues);
-    setPriceRange({ minPrice: newValues[0], maxPrice: newValues[1] });
-    handlePriceChange('minPrice', newValues[0]);
-    handlePriceChange('maxPrice', newValues[1]);
+    const [minPrice, maxPrice] = newValues;
+    setPriceRange({ minPrice, maxPrice });
+    document.getElementById('minPrice').value = minPrice;
+    document.getElementById('maxPrice').value = maxPrice;
+    handlePriceChange('minPrice', minPrice);
+    handlePriceChange('maxPrice', maxPrice);
   }
+
+
+
+
+  const customTokens = getTokens({
+    palette: {
+      product: {
+        light: "green",
+        lightHover: "green",
+        lightActive: "green",
+        normal: "green",
+        normalHover: "green",
+        normalActive: "green",
+        dark: "green",
+        darker: "green",
+        darkHover: "green",
+        darkActive: "green",
+        backgroundColor: 'green'
+      },
+    },
+  })
 
 
   return (
     <div className='place-range-container'>
       <h4 className='price-range-title'> Price range</h4>
 
-      <div className='histogram-container'>
-        {histogramData.map((value, index) => {
-          const adjustedHeight = value.count + (value.count * 0.7);
-          const isGrayedOut = value.price < currentSliderValues[0] || value.price > currentSliderValues[1];
-
-          return (
-            <div
-              key={index}
-              className={`histogram-bar ${isGrayedOut ? 'grayed-out' : ''}`}
-              style={{ height: `${adjustedHeight}%` }}>
-            </div>
-          );
-        })}
-      </div>
-
-
       <Slider
-        range
-        min={0}
-        max={2500}
-        step={step}
+        useId={React.useId}
+        theme={{
+          rtl: true,
+          transitions: true,
+          lockScrolling: true,
+          lockScrollingBarGap: true,
+          orbit: customTokens
+        }}
+        histogramData={availableStays}
         defaultValue={[priceRange.minPrice, priceRange.maxPrice]}
+        minValue={0}
+        maxValue={3500 - (3500 % step)}
+        step={150}
         onChange={handleSliderChange}
-        trackStyle={[{ background: 'linear-gradient(79deg, #000000, #333333)' }]}
-        handleStyle={[
-          { borderColor: 'black' },
-          { borderColor: 'black' },
-        ]}
-        dotStyle={{ boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.1)' }}
-
       />
-
 
       <div className='min-max-price-container'>
         <Box
@@ -151,4 +145,3 @@ function calculateCountOf(data, range, step) {
   // Implement your logic to calculate the count of selected data points here
   return [0, 0];
 }
-

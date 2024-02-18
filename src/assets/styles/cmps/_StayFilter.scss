@@ -59,6 +59,32 @@
         border-radius: 10px;
     }
 
+    .histogram-container {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+        height: 100px;
+
+        .histogram-bar {
+            background: linear-gradient(79deg, #0c0b0ba1, #030202);
+            width: 90%;
+            border-radius: 3px;
+            margin-left: 2px;
+            margin-top: auto;
+            max-height: 100%;
+            transition: height 0.3s ease;
+
+            &.grayed-out {
+                background: linear-gradient(79deg, #afaeae99, #7b7b7ba3);
+            }
+
+        }
+    }
+
+    .rc-slider-handle-dragging {
+        box-shadow: 0 0 0 5px #817b7b; 
+      }
+
     [class^="Slider__StyledSlider-sc"] {
         margin-top: 50px;
 
@@ -77,14 +103,15 @@
                     margin-top: 30px;
 
                     [class^="Histogram__StyledHistogramColumn-sc"] {
+                        // background: linear-gradient(79deg, #000000, #333333);
 
-                        &.bZSmKE {
-                            background: linear-gradient(79deg, #000000, #333333);
-                        }
+                        // &.bZSmKE {
+                        //     background: linear-gradient(79deg, #000000, #333333);
+                        // }
 
-                        &.iuFRtD {
-                            background-color: rgb(152 162 170 / 45%);
-                        }
+                        // &.iuFRtD {
+                        //     background-color: rgb(152 162 170 / 45%);
+                        // }
                     }
                 }
 
@@ -103,43 +130,32 @@
         }
 
     }
-}
 
-
-[class^="Slider__StyledSliderInput"] {
-    max-width: 100%;
-    position: relative;
-    top: 50px;
-
-    [class^="Handle__StyledHandle"] {
-        left: calc(100% - 12px);
-
-        &::after {
-            background-color: #000000;
-        }
-    }
-
-    [class^="Bar__StyledBar"] {
+    [class^="Slider__StyledSliderInput"] {
         max-width: 100%;
+        position: relative;
+        top: 50px;
 
-        [class^="Bar__StyledBarPart"] {
-            max-width: 100% !important;
-            background: linear-gradient(79deg, #000000, #333333);
+        [class^="Handle__StyledHandle"] {
+            left: calc(100% - 12px);
 
+            &::after {
+                background-color: #000000;
+            }
+        }
+
+        [class^="Bar__StyledBar"] {
+            max-width: 100%;
+
+            [class^="Bar__StyledBarPart"] {
+                max-width: 100% !important;
+                background: linear-gradient(79deg, #000000, #333333);
+
+            }
         }
     }
 }
 
-// .Slider__StyledSlider-sc-a8zzil-0.esIdlO {
-//     .Slider__StyledSliderContent-sc-a8zzil-1 {
-//         &.isFsaz {
-//             padding: 40px;
-//             visibility: visible !important;
-//             opacity: 1 !important;
-//             background-color: rgb(224, 204, 204) !important;
-//         }
-//     }
-// }
 
 .MuiBox-root.css-qqowxp {
     gap: 20px;
@@ -252,9 +268,7 @@
         }
 
         .price-range-title {
-            margin-bottom: 10px;
-            // font-size: 1rem;
-            // font-weight: 600;
+    
         }
     }
 

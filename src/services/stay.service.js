@@ -24,6 +24,7 @@ export const stayService = {
     calculateAverageRating,
     getStaysPrices,
     loadStaysPrices,
+    countItemsInRanges,
     // loadStay,
 }
 
@@ -78,7 +79,7 @@ function getDefaultSearchFilter() {
         region: '',
         label: '',
         roomType: '',
-        price: { minPrice: 0, maxPrice: 3500 },
+        price: { minPrice: 0, maxPrice: 2500 },
         bedrooms: null,
         beds: null,
         bathrooms: null,
@@ -240,4 +241,25 @@ async function loadStaysPrices() {
       throw err
 
     }
+  }
+
+  function countItemsInRanges(prices, step) {
+    const ranges = Array.from({ length: Math.ceil(Math.max(...prices) / step) }, (_, index) => (index + 1) * step);
+    const counts = new Array(ranges.length).fill(0);
+
+    prices.forEach(price => {
+      const index = Math.floor(price / step);
+      counts[index]++;
+    });
+
+    const filteredCounts = counts.filter(count => count > 0);
+
+    const histogram = filteredCounts.map((count, index) => ({
+      price: ranges[index],
+      count
+    }));
+
+    const sortedHistogram = histogram.sort((a, b) => a.price - b.price);
+
+    return sortedHistogram;
   }

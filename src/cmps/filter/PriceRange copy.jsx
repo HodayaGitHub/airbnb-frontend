@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { stayService } from '../../services/stay.service';
 import Slider from "@kiwicom/orbit-components/lib/Slider";
 
-export function PriceRange({ filterBy, stays, handlePriceChange }) {
+export function PriceRange1({ filterBy, stays, handlePriceChange }) {
   // const staysPricesss = stays.map((stay) => stay.price);
   const [priceRange, setPriceRange] = useState({ ...filterBy.price });
   const [staysPrice, setStaysPrice] = useState([]);
