@@ -17,7 +17,7 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
   const [histogramData, setHistogramData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const step = 100;
+  const step = 70;
 
 
   useEffect(() => {
