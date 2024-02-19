@@ -72,6 +72,14 @@
             justify-content: center;
           }
         }
+
+        @include for-mid-layout {
+          visibility: hidden;
+        }
+      }
+
+      @include for-mid-layout {
+        visibility: hidden;
       }
     }
   }

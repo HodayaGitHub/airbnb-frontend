@@ -53,10 +53,16 @@
 
         .react-multiple-carousel__arrow--right {
             right: calc(0% + 1px);
+
+            @include for-mobile-layout {
+                right: calc(16% + 1px);
+            }
         }
 
         .react-multiple-carousel__arrow--left {
             left: calc(0% + 1px);
+
+
         }
 
         // .react-multi-carousel-track {
@@ -161,6 +167,11 @@
         //     /* Ensure it's behind the carousel items */
         // }
 
+    }
+
+
+    @include for-mobile-layout {
+        display: block;
     }
 }
 

@@ -12,6 +12,11 @@
     grid-column: 1 /-1;
   }
 
+  @include for-mobile-layout {
+    grid-template-columns: minmax(50px, 1fr) minmax(auto, 1920px) minmax(50px, 1fr);
+
+  }
+
 }
 
 .header-wrapper {

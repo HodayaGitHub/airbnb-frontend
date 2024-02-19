@@ -41,18 +41,18 @@ export function LabelsFilter({ filterBy, onSetFilter }) {
         },
         tablet: {
             breakpoint: { max: 992, min: 768 },
-            items: 8,
+            items: 7,
             slidesToSlide: 2
         },
         mobileLarge: {
             breakpoint: { max: 768, min: 480 },
-            items: 5,
+            items: 4,
             slidesToSlide: 2
         },
         mobile: {
             breakpoint: { max: 480, min: 0 },
-            items: 3,
-            slidesToSlide: 1
+            items: 4,
+            slidesToSlide: 3
         }
     }
 

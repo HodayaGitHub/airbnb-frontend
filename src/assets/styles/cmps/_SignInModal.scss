@@ -1,5 +1,9 @@
 .MuiBox-root {
-  &.css-1febnpa {
+  &.css-x6ypki {
+
+    @include for-mobile-layout {
+      max-width: 90dvw;
+    }
   }
 
 }

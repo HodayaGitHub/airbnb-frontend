@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { orderService } from '../services/order.service.js';
 import { StayDescription } from '../cmps/stayDetails/StayDescription.jsx';
 import { StayReviews } from '../cmps/stayDetails/StayReviews.jsx';
-import { MainHeaderOnScroll } from '../cmps/MainHeaderOnScroll.jsx';
+import { MainHeader } from '../cmps/MainHeader.jsx';
 
 
 export function StayDetails() {
@@ -125,7 +125,7 @@ export function StayDetails() {
   if (!stay || !order) return <div className='loader'></div>
   return (
     <>
-      <MainHeaderOnScroll />
+      <MainHeader />
 
 
       <div className='stay-name'>

@@ -195,11 +195,16 @@
                 }
             }
         }
+
+    }
+
+    @include for-mid-layout {
+        display: none;
     }
 }
 
-@media screen and (max-width: 992px) {
-    .stay-search {
-        width: 400px;
-    }
-}
+// @media screen and (max-width: 992px) {
+//     .stay-search {
+//         width: 400px;
+//     }
+// }

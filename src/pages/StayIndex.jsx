@@ -121,7 +121,7 @@ export function StayIndex() {
 
     return (
         <>
-            <div className={`header-wrapper full main-layout  ${headerClassNames}`}>
+            <div className={`header-wrapper full main-layout ${headerClassNames}`}>
 
                 {headerClassNames ? (
                     <MainHeaderOnScroll
