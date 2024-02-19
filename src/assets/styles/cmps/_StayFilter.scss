@@ -170,9 +170,8 @@
             }
         }
 
-        .place-range-container {
+        .price-range-container {
             display: flex;
-            gap: 20px;
             flex-direction: column;
             padding-bottom: 70px;
             border-bottom: $border-filter-modal;
@@ -183,7 +182,6 @@
                 display: flex;
             }
 
-            .price-range-title {}
         }
 
 
@@ -228,15 +226,30 @@
             }
         }
 
-        .top-tier {
-            border: 1px solid;
-            width: 300px;
+        .top-tier-container {
+            border: $border-filter-modal;
+            border-radius: 10px;
+            width: max-content;
             padding: 20px;
 
+            &.active {
+                background-color: #F7F7F7;
+                border-color: #333333;
+            }
+
+
             .top-tier-details {
-                &.active {
-                    background-color: gray;
+
+                .top-tier-desc {
+                    display: flex;
+                    flex-direction: column;
+
+                    span {
+                        color: $lightGray-clr;
+                    }
+
                 }
+
 
                 svg {
                     display: block;
@@ -249,6 +262,27 @@
                 }
             }
 
+        }
+
+        .clear-total-container {
+            display: flex;
+            justify-content: space-between;
+            border-top: $border-filter-modal;
+            padding: 20px 0 5px 0;
+
+            button {
+                font-weight: 500;
+                background: none;
+            }
+
+
+            button:nth-child(2) {
+                background: linear-gradient(328deg, rgb(12 11 11 / 77%), #030202);
+                padding: 15px 10px;
+                color: #ffff;
+                font-weight: 500;
+                border-radius: 10px;
+            }
         }
 
     }

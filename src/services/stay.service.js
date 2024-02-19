@@ -78,11 +78,11 @@ function getDefaultSearchFilter() {
         guests: getDefaultGuests(),
         region: '',
         label: '',
-        roomType: '',
+        roomType: 'Any type',
         price: { minPrice: 0, maxPrice: 2500 },
-        bedrooms: null,
-        beds: null,
-        bathrooms: null,
+        bedrooms: 'Any',
+        beds: 'Any',
+        bathrooms: 'Any',
         guestFavorite: false,
     }
 }

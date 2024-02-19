@@ -59,13 +59,13 @@
     .stay-hostname {
       grid-column: 1;
       grid-row: 2;
-      color: #717171;
+      color: $lightGray-clr;
     }
 
     .stay-beds {
       grid-column: 1;
       grid-row: 3;
-      color: #717171;
+      color: $lightGray-clr;
     }
 
     .stay-price {

@@ -25,10 +25,9 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
       try {
         const prices = await stayService.getStaysPrices();
         setStaysPrice(prices);
-        setLoading(false); 
-        console.log('Stays data:', staysPrice);
+        setLoading(false);
       } catch (error) {
-        setLoading(false); 
+        setLoading(false);
         console.error('Error fetching stays prices:', error);
       }
     };
@@ -38,17 +37,14 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
 
   useEffect(() => {
     if (!loading) {
-      console.log('Stays data:', staysPrice);
       const updatedHistogram = stayService.countItemsInRanges(staysPrice, step);
       setHistogramData(updatedHistogram);
-      console.log('updatedHistogram', updatedHistogram);
     }
   }, [priceRange, stays, staysPrice, loading]);
 
   if (loading) {
     return <div>Loading...</div>;
   }
-
 
   function handleInputChange(target) {
     const field = target.name;
@@ -71,9 +67,9 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
 
 
   return (
-    <div className='place-range-container'>
-      <h4 className='price-range-title'> Price range</h4>
-
+    <div className='price-range-container'>
+      <h5> Price range</h5>
+      <span>Nightly prices including fees and taxes</span>
       <div className='histogram-container'>
         {histogramData.map((value, index) => {
           const adjustedHeight = value.count + (value.count * 0.7);
@@ -97,6 +93,7 @@ export function PriceRange({ filterBy, stays, handlePriceChange }) {
         step={step}
         defaultValue={[priceRange.minPrice, priceRange.maxPrice]}
         onChange={handleSliderChange}
+        style={{padding: '15px 0 0 0'}}
         trackStyle={[{ background: 'linear-gradient(79deg, #000000, #333333)' }]}
         handleStyle={[
           { borderColor: 'black' },

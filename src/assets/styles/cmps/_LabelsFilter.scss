@@ -71,7 +71,7 @@
             justify-content: center;
             align-items: center;
             height: max-content;
-            color: #717171;
+            color: $lightGray-clr;
             opacity: 75%;
 
             &.selected-label {
@@ -104,7 +104,7 @@
 
                 svg {
                     fill: #4f4c4c;
-                    stroke: #717171;
+                    stroke: $lightGray-clr;
                     stroke-width: 0.1px;
 
                     &:hover {

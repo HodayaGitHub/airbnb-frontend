@@ -220,7 +220,7 @@
       p {
         font-size: rem(16px);
         font-weight: 400;
-        color: #717171;
+        color: $lightGray-clr;
         padding-top: 5px;
       }
     }
@@ -247,7 +247,7 @@
 
         font-size: rem(18px);
         font-weight: 400;
-        color: #717171;
+        color: $lightGray-clr;
         padding-top: 5px;
         margin-bottom: 45px
       }
@@ -279,7 +279,7 @@
       .sec-title {
         font-size: rem(18px);
         font-weight: 400;
-        color: #717171;
+        color: $lightGray-clr;
       }
 
       .guest-item {
@@ -310,7 +310,6 @@
 
           .guest-counter-btn {
             background-color: #ffff;
-            // color: #717171;
             border: 1px solid rgb(113, 113, 113);
             border-radius: 50%;
             width: 32px;

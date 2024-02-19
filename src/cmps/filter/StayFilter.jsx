@@ -1,13 +1,14 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import _debounce from 'lodash/debounce';
 
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { FilterIcon, TopTierIcon } from '../../services/icons.service.jsx';
 import { PriceRange } from './PriceRange.jsx';
 import { RoomsBeds } from './RoomsBeds.jsx';
-import _debounce from 'lodash/debounce';
+import { stayService } from '../../services/stay.service.js';
 
 
 const style = {
@@ -28,6 +29,7 @@ export function StayFilter({ filterBy, onSetFilter }) {
     const BATHROOMS = 'bathrooms'
 
     const { stays, totalDocumentsCount } = useSelector(storeState => storeState.stayModule)
+    const [totalStays, setTotalStays] = useState(totalDocumentsCount)
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy, roomType: ANY_TYPE })
     const [selectedRoomFilters, setSelectedRoomFilters] = useState({
         [BEDROOMS]: 'Any',
@@ -35,13 +37,23 @@ export function StayFilter({ filterBy, onSetFilter }) {
         [BATHROOMS]: 'Any',
     });
 
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
 
     useEffect(() => {
-        onSetFilter({ ...filterByToEdit })
+        // onSetFilter({ ...filterByToEdit })
+        async function getplacesCount() {
+            try {
+                const totalStaysRes = await stayService.query({ ...filterByToEdit })
+                setTotalStays(totalStaysRes.totalDocumentsCount)
+                return totalStaysRes
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getplacesCount()
     }, [filterByToEdit])
 
     function handleRoomFilterClick(event, category, number) {
@@ -50,6 +62,7 @@ export function StayFilter({ filterBy, onSetFilter }) {
             ...prevFilters,
             [category]: number,
         }));
+
         setFilterByToEdit((prevFilter) => {
             const updatedFilter = { ...prevFilter, [category]: number };
             return updatedFilter;
@@ -84,6 +97,14 @@ export function StayFilter({ filterBy, onSetFilter }) {
 
     }
 
+    function clearAll() {
+        setFilterByToEdit(stayService.getDefaultSearchFilter());
+    }
+
+    function showPlaces() {
+        onSetFilter({ ...filterByToEdit })
+        handleClose()
+    }
 
     return (
         <div className="stay-filter-container">
@@ -107,11 +128,10 @@ export function StayFilter({ filterBy, onSetFilter }) {
                             <span className='filter-title'>Filters</span>
                         </div>
 
-
                         <div className="type-of-place-container">
                             <span>
-                                <h4>Type of place</h4>
-                                <h6>Search rooms, entire homes, or any type of place.</h6>
+                                <h5>Type of place</h5>
+                                <span>Search rooms, entire homes, or any type of place.</span>
                             </span>
                             <div className='place-type-btns-container'>
                                 <span onClick={(event) => handlePlaceTypeClick(event, ANY_TYPE)}
@@ -134,38 +154,46 @@ export function StayFilter({ filterBy, onSetFilter }) {
 
                         <div className="rooms-beds-container">
                             <span>
-                                <h3>Rooms and beds</h3>
+                                <h5>Rooms and beds</h5>
                             </span>
-                            <RoomsBeds
-                                category={BATHROOMS}
-                                selectedRoomFilters={selectedRoomFilters[BATHROOMS]}
-                                handleRoomFilterClick={handleRoomFilterClick}
-                            />
-
-                            <RoomsBeds
-                                category={BEDS}
-                                selectedRoomFilters={selectedRoomFilters[BEDS]}
-                                handleRoomFilterClick={handleRoomFilterClick}
-                            />
 
                             <RoomsBeds
                                 category={BEDROOMS}
                                 selectedRoomFilters={selectedRoomFilters[BEDROOMS]}
                                 handleRoomFilterClick={handleRoomFilterClick}
                             />
+                            <RoomsBeds
+                                category={BEDS}
+                                selectedRoomFilters={selectedRoomFilters[BEDS]}
+                                handleRoomFilterClick={handleRoomFilterClick}
+                            />
+                            <RoomsBeds
+                                category={BATHROOMS}
+                                selectedRoomFilters={selectedRoomFilters[BATHROOMS]}
+                                handleRoomFilterClick={handleRoomFilterClick}
+                            />
+
                         </div>
 
-                        <div className="top-tier">
-                            Top-tier stays
-                            <div className={`top-tier-details ${filterByToEdit.guestFavorite ? 'active' : ''}`} onClick={GuestFavorites}>
-                                <TopTierIcon />
-                                <span> Guest favorites</span>
-                                <span>The most loved homes on Airbnb, according to guests</span>
+                        <section>
+                            <h5>Top-tier stays</h5>
+                            <div className={`top-tier-container ${filterByToEdit.guestFavorite ? 'active' : ''}`} onClick={GuestFavorites}>
+                                <div className='top-tier-details'>
+                                    <TopTierIcon />
+                                    <div className='top-tier-desc'>
+                                        <h5> Guest favorites</h5>
+                                        <span>The most loved homes on Airbnb, according to guests</span>
+                                    </div>
+                                </div>
+
                             </div>
+                        </section>
 
+                        <div className='clear-total-container'>
+                            <button onClick={clearAll}>Clear all</button>
+                            <button onClick={showPlaces}>{`Show ${totalStays} places`}</button>
                         </div>
 
-                        <button>{`Show ${totalDocumentsCount} places`}</button>
                     </section>
 
                 </Box>
