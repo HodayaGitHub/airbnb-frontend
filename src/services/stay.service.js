@@ -2,6 +2,7 @@ import Axios from 'axios'
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 import { labels } from '../data/labels.js'
+import dayjs from 'dayjs'
 
 export const stayService = {
     query,
@@ -41,7 +42,7 @@ function query(filterBy = {}, page = 1) {
     return httpService.get(BASE_URL, { filterBy, page })
 }
 
-function getStaysPrices(){
+function getStaysPrices() {
     return httpService.get(`stay/prices`)
 
 }
@@ -145,7 +146,7 @@ function getFormattedDate(date) {
 
 function formatDateFromUnix(unixTimestamp) {
     const options = { day: 'numeric', month: 'short' };
-    const formattedDate = new Date(unixTimestamp * 1000).toLocaleDateString('en-US', options);
+    const formattedDate = new Date(unixTimestamp).toLocaleDateString(options);
     return formattedDate;
 }
 
@@ -170,25 +171,7 @@ function buildQueryParams(filterBy) {
     return params
 }
 
-function getDefaultDates() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set time to the beginning of the day
 
-    const defaultCheckIn = Math.floor(today.getTime());
-
-    const oneDayInSeconds = 24 * 60 * 60;
-    const defaultCheckOut = defaultCheckIn + oneDayInSeconds;
-
-    // console.log(defaultCheckIn, defaultCheckOut);
-
-    console.log('defaultCheckIn', defaultCheckIn);
-    console.log('defaultCheckOut', defaultCheckOut);
-
-    return {
-        defaultCheckIn,
-        defaultCheckOut,
-    };
-}
 
 function totalGuests(filterBy) {
     const { adults, children, infants } = filterBy.guests
@@ -200,12 +183,29 @@ function getLabels() {
     return labels
 }
 
+function getDefaultDates() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to the beginning of the day
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    const defaultCheckIn = today.getTime();
+    const defaultCheckOut = tomorrow.getTime();
+
+    return {
+        defaultCheckIn,
+        defaultCheckOut,
+    };
+}
+
+
 // StayDetails services: 
 
-
 function calcNights(firstDate, secondDate) {
-    const timeDifference = secondDate - firstDate;
-    const daysDifference = Math.ceil(timeDifference / (24 * 60 * 60)); // seconds to days
+    console.log('firstDate', firstDate, 'secondDate', secondDate);
+    const startDate = dayjs(firstDate);
+    const endDate = dayjs(secondDate);
+
+    const daysDifference = endDate.diff(startDate, 'day');
 
     return daysDifference;
 }
@@ -234,32 +234,32 @@ function calculateAverageRating(stay) {
 
 async function loadStaysPrices() {
     try {
-      const staysPrice = await stayService.getStaysPrices()
-      console.log(staysPrice)
+        const staysPrice = await stayService.getStaysPrices()
+        console.log(staysPrice)
     } catch (err) {
-      console.log('Cannot load prices', err)
-      throw err
+        console.log('Cannot load prices', err)
+        throw err
 
     }
-  }
+}
 
-  function countItemsInRanges(prices, step) {
+function countItemsInRanges(prices, step) {
     const ranges = Array.from({ length: Math.ceil(Math.max(...prices) / step) }, (_, index) => (index + 1) * step);
     const counts = new Array(ranges.length).fill(0);
 
     prices.forEach(price => {
-      const index = Math.floor(price / step);
-      counts[index]++;
+        const index = Math.floor(price / step);
+        counts[index]++;
     });
 
     const filteredCounts = counts.filter(count => count > 0);
 
     const histogram = filteredCounts.map((count, index) => ({
-      price: ranges[index],
-      count
+        price: ranges[index],
+        count
     }));
 
     const sortedHistogram = histogram.sort((a, b) => a.price - b.price);
 
     return sortedHistogram;
-  }
+}

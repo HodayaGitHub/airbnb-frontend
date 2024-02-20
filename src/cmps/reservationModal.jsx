@@ -23,16 +23,23 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
   }, [orderToEdit])
 
 
-
   function handleDateSelectChange(field, value) {
-    const valueToUnix = Math.floor(value.getTime() / 1000)
-    setOrderToEdit((prevOrder) => ({ ...prevOrder, [field]: valueToUnix }))
+    const valueToUnix = Math.floor(value.getTime());
+
+    setOrderToEdit((prevOrder) => {
+      const updatedOrder = { ...prevOrder, [field]: valueToUnix };
+
+      if (field === 'checkOut' && valueToUnix) {
+        const totalNights = stayService.calcNights(updatedOrder.checkIn, updatedOrder.checkOut);
+        const totalPrice = totalNights * price;
+        return { ...updatedOrder, totalNights, totalPrice };
+      }
+
+      return updatedOrder;
+    });
 
     if (field === 'checkOut' && valueToUnix) {
-      const totalNights = stayService.calcNights(value.checkIn, value.checkOut)
-      const totalPrice = totalNights * price;
-      setOrderToEdit((prevOrder) => ({ ...prevOrder, totalNights, totalPrice }))
-      setModalOpen(false)
+      setModalOpen(false);
     }
   }
 
@@ -80,7 +87,8 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
                     <span>Check-in</span>
                     <input
                       type='text'
-                      value={stayService.formatDateFromUnix(order.checkIn) || stayService.formatDateFromUnix(orderToEdit.checkIn)}
+                      value={stayService.formatDateFromUnix(orderToEdit.checkIn)}
+                      // value={stayService.formatDateFromUnix(order.checkIn) || stayService.formatDateFromUnix(orderToEdit.checkIn)}
                       readOnly
                     />
                   </button>
@@ -90,13 +98,13 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
                   <button>
                     <span>Checkout</span>
                     <input type='text'
-                      value={stayService.formatDateFromUnix(order.checkOut) || stayService.formatDateFromUnix(orderToEdit.checkOut)}
+                      value={stayService.formatDateFromUnix(orderToEdit.checkOut)}
+                      // value={stayService.formatDateFromUnix(order.checkOut) || stayService.formatDateFromUnix(orderToEdit.checkOut)}
                       readOnly
                     />
                   </button>
                 </div>
               </div >
-
               {modalOpen && (
                 <DateSelect
                   onSetField={(field, value) => handleDateSelectChange(field, value)}
@@ -104,6 +112,8 @@ export function ReservationModal({ stayId, stay, price, order, editOrder, isMobi
                   checkOut={orderToEdit.checkOut}
                 />)
               }
+
+
               {
                 <div className='guest'>
                   {orderToEdit.totalGuests} guest{orderToEdit.totalGuests !== 1 && <span>s</span>}

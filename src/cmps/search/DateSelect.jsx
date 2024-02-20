@@ -10,8 +10,8 @@ export function DateSelect({
   monthsToShow = 2
 }) {
 
-  const checkInDate = typeof checkIn === 'number' ? new Date(checkIn * 1000) : checkIn || new Date();
-  const checkOutDate = typeof checkOut === 'number' ? new Date(checkOut * 1000) : checkOut || new Date();
+  const checkInDate = typeof checkIn === 'number' ? new Date(checkIn) : checkIn || new Date();
+  const checkOutDate = typeof checkOut === 'number' ? new Date(checkOut) : checkOut || new Date();
 
   const today = new Date();
 
@@ -23,10 +23,6 @@ export function DateSelect({
     }
   ]);
 
-  function formatDate(date) {
-    const options = { day: 'numeric', month: 'short' };
-    return date.toLocaleDateString('en-US', options);
-  };
 
   function handleChange(item) {
     const selection = item.selection;

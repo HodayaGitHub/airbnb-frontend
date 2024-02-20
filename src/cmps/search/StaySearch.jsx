@@ -74,8 +74,8 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
         const selection = item.selection;
         setRange([selection]);
 
-        const checkInTimestamp = Math.floor(selection.startDate.getTime() / 1000);
-        const checkOutTimestamp = Math.floor(selection.endDate.getTime() / 1000);
+        const checkInTimestamp = Math.floor(selection.startDate.getTime());
+        const checkOutTimestamp = Math.floor(selection.endDate.getTime());
 
         if (selection.startDate === selection.endDate) {
             onSetField('checkIn', checkInTimestamp);
@@ -98,7 +98,7 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
     }
 
     function handleDateSelectChange(field, value) {
-        const valueToUnix = Math.floor(value.getTime() / 1000);
+        const valueToUnix = Math.floor(value.getTime());
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: valueToUnix }))
 
         if (field === 'checkOut' && valueToUnix) {
@@ -229,7 +229,7 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
                     )}
 
                 </div>
-                
+
             </div>
 
             <>

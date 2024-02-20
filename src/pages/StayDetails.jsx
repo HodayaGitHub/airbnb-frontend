@@ -71,7 +71,6 @@ export function StayDetails() {
     fetchHostAvatar();
   }, [stay]);
 
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 960);
