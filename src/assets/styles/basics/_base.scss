@@ -15,10 +15,12 @@ body {
 
 html,
 body {
-  font-family: Avenir, sans-serif;
+  font-family: Raleway, sans-serif;
+  font-feature-settings: 'lnum' 1;
 
   * {
-    font-family: Avenir, sans-serif;
+    font-family: Raleway, sans-serif;
+    font-feature-settings: 'lnum' 1;
   }
 }
 
