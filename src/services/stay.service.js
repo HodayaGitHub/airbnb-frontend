@@ -146,7 +146,7 @@ function getFormattedDate(date) {
 
 function formatDateFromUnix(unixTimestamp) {
     const options = { day: 'numeric', month: 'short' };
-    const formattedDate = new Date(unixTimestamp).toLocaleDateString(options);
+    const formattedDate = new Date(unixTimestamp).toLocaleDateString('en-US', options);
     return formattedDate;
 }
 
