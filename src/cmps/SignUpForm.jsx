@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { uploadService } from '../services/upload.service.js'
 import { showimgUploadSuccessMsg } from '../services/event-bus.service'
-import { ButtonHover } from './buttonHover';
+import { ButtonHover } from './ButtonHover';
 
 export function SignUpForm({ closeModal, setCredentials, handleCredentialsChange, handleDemoLogIn, credentials, uploadImg, onSubmit }) {
   const [open, setOpen] = useState(false);
@@ -80,9 +80,9 @@ export function SignUpForm({ closeModal, setCredentials, handleCredentialsChange
         </div>
       </form>
       <div className='demo-button'>
-        <button onClick={handleDemoLogIn}>Demo Log in</button>
+        <button onClick={(e) => handleDemoLogIn(e)}>Demo Log in</button>
       </div>
-      <button className='close-login-modal' onClick={closeModal}>𝝬</button>
+      <button className='close-login-modal' onClick={(e)=>closeModal(e)}>𝝬</button>
     </div>
   );
 };

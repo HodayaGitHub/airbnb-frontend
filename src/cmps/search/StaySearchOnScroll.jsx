@@ -5,7 +5,7 @@ import { DateSelect } from './DateSelect.jsx'
 import { ServiceAnimalModal } from './ServiceAnimalModal.jsx'
 import { SearchIcon } from '../../services/icons.service.jsx'
 import { MinusIcon, PlusIcon } from '../../services/icons.service.jsx'
-import { ButtonHover } from '../buttonHover.jsx'
+import { ButtonHover } from '../ButtonHover.jsx'
 
 export function StaySearchOnScroll({ filterBy, onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })

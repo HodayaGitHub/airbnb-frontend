@@ -2,7 +2,7 @@ import { Link, useNavigate, NavLink, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ControlledCarousel } from './ControlledCarousel'
 import { useState } from 'react'
-import { FavoriteIcon } from './favoriteIcon'
+import { FavoriteIcon } from './FavoriteIcon.jsx'
 import { SimpleSlider } from './SimpleSlider'
 import { utilService } from '../services/util.service'
 import star from '../assets/img/svgs/star.svg'
@@ -35,8 +35,7 @@ export function StayPreview({ stay, onRemoveStay, params }) {
     >
       <div onClick={openStayInNewTab}>
         <div className='img-container'>
-          <FavoriteIcon stay={stay} />
-          <FavoriteIcon stay={stay} />
+          <FavoriteIcon  stay={stay} />
           <SimpleSlider stay={stay} />
         </div>
         <div className='stay-desc'>

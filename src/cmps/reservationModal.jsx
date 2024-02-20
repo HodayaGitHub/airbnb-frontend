@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { DateSelect } from './search/DateSelect';
 import { useNavigate } from 'react-router';
 import { stayService } from '../services/stay.service';
-import { ButtonHover } from './buttonHover';
+import { ButtonHover } from './ButtonHover';
 import { LoginSignupModal } from './LoginSignupModal';
 import { useLocation } from 'react-router-dom';
 

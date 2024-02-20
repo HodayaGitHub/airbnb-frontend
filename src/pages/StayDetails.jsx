@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { stayService } from '../services/stay.service.js';
 import { updateStay } from '../store/actions/stay.actions.js';
-import { ReservationModal } from '../cmps/reservationModal.jsx';
+import { ReservationModal } from '../cmps/ReservationModal.jsx';
 import { GoogleMap } from '../cmps/GoogleMap.jsx';
 import { addOrder, updateOrder } from '../store/actions/order.actions.js';
 import { useSelector } from 'react-redux';

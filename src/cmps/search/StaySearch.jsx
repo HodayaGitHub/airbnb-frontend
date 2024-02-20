@@ -3,7 +3,7 @@ import { utilService } from '../../services/util.service.js'
 import { stayService } from '../../services/stay.service.js'
 import { DateSelect } from './DateSelect.jsx'
 import { SearchIcon } from '../../services/icons.service.jsx'
-import { ButtonHover } from '../buttonHover.jsx'
+import { ButtonHover } from '../ButtonHover.jsx'
 import { GuestCountModal  } from './GuestCountModal.jsx'
 
 export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {

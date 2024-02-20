@@ -21,7 +21,8 @@ export function userReducer(state = initialState, action) {
     var newState = state
     switch (action.type) {
         case SET_USER:
-            newState = { ...state, user: action.user }
+            console.log('SET_USER action dispatched:', action);
+            newState = { ...state, loggedInUser: action.user }
             break
         case UPDATE_USER:
             newState = { ...state, loggedInUser: action.user }
@@ -40,6 +41,8 @@ export function userReducer(state = initialState, action) {
             break
 
         default:
+            break
+
     }
     // For debug:
     // window.userState = newState

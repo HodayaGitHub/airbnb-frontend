@@ -9,7 +9,8 @@ export function LoginSignupModal({ loginOrSignup, state }) {
   const [credentials, setCredentials] = useState(userService.getEmptyCredentials());
   const [isModalOpen, setModalOpen] = useState(state ? state : true);
 
-  function closeModal() {
+  function closeModal(e) {
+    e.stopPropagation();
     setModalOpen(false);
   }
 
@@ -18,8 +19,9 @@ export function LoginSignupModal({ loginOrSignup, state }) {
     try {
       if (loginOrSignup === 'signup') {
         await signup(credentials);
+      } else {
+        await login(credentials);
       }
-      await login(credentials);
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -34,6 +36,7 @@ export function LoginSignupModal({ loginOrSignup, state }) {
 
 
   async function handleDemoLogIn() {
+    // e.stopPropagation()
     try {
       await login(userService.demoCredentials());
       window.location.reload();

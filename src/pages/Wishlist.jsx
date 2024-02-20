@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { FavoriteIcon } from '../cmps/favoriteIcon'
+import { FavoriteIcon } from '../cmps/FavoriteIcon.jsx'
 import { SimpleSlider } from '../cmps/SimpleSlider'
 import { loadUser } from '../store/actions/user.actions.js'
 import { MainHeader } from '../cmps/MainHeader.jsx'

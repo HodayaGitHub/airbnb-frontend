@@ -9,7 +9,7 @@ import { stayService } from '../services/stay.service'
 import { orderService } from '../services/order.service'
 import { MainHeader } from '../cmps/MainHeader.jsx'
 import { userService } from '../services/user.service.js'
-import { ButtonHover } from '../cmps/buttonHover.jsx'
+import { ButtonHover } from '../cmps/ButtonHover.jsx'
 import { socketService, SOCKET_ORDER_STATUS_UPDATED, SOCKET_ADD_ORDER } from '../services/socket.service.js'
 import { utilService } from '../services/util.service.js'
 

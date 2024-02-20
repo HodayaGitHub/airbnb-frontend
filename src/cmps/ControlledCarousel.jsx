@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Carousel from 'react-bootstrap/Carousel'
-import { FavoriteIcon } from './favoriteIcon'
+import { FavoriteIcon } from './FavoriteIcon.jsx'
 
 export function ControlledCarousel({ stay, isHover }) {
   const [index, setIndex] = useState(0)
