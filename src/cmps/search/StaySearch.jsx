@@ -2,10 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { utilService } from '../../services/util.service.js'
 import { stayService } from '../../services/stay.service.js'
 import { DateSelect } from './DateSelect.jsx'
-import { ServiceAnimalModal } from './ServiceAnimalModal.jsx'
 import { SearchIcon } from '../../services/icons.service.jsx'
-import { MinusIcon, PlusIcon } from '../../services/icons.service.jsx'
 import { ButtonHover } from '../buttonHover.jsx'
+import { GuestCountModal  } from './GuestCountModal.jsx'
 
 export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
@@ -14,21 +13,11 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
     const [labelsData, setLabelsData] = useState()
 
     const [modalOpen, setModalOpen] = useState(null)
-    const [isPetsModalOpen, setIsPetsModalOpen] = useState(false)
 
     const REGION_MODAL = 'region'
-    const GUEST_MODAL = 'guest'
+    const GUEST_MODAL_STR = 'guest'
     const CHECK_IN_MODAL = 'checkIn'
     const CHECK_OUT_MODAL = 'checkOut'
-
-
-    const guestsDesc = {
-        adults: 'Ages 13 or above',
-        children: 'Ages 2-12',
-        infants: 'Under 2',
-        pets: 'Bringing a service animal?',
-    }
-
 
     useEffect(() => {
         function handleOutsideClick(event) {
@@ -48,20 +37,6 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
             document.body.removeEventListener('click', handleOutsideClick);
         };
     }, []);
-
-    function updateGuestCount(event, option, amount) {
-        event.stopPropagation()
-        setFilterByToEdit((prevFilter) => {
-            const currentCount = +prevFilter.guests[option]
-            const newCount = Math.max(0, currentCount + amount)
-            const newCounts = {
-                ...prevFilter.guests,
-                [option]: newCount
-            }
-            const updatedFilterBy = { ...prevFilter, guests: newCounts }
-            return updatedFilterBy
-        })
-    }
 
     function updateRegion(event, region) {
         event.stopPropagation()
@@ -106,12 +81,25 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
         }
     }
 
-    function serviceAnimalModalOpen() {
-        setIsPetsModalOpen(true)
+
+    function handleChange() {
+        console.log('blah')
     }
 
-    function serviceAnimalModalClose() {
-        setIsPetsModalOpen(false)
+
+
+    function updateGuestCount(event, option, amount) {
+        event.stopPropagation()
+        setFilterByToEdit((prevFilter) => {
+            const currentCount = +prevFilter.guests[option]
+            const newCount = Math.max(0, currentCount + amount)
+            const newCounts = {
+                ...prevFilter.guests,
+                [option]: newCount
+            }
+            const updatedFilterBy = { ...prevFilter, guests: newCounts }
+            return updatedFilterBy
+        })
     }
 
     function getGuestsString() {
@@ -122,10 +110,6 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
         } else {
             return ''
         }
-    }
-
-    function handleChange() {
-        console.log('blah')
     }
 
     return (
@@ -173,8 +157,8 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
                 </div>
 
 
-                <div className={`search-last-section search-div ${setActiveClass(GUEST_MODAL)}`}>
-                    <div className='inner-div' onClick={() => handleSearchOptionClick(GUEST_MODAL)}>
+                <div className={`search-last-section search-div ${setActiveClass(GUEST_MODAL_STR)}`}>
+                    <div className='inner-div' onClick={() => handleSearchOptionClick(GUEST_MODAL_STR)}>
                         <span>Who</span>
                         <input type='text' placeholder='Add guests'
                             value={getGuestsString()}
@@ -191,41 +175,9 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
                         </span>
                     )}
 
-                    {isPetsModalOpen && <ServiceAnimalModal serviceAnimalModalClose={serviceAnimalModalClose} />}
 
-                    {modalOpen === GUEST_MODAL && (
-                        <div className="guest-modal">
-                            <div className="guest-wrapper">
-                                {Object.entries(filterByToEdit.guests).map(([guestType, guestInfo], index, array) => (
-                                    <div className="guest-container" key={guestType}>
-
-                                        <div className="guest-item">
-                                            <div className="guests-info">
-                                                <span className="guest-title">{guestType}</span>
-                                                <span className={`guest-desc ${index === array.length - 1 ? 'service-animal' : ''}`}
-                                                    onClick={index === array.length - 1 ? serviceAnimalModalOpen : null}>
-                                                    {guestsDesc[guestType]}
-                                                </span>
-                                            </div>
-
-                                            <div className="guest-counter-btns">
-                                                <button className="guest-counter-btn" onClick={(event) => updateGuestCount(event, guestType, -1)}
-                                                    style={{ cursor: guestInfo <= 0 ? 'not-allowed' : 'pointer' }}
-                                                    disabled={guestInfo <= 0}>
-                                                    <MinusIcon />
-                                                </button>
-                                                <span className="counter">{guestInfo}</span>
-                                                <button className="guest-counter-btn" onClick={(event) => updateGuestCount(event, guestType, 1)}>
-                                                    <PlusIcon />
-                                                </button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                ))}
-                            </div>
-                        </div>
+                    {modalOpen === GUEST_MODAL_STR && (
+                        <GuestCountModal updateGuestCount={updateGuestCount} />
                     )}
 
                 </div>
