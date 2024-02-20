@@ -1,5 +1,7 @@
-import { createStore, combineReducers } from 'redux'
+import storage from 'redux-persist/lib/storage';
 
+import { createStore, combineReducers } from 'redux'
+import { persistReducer, persistStore } from 'redux-persist';
 import { stayReducer } from './reducers/stay.reducer.js'
 import { orderReducer } from './reducers/order.reducer.js'
 import { userReducer } from './reducers/user.reducer.js'
@@ -15,8 +17,16 @@ const rootReducer = combineReducers({
 })
 
 
+const persistConfig = {
+    key: 'root',
+    storage,
+};
+
+
 const middleware = (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() : undefined
-export const store = createStore(rootReducer, middleware)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+export const store = createStore(persistedReducer, middleware);
+export const persistor = persistStore(store);
 
 
 store.subscribe(() => {

@@ -33,7 +33,7 @@ export async function login(credentials) {
         const user = await userService.login(credentials)
         store.dispatch({
             type: SET_USER,
-            loggedInUser: user
+            user: user
         })
         socketService.login(user)
         return user
@@ -48,7 +48,7 @@ export async function signup(credentials) {
         const user = await userService.signup(credentials)
         store.dispatch({
             type: SET_USER,
-            loggedInUser: user
+            user: user
         })
         socketService.login(user)
         return user
@@ -94,7 +94,7 @@ export async function updateUser(user) {
     try {
         const savedUser = await userService.save(user)
         console.log('Updated user:', savedUser)
-        // store.dispatch(getActionUpdateUser(savedUser))
+        store.dispatch(getActionUpdateUser(savedUser))
         return savedUser
     } catch (err) {
         console.log('Cannot save user', err)
