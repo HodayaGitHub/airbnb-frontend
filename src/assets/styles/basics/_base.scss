@@ -3,8 +3,6 @@
 }
 
 html {
-  // font-family: montserrat;
-  font-family: roboto, sans-serif;
   line-height: 1.6;
   color: $clr2;
 }
@@ -12,9 +10,16 @@ html {
 body {
   font-size: 16px;
   margin: 0;
-  // max-width: 1024px;
   margin: auto;
-  font-family: roboto, sans-serif;
+}
+
+html,
+body {
+  font-family: Avenir, sans-serif;
+
+  * {
+    font-family: Avenir, sans-serif;
+  }
 }
 
 h1,
@@ -25,11 +30,6 @@ h5,
 h6 {
   margin: 0 0 0.6em;
   line-height: 1;
-}
-
-section,
-main,
-footer {
 }
 
 img {

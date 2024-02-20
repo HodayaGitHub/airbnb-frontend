@@ -41,11 +41,6 @@ export const labels = [
         "label": "Domes"
     },
     {
-        "title": "Casas particulares",
-        "svg": "CasasParticulares",
-        "label": "Casa"
-    },
-    {
         "title": "Ryokans",
         "svg": "Ryokans",
         "label": "Ryokans"
@@ -84,6 +79,11 @@ export const labels = [
         "title": "Houseboats",
         "svg": "Houseboat",
         "label": "Houseboats"
+    },
+    {
+        "title": "Casas particulares",
+        "svg": "CasasParticulares",
+        "label": "Casa"
     },
     {
         "title": "Containers",
