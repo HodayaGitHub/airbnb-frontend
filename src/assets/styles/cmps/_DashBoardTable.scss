@@ -1,55 +1,28 @@
 .myTable {
   box-shadow: #0000001f 0 6px 16px;
   border-radius: 12px;
-  padding: 30px;
-  .header-row {
-    // display: flex;
-    display: grid;
-    grid-template-columns: 2fr repeat(6, 1fr);
-    background-color: #f2f2f2;
-    box-shadow: #0000001f 0 3px 12px;
-    border-bottom: 1px solid $lightGray-bg-clr1;
+  margin-bottom: 15px;
+  overflow: auto; // Add overflow for horizontal scrolling if needed
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); // Adjust based on the number of columns
 
-    .header-cell {
-      // width: 150px;
-      padding: 12px 0;
-      text-align: center;
-      font-weight: bold;
-      color: $darkGray-clr;
-    }
-    .photoNameCell {
-      // width: 250px;
-      margin-left: 10px;
-      text-align: start;
-    }
+  table {
+    width: 100%;
+    border-spacing: 0;
   }
-  .row {
-    // display: flex;
-    margin-bottom: 15px;
-    align-items: center;
-    align-content: center;
-    display: grid;
-    grid-template-columns: 2fr repeat(6, 1fr);
+
+  th, td {
     padding: 10px;
+    text-align: left;
     border-bottom: 1px solid $lightGray-bg-clr1;
-    .photoName {
-      display: flex;
-      align-items: center;
-      // width: 250px;
-      .userName {
-        margin-left: 15px;
-        font-size: 1.2rem;
-        color: $darkGray-clr;
-      }
-    }
-    .cell {
-      // width: 150px;
-      padding: 10px;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: $darkGray-clr;
-    }
+  }
+
+  .header-row {
+    font-weight: bold;
+  }
+
+  .photoNameCell, .photoName, .approve-btn, .reject-btn {
+    // Assuming these cells need special styling, adjust as needed
+    grid-column: span 6; // Example value, adjust based on your layout
   }
 }

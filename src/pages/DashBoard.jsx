@@ -16,9 +16,7 @@ export function DashBoard() {
           <MyBar />
           <MyRevenue />
         </div>
-        <div className='dashboard-table'>
           <DataTable />
-        </div>
       </section>
     </>
   )

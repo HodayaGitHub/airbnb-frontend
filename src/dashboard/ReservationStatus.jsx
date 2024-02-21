@@ -7,11 +7,12 @@ export function ReservationStatus() {
 
   useEffect(() => {
     totalPending = clacPending();
+    console.log('totalPending', totalPending);
   }, []);
 
-  function clacPending() {
+  function clacPending(statusToCount) {
     return loggedInUser.myGuests.reduce((acc, guest) => {
-      if (guest.status === 'Pending') {
+      if (guest.status === statusToCount) {
         return acc + 1;
       }
       return acc;
@@ -24,15 +25,15 @@ export function ReservationStatus() {
       <div className='chaty'>
         <div className="status-info">
           <span className="status-name">Pending</span>
-          <span className="status-count pending">6</span>
+          <span className="status-count pending">{clacPending('Pending')}</span>
         </div>
         <div className="status-info">
           <span className="status-name">Approved</span>
-          <span className="status-count approved">3</span>
+          <span className="status-count approved">{clacPending('Approve')}</span>
         </div>
         <div className="status-info">
           <span className="status-name">Rejected</span>
-          <span className="status-count rejected">1</span>
+          <span className="status-count rejected">{clacPending('Rejected')}</span>
         </div>
       </div>
     </section>

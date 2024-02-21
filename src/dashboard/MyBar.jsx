@@ -62,19 +62,19 @@ export const data = {
   datasets: [
     {
       label: 'Data',
-      data:[3000, 2000, 4560 ,8920, 7500],
+      data: [3000, 2000, 4560, 8920, 7500],
       backgroundColor: '#FF0060',
     }
   ],
 };
 
 export function MyBar() {
-  return(
-    <section className='myBar' style={{maxWidth:'60vw'}}>
-  <h3>Revenue / month</h3>
-  <div className='bar-container'>
-   <Bar options={options} data={data} />
-  </div>
-  </section> 
+  return (
+    <section className='myBar' >
+      <h3>Revenue / month</h3>
+      <div className='bar-container'>
+        <Bar options={options} data={data} />
+      </div>
+    </section>
   )
 }

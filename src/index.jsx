@@ -17,7 +17,6 @@ root.render(
         <RootCmp />
       </Router>
     </PersistGate>
-
   </Provider>
 )
 

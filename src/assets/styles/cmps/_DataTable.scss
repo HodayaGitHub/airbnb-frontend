@@ -1,37 +1,53 @@
-.data-table {
-  // position: relative;
-  // display: flex;
-  // flex-direction: column;
-  // width: 100%;
-  // border: 1px solid $lightGray-bg-clr;
-  // border-radius: 15px;
-  // margin-top: 50px;
-  // padding: 0;
-  // height: 100%;
-  // .subtitle {
-  //   display: grid;
-  //   justify-items: center;
-  //   border-top-right-radius: 15px;
-  //   border-top-left-radius: 15px;
-  //   position: -webkit-sticky;
-  //   position: sticky;
-  //   top: 0;
-  //   z-index: 500;
-  //   height: 3em;
-  //   font-family: Airbnb_Cereal-Medium;
-  //   // grid-template-columns: repeat(8, 1fr);
-  //   grid-template-columns: repeat(7, 1fr);
-  //   background: linear-gradient(
-  //     0deg,
-  //     rgba(255, 255, 255, 0.188) 13%,
-  //     hsla(0, 0%, 46%, 0.226)
-  //   );
-  //   p {
-  //     display: flex;
-  //     align-items: center;
-  //     margin: 0;
-  //     text-decoration: underline;
-  //     font-weight: 600;
-  //   }
-  // }
+.dashboard-table {
+  overflow-x: auto;
+  width: 50%;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+
+    thead {
+      tr {
+        &.header-row {
+          th {
+            &.header-cell {
+              padding: 10px;
+              text-align: left;
+              font-weight: bold;
+              background-color: #f2f2f2;
+            }
+
+            &.photoNameCell {
+              width: 20%;
+            }
+          }
+        }
+      }
+    }
+
+    tr {
+      &:nth-child(even) {
+        background-color: #e3e3e3;
+      }
+
+      td {
+        padding: 15px 0;
+
+        &.photo-name {
+          display: flex;
+          justify-content: left;
+          gap: 10px;
+
+          .guest-name {
+            align-self: center;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+  }
+
+
 }

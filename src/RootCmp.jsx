@@ -1,15 +1,9 @@
 import React from 'react'
-import { Routes, Route, useLocation } from 'react-router'
 import routes from './routes'
-
-import { Provider } from 'react-redux'
-import { store } from './store/store.js'
-
-// import { AppHeader } from './cmps/AppHeader'
+import { Routes, Route, useLocation } from 'react-router'
 import { AppFooter } from './cmps/AppFooter'
 import { UserDetails } from './pages/UserDetails'
-import { StayDetails } from './pages/StayDetails.jsx'
-import { MainHeader } from './cmps/MainHeader.jsx'
+
 
 const getMainLayoutClasses = (pathname) => {
   if (pathname === '/') {
@@ -41,7 +35,7 @@ export function RootCmp() {
             path={route.path}
           />
         ))}
-        <Route path='user/:id' element={<UserDetails />} />
+        {/* <Route path='user/:id' element={<UserDetails />} /> */}
       </Routes>
       {showFooter && <AppFooter />}
     </main>

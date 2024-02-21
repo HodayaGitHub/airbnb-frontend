@@ -144,9 +144,15 @@ function getFormattedDate(date) {
     return ''
 }
 
-function formatDateFromUnix(unixTimestamp) {
-    const options = { day: 'numeric', month: 'short' };
-    const formattedDate = new Date(unixTimestamp).toLocaleDateString('en-US', options);
+function formatDateFromUnix(unixTimestamp, fullDate) {
+    let options
+    options = { day: 'numeric', month: 'short' };
+    let formattedDate = new Date(unixTimestamp).toLocaleDateString('en-US', options);
+
+    if (fullDate) {
+        options = { day: 'short', month: 'numeric' };
+        formattedDate = new Date(unixTimestamp).toLocaleDateString(options);
+    }
     return formattedDate;
 }
 
