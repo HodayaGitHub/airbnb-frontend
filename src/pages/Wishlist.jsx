@@ -3,63 +3,48 @@ import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { FavoriteIcon } from '../cmps/FavoriteIcon.jsx'
 import { SimpleSlider } from '../cmps/SimpleSlider'
-import { loadUser } from '../store/actions/user.actions.js'
 import { MainHeader } from '../cmps/MainHeader.jsx'
+import { userService } from '../services/user.service.js'
+import { StayPreview } from '../cmps/StayPreview.jsx'
+import { stayService } from '../services/stay.service.js'
 
 export function Wishlist() {
   const [isHover, setIsHover] = useState(false)
-  const [user, setUser] = useState(null)
+  const loggedInUser = useSelector((storeState) => storeState.userModule.loggedInUser);
+  const [favList, setFavList] = useState([])
   const navigate = useNavigate()
-  const { userId } = useParams()
+  const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
+
+  const params = stayService.generateQueryString(filterBy)
 
   useEffect(() => {
-    async function fetchUserDetails() {
-      try {
-        if (userId) {
-          const user = await loadUser(userId)
-          setUser(user)
-        }
-      } catch (error) {
-        console.error('Error loading user details:', error)
-      }
-    }
+    fetchFavList()
+  }, [loggedInUser])
 
-    fetchUserDetails()
-  }, [])
+  async function fetchFavList() {
+    try {
+      const wishlist = await userService.getUserWishlist(loggedInUser._id)
+      setFavList(wishlist)
+      console.log('wishlist', wishlist);
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
 
   return (
     <>
-      {user && (
+      {loggedInUser && favList && (
         <>
           <MainHeader>
           </MainHeader>
           <ul className="wishlist stay-list">
-            {user.favoriteStays.map((stay) => (
-              <li
-                className="stay-preview"
+            {favList.map((stay) => (
+              < StayPreview
                 key={stay._id}
-                onMouseOver={() => setIsHover(true)}
-                onMouseLeave={() => setIsHover(false)}
-              >
-                <div onClick={() => navigate(`/stay/${stay._id}`)}>
-                  <div className="img-container">
-                    <FavoriteIcon stay={stay} />
-                    {/* Assuming SimpleSlider component accepts stay as a prop */}
-                    <SimpleSlider stay={stay} />
-                  </div>
-                  <div className="stay-desc">
-                    <span className="stay-name">
-                      {stay.loc?.city}, {stay.loc?.country}{' '}
-                    </span>
-                    <span className="stay-star">🟊</span>
-                    <span className="stay-distance">2354 Kilometres away</span>
-                    <span className="stay-date">Sep 29 - Oct 4</span>
-                    <span className="stay-price">
-                      <span className="stay-price-number">${stay.price?.toLocaleString()}</span> night
-                    </span>
-                  </div>
-                </div>
-              </li>
+                stay={stay}
+                params={params}
+              />
             ))}
           </ul>
         </>

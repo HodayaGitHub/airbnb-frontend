@@ -25,8 +25,11 @@ export function userReducer(state = initialState, action) {
             newState = { ...state, loggedInUser: action.user }
             break
         case UPDATE_USER:
-            newState = { ...state, loggedInUser: action.user }
-            break
+            newState = {
+                ...state, loggedInUser: { ...state.loggedInUser, favoriteStays: action.user.favoriteStays, },
+            };
+            break;
+
         case SET_WATCHED_USER:
             newState = { ...state, watchedUser: action.user }
             break

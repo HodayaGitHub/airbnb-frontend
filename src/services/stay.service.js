@@ -126,7 +126,6 @@ function getDefaultGuests() {
     }
 }
 
-
 function guestParams(guests) {
     const queryString = Object.keys(guests)
         .map((key) => {
@@ -177,8 +176,6 @@ function buildQueryParams(filterBy) {
     return params
 }
 
-
-
 function totalGuests(filterBy) {
     const { adults, children, infants } = filterBy.guests
     let totalGuests = adults + children + infants
@@ -227,7 +224,6 @@ async function fetchAvatar() {
         throw error;
     }
 }
-
 
 function calculateAverageRating(stay) {
     if (!stay || !stay.reviews || stay.reviews.length === 0) {

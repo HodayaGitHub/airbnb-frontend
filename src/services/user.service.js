@@ -20,6 +20,7 @@ export const userService = {
   save,
   fetchRandomAvatar,
   demoCredentials,
+  getUserWishlist,
 }
 
 window.userService = userService
@@ -50,8 +51,11 @@ function save(user) {
   return httpService.put(`user/${user._id}`, user)
 }
 
+function getUserWishlist(userId) {
+  return httpService.get(`user/wishlist/${userId}`)
+}
+
 async function update(user) {
-  // let user = await httpService.get('user', _id)
   await httpService.put(`user/${user._id}`, user)
 
   if (getLoggedinUser()._id === user._id) saveLocalUser(user)

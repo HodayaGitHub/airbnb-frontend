@@ -18,7 +18,6 @@ export async function loadUsers() {
     }
 }
 
-
 export async function removeUser(userId) {
     try {
         await userService.remove(userId)
@@ -83,19 +82,13 @@ export async function loadUser(userId) {
     }
 }
 
-export function getActionUpdateUser(user) {
-    return {
-        type: UPDATE_USER,
-        user
-    }
-}
-
 export async function updateUser(user) {
     try {
-        const savedUser = await userService.save(user)
-        console.log('Updated user:', savedUser)
-        store.dispatch(getActionUpdateUser(savedUser))
-        return savedUser
+        await userService.save(user)
+        store.dispatch({
+            type: UPDATE_USER,
+            user
+        })
     } catch (err) {
         console.log('Cannot save user', err)
         throw err
