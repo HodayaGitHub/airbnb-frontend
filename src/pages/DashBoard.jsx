@@ -5,7 +5,7 @@ import { MainHeader } from '../cmps/MainHeader.jsx'
 import { DataTable } from '../dashboard/DataTable.jsx'
 import { MyRevenue } from '../dashboard/MyRevnue.jsx'
 
-export function DashBoard() {
+export function Dashboard() {
   return (
     <>
       <MainHeader />

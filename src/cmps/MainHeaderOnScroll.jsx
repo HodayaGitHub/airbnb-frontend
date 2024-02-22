@@ -49,12 +49,12 @@ export function MainHeaderOnScroll({ onSetFilter, filterBy, headerClassNames }) 
         }
     }
 
-    function goDashBoard() {
-        navigate('/DashBoard')
+    function goDashboard() {
+        navigate('/Dashboard')
     }
 
     function goToWishlist() {
-        navigate(`/Wishlist/${user._id}`)
+        navigate(`/wishlist/${user._id}`)
     }
     
     function handleOpen(event, loginOrSignup) {
@@ -117,7 +117,7 @@ export function MainHeaderOnScroll({ onSetFilter, filterBy, headerClassNames }) 
                             <div className='login-user-modal'>
                                 <button onClick={goToWishlist}>Wishlist</button>
                                 <button onClick={() => navigate('/trips')}>Trips</button>
-                                <button onClick={goDashBoard}>DashBorad</button>
+                                <button onClick={goDashboard}>Dashboard</button>
                                 <button onClick={() => navigate('/become-a-host')}>
                                     Become a host
                                 </button>

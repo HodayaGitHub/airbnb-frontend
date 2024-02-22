@@ -10,7 +10,7 @@ import { ConfirmPage } from './pages/ConfirmStay.jsx'
 import { LoginPage } from './pages/LoginPage.jsx'
 import { Wishlist } from './pages/Wishlist.jsx'
 import { Trips } from './pages/Trips.jsx'
-import { DashBoard } from './pages/DashBoard.jsx'
+import { Dashboard } from './pages/Dashboard.jsx'
 
 // Routes accesible from the main navigation (in AppHeader)
 const routes = [
@@ -52,7 +52,7 @@ const routes = [
   {
     path: 'wishlist/:userId',
     component: <Wishlist />,
-    label: 'Wishlist'
+    label: 'wishlist'
   },
   {
     path: 'trips',
@@ -61,7 +61,7 @@ const routes = [
   },
   {
     path: 'dashBoard',
-    component: <DashBoard />,
+    component: <Dashboard />,
     label: 'dashBoard'
   },
   {

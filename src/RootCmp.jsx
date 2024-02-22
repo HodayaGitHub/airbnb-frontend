@@ -12,7 +12,7 @@ const getMainLayoutClasses = (pathname) => {
     return 'stay-detail-layout'
   } else if (pathname.includes('/book/')) {
     return 'confirm-layout'
-  } else if (pathname.includes('/DashBoard')) {
+  } else if (pathname.includes('/Dashboard')) {
     return 'dashboard-layout'
   } else if (pathname.includes('/trips')) {
     return 'trips-layout'
