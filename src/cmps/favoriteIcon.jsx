@@ -14,7 +14,7 @@ export function FavoriteIcon({ stay }) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   useEffect(() => {
-    setIsFavorite(loggedInUser?.favoriteStays?.some((favoriteStay) => favoriteStay._id === stay._id));
+    setIsFavorite(loggedInUser?.favoriteStays?.some((favoriteStay) => favoriteStay === stay._id));
   },
     [loggedInUser?.favoriteStays, stay._id]);
 
@@ -28,8 +28,7 @@ export function FavoriteIcon({ stay }) {
   async function addToFave(updatedUser) {
     try {
       setIsLoading(true);
-      const updatedUserFromDB = await updateUser(updatedUser);
-      // console.log('updatedUser: ', updatedUserFromDB);
+      await updateUser(updatedUser);
       setIsLoading(false);
     } catch (err) {
       console.error('Error updating user:', err);
@@ -47,19 +46,19 @@ export function FavoriteIcon({ stay }) {
     else {
       try {
         let updatedFavoriteStays;
-        const updatedIsFavorite = !isFavorite;
-        setIsFavorite(updatedIsFavorite);
-
-        if (updatedIsFavorite) {
-          updatedFavoriteStays = [...(loggedInUser.favoriteStays || []), stay];
+        const isInFav = loggedInUser?.favoriteStays?.some((favoriteStay) => favoriteStay === stay._id)
+        if (!isInFav) {
+          updatedFavoriteStays = [...(loggedInUser.favoriteStays || []), stay._id];
         } else {
-          updatedFavoriteStays = loggedInUser.favoriteStays.filter((favoriteStay) => favoriteStay._id !== stay._id);
+          updatedFavoriteStays = loggedInUser.favoriteStays.filter((favoriteStay) => favoriteStay !== stay._id);
         }
+
 
         const updatedUser = {
           ...loggedInUser,
           favoriteStays: updatedFavoriteStays,
         };
+        console.log('updatedUser', updatedUser)
 
         addToFave(updatedUser);
       } catch (err) {

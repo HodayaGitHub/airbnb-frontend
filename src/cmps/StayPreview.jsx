@@ -6,6 +6,7 @@ import { FavoriteIcon } from './FavoriteIcon.jsx'
 import { SimpleSlider } from './SimpleSlider'
 import { utilService } from '../services/util.service'
 import star from '../assets/img/svgs/star.svg'
+
 export function StayPreview({ stay, onRemoveStay, params }) {
   const [isHover, setIsHover] = useState(false)
   const navigate = useNavigate()
@@ -15,7 +16,7 @@ export function StayPreview({ stay, onRemoveStay, params }) {
     // navigate(`/stay/${stay._id}`)
   }
 
-  function calculateAverageRating() {
+  function calculateAverageRating(stay) {
     if (!stay || !stay.reviews || stay.reviews.length === 0) {
       return 0
     }
@@ -24,7 +25,6 @@ export function StayPreview({ stay, onRemoveStay, params }) {
     return totalRating / stay.reviews.length
   }
 
-  let averageRating = calculateAverageRating()
 
   return (
     <li
@@ -42,7 +42,7 @@ export function StayPreview({ stay, onRemoveStay, params }) {
           <span className='stay-name'>
             {stay.loc?.city || "Tel Aviv"}, {stay.loc?.country || "Israel"}{' '}
           </span>
-          <span className='stay-star'>🟊 {averageRating.toFixed(1)}</span>
+          <span className='stay-star'>🟊 {calculateAverageRating(stay).toFixed(1)}</span>
 
           <span className='stay-hostname'>  Hosted by {stay.host.fullname}</span>
 
