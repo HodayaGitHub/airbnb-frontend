@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import { logout } from '../store/actions/user.actions.js'
 import { useSelector } from 'react-redux'
 import { LoginSignupModal } from './LoginSignupModal.jsx'
-
+import { userService } from '../services/user.service.js'
 import appLogo from '../assets/img/new-logo-svg.svg'
 import hamburger from '../assets/img/svgs/hamburger.svg'
 import defaultLogo from '../assets/img/svgs/defaultLogo.svg'
@@ -51,12 +51,12 @@ export function MainHeader({ headerClassNames }) {
     };
   };
 
-  function goDashBoard() {
-    navigate('/DashBoard');
+  function goDashboard() {
+    navigate('/Dashboard');
   };
 
   function goToWishlist() {
-    navigate(`/Wishlist/${user._id}`);
+    navigate(`/wishlist/${user._id}`);
   };
 
   function handleOpen(event, loginOrSignup) {
@@ -114,7 +114,7 @@ export function MainHeader({ headerClassNames }) {
               <div className='login-user-modal'>
                 <button onClick={goToWishlist}>Wishlist</button>
                 <button onClick={() => navigate('/trips')}>Trips</button>
-                <button onClick={goDashBoard}>DashBorad</button>
+                <button onClick={goDashboard}>Dashboard</button>
                 <button onClick={() => navigate('/become-a-host')}>
                   Become a host
                 </button>

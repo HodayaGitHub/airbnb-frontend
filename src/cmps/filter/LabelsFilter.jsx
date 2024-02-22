@@ -26,7 +26,7 @@ export function LabelsFilter({ filterBy, onSetFilter }) {
     const responsive = {
         desktopLarge: {
             breakpoint: { max: 3000, min: 1600 },
-            items: 16,
+            items: 18,
             slidesToSlide: 4
         },
         desktop: {

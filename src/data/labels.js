@@ -81,11 +81,6 @@ export const labels = [
         "label": "Houseboats"
     },
     {
-        "title": "Casas particulares",
-        "svg": "CasasParticulares",
-        "label": "Casa"
-    },
-    {
         "title": "Containers",
         "svg": "Containers",
         "label": "Containers",
@@ -121,7 +116,11 @@ export const labels = [
         "svg": "BBQGrill",
         "label": "BBQ grill"
     },
-
+    {
+        "title": "Casas particulares",
+        "svg": "CasasParticulares",
+        "label": "Casa"
+    },
     {
         "title": "Campervan",
         "svg": "Campervan",
