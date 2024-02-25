@@ -28,6 +28,7 @@ export function StayIndex() {
     const [loadingMore, setLoadingMore] = useState(false)
     const [isHeaderSticky, setIsHeaderSticky] = useState(false);
     const [initialLoad, setInitialLoad] = useState(true);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 1000);
 
     const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -48,7 +49,6 @@ export function StayIndex() {
     })
 
     useEffect(() => {
-        console.log('useEffect triggered');
         loadStays(filterBy, false);
     }, [filterBy]);
 

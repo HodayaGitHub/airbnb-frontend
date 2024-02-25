@@ -124,7 +124,14 @@ export function StayDetails() {
   if (!stay || !order) return <div className='loader'></div>
   return (
     <>
-      <MainHeader />
+
+      {!isMobile ? (
+        <MainHeader />
+      ) : (
+        <MainHeaderOnScroll
+          filterBy={filterBy}
+          onSetFilter={onSetFilter} />
+      )}
 
 
       <div className='stay-name'>

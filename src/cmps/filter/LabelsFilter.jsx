@@ -8,8 +8,6 @@ import * as labelsSvg from '../../services/labels.icons.service.jsx'
 import * as React from 'react'
 
 export function LabelsFilter({ filterBy, onSetFilter }) {
-    // const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
-
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const [labels, setLabels] = useState([])
 
@@ -20,7 +18,6 @@ export function LabelsFilter({ filterBy, onSetFilter }) {
     useEffect(() => {
         if (filterByToEdit !== filterBy) {
             onSetFilter(filterByToEdit)
-            console.log('labels filter was activated');
         }
     }, [filterByToEdit])
 
