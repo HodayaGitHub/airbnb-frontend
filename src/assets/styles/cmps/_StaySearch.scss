@@ -61,7 +61,7 @@
         }
 
 
-        > :last-child {
+        > .search-last-section {
             padding-right: 1rem;
             padding: 10px;
 
@@ -73,7 +73,7 @@
             padding: 10px;
         }
 
-        > :not(:first-child):not(:last-child) {
+        > :not(:first-child):not(.search-last-section):not(.region-modal) {
             flex-grow: 0;
             width: 15%;
 
@@ -203,9 +203,3 @@
         display: none;
     }
 }
-
-// @media screen and (max-width: 992px) {
-//     .stay-search {
-//         width: 400px;
-//     }
-// }

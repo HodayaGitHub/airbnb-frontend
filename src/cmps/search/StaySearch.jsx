@@ -4,7 +4,7 @@ import { stayService } from '../../services/stay.service.js'
 import { DateSelect } from './DateSelect.jsx'
 import { SearchIcon } from '../../services/icons.service.jsx'
 import { ButtonHover } from '../ButtonHover.jsx'
-import { GuestCountModal  } from './GuestCountModal.jsx'
+import { GuestCountModal } from './GuestCountModal.jsx'
 
 export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
@@ -182,9 +182,6 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
 
                 </div>
 
-            </div>
-
-            <>
                 {modalOpen === REGION_MODAL && (
                     <div className="region-modal ">
                         <div className="region-title">Search by region</div>
@@ -201,7 +198,9 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
                     </div>
                 )}
 
+            </div>
 
+            <>
                 {modalOpen === CHECK_IN_MODAL || modalOpen === CHECK_OUT_MODAL ? (
                     <div className="date-modal">
                         <DateSelect
