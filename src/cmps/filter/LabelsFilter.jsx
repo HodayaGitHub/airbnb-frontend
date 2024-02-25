@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
+import { useSelector } from 'react-redux'
+
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
 import { stayService } from "../../services/stay.service.js"
@@ -6,7 +8,9 @@ import * as labelsSvg from '../../services/labels.icons.service.jsx'
 import * as React from 'react'
 
 export function LabelsFilter({ filterBy, onSetFilter }) {
-    const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+    // const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
+
+    const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const [labels, setLabels] = useState([])
 
     useEffect(() => {
@@ -14,13 +18,21 @@ export function LabelsFilter({ filterBy, onSetFilter }) {
     }, [])
 
     useEffect(() => {
-        onSetFilter({ ...filterByToEdit })
+        if (filterByToEdit !== filterBy) {
+            onSetFilter(filterByToEdit)
+            console.log('labels filter was activated');
+        }
     }, [filterByToEdit])
+
+    function handleLabelPick(value) {
+        setFilterByToEdit((prevFilter) => ({ ...prevFilter, label: value }))
+    }
 
     function fetchLabels() {
         const fetchedLabels = stayService.getLabels()
         setLabels(fetchedLabels)
     }
+
 
 
     const responsive = {
@@ -56,9 +68,7 @@ export function LabelsFilter({ filterBy, onSetFilter }) {
         }
     }
 
-    function handleLabelPick(value) {
-        setFilterByToEdit((prevFilter) => ({ ...prevFilter, label: value }))
-    }
+
 
     return (
         <Carousel

@@ -48,8 +48,11 @@ export function StayIndex() {
     })
 
     useEffect(() => {
+        console.log('useEffect triggered');
         loadStays(filterBy, false);
     }, [filterBy]);
+
+
 
 
 
