@@ -61,20 +61,6 @@ export function StaySearchOnScroll({ filterBy, onSetFilter }) {
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, region: region }))
     }
 
-    function handleChange(item) {
-        const selection = item.selection;
-        setRange([selection]);
-
-        const checkInTimestamp = Math.floor(selection.startDate.getTime() / 1000);
-        const checkOutTimestamp = Math.floor(selection.endDate.getTime() / 1000);
-
-        if (selection.startDate === selection.endDate) {
-            onSetField('checkIn', checkInTimestamp);
-        } else {
-            onSetField('checkOut', checkOutTimestamp);
-        }
-    }
-
     function setActiveClass(selectedModal) {
         return (modalOpen === selectedModal) ? ' active' : ''
     }
@@ -144,20 +130,6 @@ export function StaySearchOnScroll({ filterBy, onSetFilter }) {
                     </div>
                 </div>
 
-                {/* <div className={`date-item search-div ${setActiveClass(CHECK_OUT_MODAL)}`}
-                    onClick={() => handleSearchOptionClick(CHECK_OUT_MODAL)}>
-                    <div className='inner-div'>
-                        <span>Check out</span>
-                        <input
-                            type='text'
-                            placeholder='Add dates'
-                            value={filterByToEdit.checkOut ? stayService.formatDateFromUnix(filterByToEdit.checkOut) : ''}
-                            readOnly
-                        />
-                    </div>
-                </div> */}
-
-
                 <div className={`search-last-section search-div ${setActiveClass(GUEST_MODAL)}`}>
                     <div className='inner-div' onClick={() => handleSearchOptionClick(GUEST_MODAL)}>
                         <span>Guests</span>
@@ -205,8 +177,6 @@ export function StaySearchOnScroll({ filterBy, onSetFilter }) {
                     )}
 
                 </div>
-
-
             </div>
 
             <>
