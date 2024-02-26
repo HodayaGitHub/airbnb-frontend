@@ -18,8 +18,6 @@ export function MainHeader({ isTop, onSetFilter, filterBy }) {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
 
-
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {

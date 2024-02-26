@@ -11,8 +11,6 @@ export function StaySearchOnScroll({ filterBy, onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
     const [regions, setRegion] = useState(stayService.getDefaultRegion())
     const [selectedRegion, setSelectedRegion] = useState(null)
-    const [labelsData, setLabelsData] = useState()
-
     const [modalOpen, setModalOpen] = useState(null)
     const [isPetsModalOpen, setIsPetsModalOpen] = useState(false)
 
@@ -63,7 +61,6 @@ export function StaySearchOnScroll({ filterBy, onSetFilter }) {
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, region: region }))
     }
 
-
     function handleChange(item) {
         const selection = item.selection;
         setRange([selection]);
@@ -77,7 +74,6 @@ export function StaySearchOnScroll({ filterBy, onSetFilter }) {
             onSetField('checkOut', checkOutTimestamp);
         }
     }
-
 
     function setActiveClass(selectedModal) {
         return (modalOpen === selectedModal) ? ' active' : ''
@@ -93,7 +89,7 @@ export function StaySearchOnScroll({ filterBy, onSetFilter }) {
     }
 
     function handleDateSelectChange(field, value) {
-        const valueToUnix = Math.floor(value.getTime() / 1000);
+        const valueToUnix = Math.floor(value.getTime());
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: valueToUnix }))
 
         if (field === 'checkOut' && valueToUnix) {

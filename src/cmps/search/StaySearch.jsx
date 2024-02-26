@@ -10,8 +10,6 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
     const [regions, setRegion] = useState(stayService.getDefaultRegion())
     const [selectedRegion, setSelectedRegion] = useState(null)
-    const [labelsData, setLabelsData] = useState()
-
     const [modalOpen, setModalOpen] = useState(null)
 
     const REGION_MODAL = 'region'
@@ -81,12 +79,9 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
         }
     }
 
-
     function handleChange() {
         console.log('blah')
     }
-
-
 
     function updateGuestCount(event, option, amount) {
         event.stopPropagation()
