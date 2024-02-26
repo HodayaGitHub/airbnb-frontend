@@ -113,7 +113,7 @@ export function StaySearch({ filterBy, onSetFilter, headerClassNames }) {
     }
 
     return (
-        <section className={`stay-search ${headerClassNames}`}>
+        <section className={`stay-search `}>
 
             <div className={`search-container ${modalOpen !== null ? 'search-active' : ''}`}>
 

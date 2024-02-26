@@ -124,16 +124,7 @@ export function StayDetails() {
   if (!stay || !order) return <div className='loader'></div>
   return (
     <>
-
-      {!isMobile ? (
-        <MainHeader />
-      ) : (
-        <MainHeaderOnScroll
-          filterBy={filterBy}
-          onSetFilter={onSetFilter} />
-      )}
-
-
+      <MainHeader />
       <div className='stay-name'>
         {isEdit && (
           <form onSubmit={handleSubmit}>

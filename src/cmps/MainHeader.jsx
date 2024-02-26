@@ -4,12 +4,14 @@ import { logout } from '../store/actions/user.actions.js'
 import { useSelector } from 'react-redux'
 import { LoginSignupModal } from './LoginSignupModal.jsx'
 import { userService } from '../services/user.service.js'
+import { StaySearchOnScroll } from '../cmps/search/StaySearchOnScroll.jsx'
+
 import appLogo from '../assets/img/new-logo-svg.svg'
 import hamburger from '../assets/img/svgs/hamburger.svg'
 import defaultLogo from '../assets/img/svgs/defaultLogo.svg'
 import Avatar from '@mui/material/Avatar'
 
-export function MainHeader({ headerClassNames }) {
+export function MainHeader({ isTop, onSetFilter, filterBy }) {
   const modalRef = useRef(null);
   const user = useSelector((storeState) => storeState.userModule.loggedInUser)
   const navigate = useNavigate()
@@ -66,7 +68,7 @@ export function MainHeader({ headerClassNames }) {
 
 
   return (
-    <header className={`app-header ${headerClassNames}`}>
+    <header className={`app-header  ${!isTop ? 'main-header-on-scroll' : ''}`}>
       <div
         onClick={() => {
           navigate('/')
@@ -77,6 +79,13 @@ export function MainHeader({ headerClassNames }) {
         <img src={appLogo} alt='Logo' className='app-logo' />
         <span className="logo-name">Journey</span>
       </div>
+
+      {!isTop && (
+        <StaySearchOnScroll
+          filterBy={filterBy}
+          onSetFilter={onSetFilter}
+        />
+      )}
 
       <div className='login' onClick={(event) => toggleUserModal(event)} ref={modalRef}>
         <img className='hamburger' src={hamburger} />
