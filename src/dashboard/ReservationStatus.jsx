@@ -11,7 +11,7 @@ export function ReservationStatus() {
   }, []);
 
   function clacPending(statusToCount) {
-    return loggedInUser.myGuests.reduce((acc, guest) => {
+    return loggedInUser?.myGuests?.reduce((acc, guest) => {
       if (guest.status === statusToCount) {
         return acc + 1;
       }

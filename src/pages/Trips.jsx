@@ -9,7 +9,7 @@ export function Trips() {
     <section className='trips'>
       <MainHeader />
       <h1>My trips</h1>
-      <h3>{loggedInUser.myOrder.length} trip{loggedInUser.myOrder.length !== 1 ? <span>s</span> : ''}</h3>      
+      <h3>{loggedInUser?.myOrder?.length} trip{loggedInUser?.myOrder?.length !== 1 ? <span>s</span> : ''}</h3>      
       <TripsData />
     </section>
   )
