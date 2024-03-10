@@ -10,8 +10,10 @@ Welcome to Journey, an innovative web application that redefines the way travele
 7. Adding a New Stay
 8. Getting Started
 9. Run the Project
-10.Feedback and Support
-   <br> </br>
+10. Feedback and Support
+    
+    <br> </br>
+
 ## 1. Introduction
 Journey is a web application and online marketplace designed to seamlessly connect travelers with unique accommodations. Whether you're a globetrotter seeking an authentic local experience or a host looking to share your space, Journey provides the platform for these connections to flourish.
 
