@@ -1,4 +1,4 @@
-# Journey - Your Gateway to Unique Travel Experiences
+# Journey 
 Welcome to Journey, an innovative web application that redefines the way travelers connect with accommodations. Journey brings together a diverse array of lodging options hosted by individuals worldwide, offering a personalized and enriching travel experience.
 
 1. Table of Contents
