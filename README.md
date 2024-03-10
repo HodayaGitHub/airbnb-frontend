@@ -1,16 +1,14 @@
 # Journey (airbnb) - Frontend
 Welcome to Journey, an innovative web application that redefines the way travelers connect with accommodations. Journey brings together a diverse array of lodging options hosted by individuals worldwide, offering a personalized and enriching travel experience.
-
-1. Table of Contents
-2. Introduction
-3. Demo Login
-4. Host Experience
-5. User Experience
-6. Filter and Search
-7. Adding a New Stay
-8. Getting Started
-9. Run the Project
-10. Feedback and Support
+1. [Introduction](#introduction)
+2. [Demo Login](#demo-login)
+3. [Host Experience](#host-experience)
+4. [User Experience](#user-experience)
+5. [Filter and Search](#filter-and-search)
+6. [Adding a New Stay](#adding-a-new-stay)
+7. [Getting Started](#getting-started)
+8. [Run the Project](#run-the-project)
+9. [Feedback and Support](#feedback-and-support)
     
     <br> </br>
 
