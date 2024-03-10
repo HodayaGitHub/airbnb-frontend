@@ -44,12 +44,12 @@ Install the project dependencies:
 
 ```npm install```
 
-8. Run the Project
+## 8. Run the Project
 To start the Journey application, run the following command:
 ```npm run dev```
 Visit ```http://localhost:3000``` in your browser to explore Journey.
 
-9. Feedback and Support
+## 9. Feedback and Support
 I value your feedback! If you encounter any issues, have suggestions, or need assistance, please reach out to our support team at support@journeyapp.com.
 
 Thank you for choosing Journey! I hope your experience is as delightful as the travels it facilitates. Safe journey!
