@@ -8,7 +8,6 @@ Welcome to Journey, an innovative web application that redefines the way travele
 6. [Adding a New Stay](#adding-a-new-stay)
 7. [Getting Started](#getting-started)
 8. [Run the Project](#run-the-project)
-9. [Feedback and Support](#feedback-and-support)
     
     <br> </br>
 
@@ -48,8 +47,5 @@ Install the project dependencies:
 To start the Journey application, run the following command:
 ```npm run dev```
 Visit ```http://localhost:3000``` in your browser to explore Journey.
-
-## 9. Feedback and Support
-I value your feedback! If you encounter any issues, have suggestions, or need assistance, please reach out to our support team at support@journeyapp.com.
 
 Thank you for choosing Journey! I hope your experience is as delightful as the travels it facilitates. Safe journey!
