@@ -94,7 +94,7 @@ function saveLocalUser(user) {
     username: user.username,
     imgUrl: user.imgUrl,
     favoriteStays: user.favoriteStays,
-    myOrder: user.myOrders,
+    myOrders: user.myOrders,
     myGuests: user.myGuests,
 
   }
@@ -150,7 +150,7 @@ function demoCredentials() {
     password: '123',
     email: 'defEmail@',
     imgUrl: '../assets/img/host-img/anonumus-user.png',
-    myOrder: [],
+    myOrders: [],
     myGuests: [],
   }
 }

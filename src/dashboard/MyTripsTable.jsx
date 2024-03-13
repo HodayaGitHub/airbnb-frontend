@@ -11,7 +11,7 @@ export default function Dashboard() {
   const [isStatus, setStatus] = useState('pending');
   const loggedInUser = useSelector((storeState) => storeState.userModule.loggedInUser);
   const [host, setHost] = useState(null);
-  const [trips, setTrips] = useState(loggedInUser.myOrder || [])
+  const [trips, setTrips] = useState(loggedInUser.myOrders || [])
 
 
 
@@ -30,7 +30,6 @@ export default function Dashboard() {
 
       const updatedTrips = trips.map(trip => {
         if (trip.id === newStatus.orderId) {
-          console.log('hi!!!!!!!!!!!!!!!!!')
           return { ...trip, status: newStatus.newStatus }
         } else {
           return trip
@@ -97,7 +96,7 @@ export default function Dashboard() {
             </div>
             <div className='host cell'>{order.hostName}</div>
             <div className='date-cell'>
-              <span className='checkIn cell'>{stayService.formatDateFromUnix(order.check_In)} - {stayService.formatDateFromUnix(order.check_Out)}</span>
+              <span className='checkIn cell'>{stayService.formatDateFromUnix(order.checkIn)} - {stayService.formatDateFromUnix(order.checkOut)}</span>
             </div>
             <div className='price cell'>{`$${order.price || 0}`}</div>
             <div
