@@ -30,6 +30,11 @@ const axios = Axios.create({
 
 window.cs = orderService
 
+function save(order) {
+    return httpService.post(`order`, order)
+}
+
+
 async function query(filterBy) {
     var orders = await storageService.query(STORAGE_KEY)
     return orders
@@ -100,11 +105,6 @@ function fixTime() {
 }
 
 
-function save(order) {
-    return httpService.post(`order`, order)
-}
-
-
 
 function convertDateStringToUnix(dateString) {
     // Assuming dateString is in the format "YY/MM/DD"
@@ -157,7 +157,7 @@ function createOrder(stay, location, loggedInUser) {
     const order = {
         checkIn,
         checkOut,
-        hostId: stay.host._id,
+        hostId: '65a59de928c0c04c96622d7f',
         hostName: stay.host.fullname,
         hostPic: stay.host.pictureUrl,
         totalNights: stayService.calcNights(checkIn, checkOut),

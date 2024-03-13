@@ -71,11 +71,11 @@ export function DataTable() {
                 </td>
 
                 <td className='checkIn'>
-                  {stayService.formatDateFromUnix(+guest.check_In, true)}
+                  {stayService.formatDateFromUnix(+guest.checkIn, true)}
                 </td>
 
                 <td className='checkOut'>
-                  {stayService.formatDateFromUnix(+guest.check_Out, true)}
+                  {stayService.formatDateFromUnix(+guest.checkOut, true)}
                 </td>
 
                 <td className='price '>{`$${guest.price || 0}`}</td>

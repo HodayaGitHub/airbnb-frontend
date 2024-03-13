@@ -36,7 +36,6 @@ export function ConfirmPage() {
   async function loadStay() {
     try {
       const stay = await stayService.getById(stayId)
-      console.log('stay', stay)
       setStay(stay)
     } catch (err) {
       console.log(err)
@@ -50,11 +49,10 @@ export function ConfirmPage() {
   }
 
   async function saveOrderToDb(order) {
-    console.log('baba', loggedInUser._id);
+    console.log('loggedInUser id', loggedInUser._id);
     order.buyerId = loggedInUser._id
     order.id = await utilService.makeId()
-    console.log('mama', order);
-    console.log(order);
+    console.log('order', order);
 
     try {
       const user = await userService.getById(loggedInUser._id)
@@ -68,19 +66,18 @@ export function ConfirmPage() {
 
       const updatedHost = {
         ...host,
-        // myGuests: [...(host.myGuests || []), order]
         myGuests: [...(host.myGuests || []), order]
       }
 
+      console.log('updatedHost', updatedHost)
+
       await Promise.all([
-        orderService.save(order),
+        // orderService.save(order),
         userService.update(updatedUser),
         userService.update(updatedHost)
       ])
 
       socketService.emit(SOCKET_ADD_ORDER, order)
-
-
       localStorage.removeItem('PRE_ORDER')
       navigate('/trips')
       window.location.reload()
@@ -139,7 +136,7 @@ export function ConfirmPage() {
             <section className='payment'>
               <div className='title'>
                 <h2>Pay with</h2>
-                <img src='../../src\assets\img\svgs\creditcards.PNG' />
+                <img src='../../src/assets/img/svgs/creditcards.PNG' />
               </div>
               <form
                 className='billing-form'
